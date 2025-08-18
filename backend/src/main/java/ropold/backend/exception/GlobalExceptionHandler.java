@@ -5,6 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import ropold.backend.exception.notfoundexceptions.CustomerNotFoundException;
+import ropold.backend.exception.notfoundexceptions.ScannerNotFoundException;
+import ropold.backend.exception.notfoundexceptions.ServicePartnerNotFoundException;
 import ropold.backend.exception.notfoundexceptions.UserNotFoundException;
 
 @Slf4j
@@ -20,6 +23,9 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler({
             UserNotFoundException.class,
+            CustomerNotFoundException.class,
+            ScannerNotFoundException.class,
+            ServicePartnerNotFoundException.class
     })
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse handleNotFoundException(RuntimeException e) {

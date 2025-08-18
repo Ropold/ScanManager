@@ -1,11 +1,11 @@
 package ropold.backend.exception;
 
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import ropold.backend.exception.notfoundexceptions.UserNotFoundException;
 
 @Slf4j
 @RestControllerAdvice
@@ -19,16 +19,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler({
-            CustomerNotFoundException.class,
-            InvoiceNotFoundException.class,
-            LicenseNotFoundException.class,
-            ManufacturerNotFoundException.class,
             UserNotFoundException.class,
-            CustomerLicenseNotFoundException.class,
-            LicenseDependencyNotFoundException.class,
-            InvoiceBundleItemNotFoundException.class,
-            LicensePriceHistoryNotFoundException.class,
-            UserCustomerWishlistNotFound.class
     })
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse handleNotFoundException(RuntimeException e) {

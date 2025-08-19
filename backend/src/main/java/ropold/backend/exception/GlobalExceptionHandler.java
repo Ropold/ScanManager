@@ -1,0 +1,36 @@
+package ropold.backend.exception;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+import ropold.backend.exception.notfoundexceptions.CustomerNotFoundException;
+import ropold.backend.exception.notfoundexceptions.ScannerNotFoundException;
+import ropold.backend.exception.notfoundexceptions.ServicePartnerNotFoundException;
+import ropold.backend.exception.notfoundexceptions.UserNotFoundException;
+
+@Slf4j
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(RuntimeException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponse handleRuntimeException(RuntimeException e) {
+        log.error("Unhandled RuntimeException: {}", e.getMessage(), e);
+        return new ErrorResponse("INTERNAL_ERROR", e.getMessage());
+    }
+
+    @ExceptionHandler({
+            UserNotFoundException.class,
+            CustomerNotFoundException.class,
+            ScannerNotFoundException.class,
+            ServicePartnerNotFoundException.class
+    })
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handleNotFoundException(RuntimeException e) {
+        log.error("NotFoundException: {}", e.getMessage(), e);
+        return new ErrorResponse("NOT_FOUND", e.getMessage());
+    }
+
+}

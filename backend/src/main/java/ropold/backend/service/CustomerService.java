@@ -13,7 +13,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CustomerService {
 
-    private final IdService idService;
     private final CloudinaryService cloudinaryService;
     private final CustomerRepository customerRepository;
 

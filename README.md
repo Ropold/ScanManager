@@ -1,13 +1,13 @@
 
 SonarQube-backend:
 
-[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=ropold_PrintScanManager-backend)](https://sonarcloud.io/summary/new_code?id=ropold_PrintScanManager-backend)
+[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=ropold_ScanManager-backend)](https://sonarcloud.io/summary/new_code?id=ropold_ScanManager-backend)
 
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ropold_PrintScanManager-backend&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=ropold_PrintScanManager-backend)
-[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=ropold_PrintScanManager-backend&metric=bugs)](https://sonarcloud.io/summary/new_code?id=ropold_PrintScanManager-backend)
-[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=ropold_PrintScanManager-backend&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=ropold_PrintScanManager-backend)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=ropold_PrintScanManager-backend&metric=coverage)](https://sonarcloud.io/summary/new_code?id=ropold_PrintScanManager-backend)
-[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=ropold_PrintScanManager-backend&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=ropold_PrintScanManager-backend)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ropold_ScanManager-backend&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=ropold_ScanManager-backend)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=ropold_ScanManager-backend&metric=bugs)](https://sonarcloud.io/summary/new_code?id=ropold_ScanManager-backend)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=ropold_ScanManager-backend&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=ropold_ScanManager-backend)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=ropold_ScanManager-backend&metric=coverage)](https://sonarcloud.io/summary/new_code?id=ropold_ScanManager-backend)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=ropold_ScanManager-backend&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=ropold_ScanManager-backend)
 
 SonarQube-frontend:
 

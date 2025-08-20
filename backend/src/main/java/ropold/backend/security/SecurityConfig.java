@@ -35,7 +35,6 @@ public class SecurityConfig {
     private static final String SERVICE_PARTNER = "/api/service-partners/**";
 
     @Bean
-    @ConditionalOnBean(ClientRegistrationRepository.class)
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
@@ -54,7 +53,11 @@ public class SecurityConfig {
                 .exceptionHandling(e -> e
                         .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
                 .oauth2Login(o -> o
-                        .defaultSuccessUrl("/", true));
+                        .successHandler((request, response, authentication) -> {
+                            //System.out.println("🚀 SUCCESS HANDLER CALLED - User: " + authentication.getName());
+                            response.sendRedirect("http://localhost:5173/");
+                        }));
+
         return http.build();
     }
 

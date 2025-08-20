@@ -1,6 +1,6 @@
 
 import './App.css'
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Welcome from "./components/Welcome.tsx";
 import NotFound from "./components/NotFound.tsx";
 import {Route, Routes} from "react-router-dom";
@@ -27,6 +27,10 @@ export default function App() {
                 setUser("anonymousUser");
             });
     }
+
+    useEffect(() => {
+        getUser();
+    }, []);
 
   return (
     <>

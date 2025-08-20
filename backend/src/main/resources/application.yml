@@ -13,15 +13,3 @@ spring:
         provider:
           azure:
             issuer-uri: https://login.microsoftonline.com/${TENANT_ID}/v2.0
-
-
-#spring:
-#  cloud:
-#    azure:
-#      active-directory:
-#        enabled: true
-#        profile:
-#          tenant-id: ${TENANT_ID}
-#        credential:
-#          client-id: ${CLIENT_ID}
-#          client-secret: ${CLIENT_SECRET}

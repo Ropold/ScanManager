@@ -1,8 +1,13 @@
+import {translatedInfo} from "./utils/TranslatedInfo.ts";
 
-export default function Footer() {
+type FooterProps = {
+    language: string;
+}
+
+export default function Footer(props: Readonly<FooterProps>) {
     return (
         <footer className="footer">
-            <p>Scan Manager 2025 by R.Stolz</p>
+            <p>{translatedInfo["Footer-Info"][props.language]}</p>
         </footer>
     )
 }

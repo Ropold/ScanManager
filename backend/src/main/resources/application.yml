@@ -13,3 +13,8 @@ spring:
         provider:
           azure:
             issuer-uri: https://login.microsoftonline.com/${TENANT_ID}/v2.0
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.security.oauth2: DEBUG

@@ -54,14 +54,7 @@ public class SecurityConfig {
                 .exceptionHandling(e -> e
                         .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
                 .oauth2Login(o -> o
-                        .loginPage("/oauth2/authorization/azure") // optional
-                        .successHandler((request, response, authentication) -> {
-                            response.sendRedirect("http://localhost:5173/");
-                        })
-                        .failureHandler((request, response, exception) -> {
-                            response.sendRedirect("http://localhost:5173/login?error=true");
-                        })
-                );
+                        .defaultSuccessUrl("/", true));
         return http.build();
     }
 

@@ -6,6 +6,9 @@ import {LanguagesImages} from "./utils/FlagImages.ts";
 import {translatedInfo} from "./utils/TranslatedInfo.ts";
 import "./styles/Popup.css"
 import bechtleLogoSmall from "../assets/logo-bechtle-small.svg"
+import scannerLogo from "../assets/scanner-logo.svg";
+import servicePartnerLogo from "../assets/service-partner-logo.png"
+import customerLogo from "../assets/customer-logo.png"
 
 type NavbarProps = {
     user:string;
@@ -14,7 +17,7 @@ type NavbarProps = {
     setLanguage: React.Dispatch<React.SetStateAction<string>>
 }
 
-export default function Navbar(props: NavbarProps) {
+export default function Navbar(props: Readonly<NavbarProps>) {
     const [showLanguagePopup, setShowLanguagePopup] = React.useState(false);
 
     const navigate = useNavigate();
@@ -42,7 +45,7 @@ export default function Navbar(props: NavbarProps) {
 
             <div
                 className="clickable-header"
-                id="clickable-header"
+                id="clickable-header-home"
                 onClick={() => {
                     navigate("/");
                 }}
@@ -102,7 +105,36 @@ export default function Navbar(props: NavbarProps) {
 
             {props.user !== "anonymousUser" ? (
                 <>
-                    <button className="button-group-button" onClick={() => navigate("/scanner")}>Scanner</button>
+                    <div
+                        className="clickable-header padding-left-5"
+                        onClick={() => {
+                            navigate("/scanner");
+                        }}
+                    >
+                        <img src={scannerLogo} alt="Scanner Logo" className="logo-image" />
+                        <h2 className="header-title">Scanner</h2>
+                    </div>
+
+                    <div
+                        className="clickable-header padding-left-5"
+                        onClick={() => {
+                            navigate("/customer");
+                        }}
+                    >
+                        <img src={customerLogo} alt="Customer Logo" className="logo-image" />
+                        <h2 className="header-title">Customers</h2>
+                    </div>
+
+                    <div
+                        className="clickable-header padding-left-5"
+                        onClick={() => {
+                            navigate("/service-partner");
+                        }}
+                    >
+                        <img src={servicePartnerLogo} alt="Scanner Logo" className="logo-image" />
+                        <h2 className="header-title">Service Partner</h2>
+                    </div>
+
                     <button className="button-group-button" onClick={() => navigate("/profile")}>Profile</button>
                     <button className="button-group-button" onClick={logoutFromAzure}>{translatedInfo["Logout"][props.language]}</button>
                 </>

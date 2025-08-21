@@ -1,7 +1,6 @@
 package ropold.backend.security;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,9 +28,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    @Value("${app.url}")
-    private String appUrl;
-
     private final UserRepository userRepository;
     private static final String CUSTOMER = "/api/customers/**";
     private static final String SCANNER = "/api/scanners/**";
@@ -43,10 +39,10 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(a -> a
-                        .requestMatchers(HttpMethod.GET, CUSTOMER,SCANNER,SERVICE_PARTNER).permitAll()
-                        .requestMatchers(HttpMethod.POST, CUSTOMER,SCANNER,SERVICE_PARTNER).authenticated()
-                        .requestMatchers(HttpMethod.PUT, CUSTOMER,SCANNER,SERVICE_PARTNER).authenticated()
-                        .requestMatchers(HttpMethod.DELETE, CUSTOMER,SCANNER,SERVICE_PARTNER).authenticated()
+                        .requestMatchers(HttpMethod.GET, CUSTOMER, SCANNER, SERVICE_PARTNER).permitAll()
+                        .requestMatchers(HttpMethod.POST, CUSTOMER, SCANNER, SERVICE_PARTNER).authenticated()
+                        .requestMatchers(HttpMethod.PUT, CUSTOMER, SCANNER, SERVICE_PARTNER).authenticated()
+                        .requestMatchers(HttpMethod.DELETE, CUSTOMER, SCANNER, SERVICE_PARTNER).authenticated()
                         .requestMatchers("/api/users/me").permitAll()
                         .requestMatchers("/api/users/me/details").permitAll()
                         .anyRequest().permitAll()
@@ -57,11 +53,14 @@ public class SecurityConfig {
                 .exceptionHandling(e -> e
                         .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
                 .oauth2Login(o -> o
-                        .loginPage("/oauth2/authorization/azure") // optional
-                        .defaultSuccessUrl(appUrl));
+                        .successHandler((request, response, authentication) -> {
+                            //System.out.println("🚀 SUCCESS HANDLER CALLED - User: " + authentication.getName());
+                            response.sendRedirect("http://localhost:5173/");
+                        }));
 
         return http.build();
     }
+
 
     @Bean
     public OAuth2UserService<OAuth2UserRequest, OAuth2User> oauth2UserService() {

@@ -7,8 +7,8 @@ import {Route, Routes} from "react-router-dom";
 import Footer from "./components/Footer.tsx";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
 import Profile from "./components/Profile.tsx";
-import axios from "axios";
 import Navbar from "./components/Navbar.tsx";
+import { getUser as fetchUser } from "./App-Functions.ts"
 
 
 export default function App() {
@@ -18,14 +18,7 @@ export default function App() {
 
 
     function getUser() {
-        axios.get("/api/users/me")
-            .then((response) => {
-                setUser(response.data.toString());
-            })
-            .catch((error) => {
-                console.error(error);
-                setUser("anonymousUser");
-            });
+        fetchUser(setUser);
     }
 
     useEffect(() => {

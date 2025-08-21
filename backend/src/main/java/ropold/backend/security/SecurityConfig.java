@@ -1,7 +1,6 @@
 package ropold.backend.security;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,6 +34,7 @@ public class SecurityConfig {
     private static final String SERVICE_PARTNER = "/api/service-partners/**";
 
     @Bean
+    @ConditionalOnBean(ClientRegistrationRepository.class)
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
@@ -90,18 +90,6 @@ public class SecurityConfig {
                     });
 
             return azureUser;
-        };
-    }
-
-    @Bean
-    public org.springframework.web.servlet.config.annotation.WebMvcConfigurer corsConfigurer() {
-        return new org.springframework.web.servlet.config.annotation.WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(org.springframework.web.servlet.config.annotation.CorsRegistry registry) {
-                registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:5173")
-                        .allowedMethods("*");
-            }
         };
     }
 }

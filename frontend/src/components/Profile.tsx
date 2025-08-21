@@ -1,7 +1,9 @@
 
 type ProfileProps = {
     user: string;
+    userDetails: UserDetails | null;
 }
+
 
 export default function Profile(props: Readonly<ProfileProps>){
     return (

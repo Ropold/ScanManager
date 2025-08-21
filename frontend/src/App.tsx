@@ -8,11 +8,13 @@ import Footer from "./components/Footer.tsx";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
 import Profile from "./components/Profile.tsx";
 import Navbar from "./components/Navbar.tsx";
-import { getUser as fetchUser } from "./App-Functions.ts"
+import { getUser as fetchUser, getUserDetails as fetchUserDetails } from "./App-Functions.ts";
+import {DefaultUser, type UserModel} from "./components/model/UserModel.ts";
 
 
 export default function App() {
     const [user, setUser] = useState<string>("anonymousUser");
+    const [userDetails, setUserDetails] = useState<UserModel | null>(DefaultUser);
 
     const [language, setLanguage] = useState<string>("de");
 
@@ -21,9 +23,19 @@ export default function App() {
         fetchUser(setUser);
     }
 
+    function getUserDetails() {
+        fetchUserDetails(setUserDetails);
+    }
+
     useEffect(() => {
         getUser();
     }, []);
+
+    useEffect(() => {
+        if(user !== "anonymousUser"){
+            getUserDetails();
+        }
+    }, [user]);
 
   return (
     <>
@@ -32,7 +44,7 @@ export default function App() {
             <Route path="*" element={<NotFound />} />
             <Route path="/" element={<Welcome language={language}/>}/>
             <Route element={<ProtectedRoute user={user}/>}>
-                <Route path="/profile/*" element={<Profile user={user}/>} />
+                <Route path="/profile/*" element={<Profile user={user} userDetails={userDetails}/>} />
             </Route>
         </Routes>
         <Footer language={language}/>

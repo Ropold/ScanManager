@@ -41,6 +41,34 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "nl": "Scan Manager 2025 door R.Stolz",
         "gr": "Scan Manager 2025 από R.Stolz",
         "ru": "Scan Manager 2025 от R.Stolz"
+    },
+    "Login": {
+        "de": "Mit Azure anmelden",
+        "en": "Login with Azure",
+        "pl": "Zaloguj się przez Azure",
+        "es": "Iniciar sesión con Azure",
+        "fr": "Se connecter avec Azure",
+        "it": "Accedi con Azure",
+        "cz": "Přihlásit se přes Azure",
+        "pt": "Entrar com Azure",
+        "hu": "Bejelentkezés Azure-val",
+        "nl": "Inloggen met Azure",
+        "gr": "Σύνδεση με το Azure",
+        "ru": "Войти через Azure"
+    },
+    "Logout": {
+        "de": "Abmelden",
+        "en": "Logout",
+        "pl": "Wyloguj się",
+        "es": "Cerrar sesión",
+        "fr": "Se déconnecter",
+        "it": "Disconnettersi",
+        "cz": "Odhlásit se",
+        "pt": "Sair",
+        "hu": "Kijelentkezés",
+        "nl": "Uitloggen",
+        "gr": "Αποσύνδεση",
+        "ru": "Выйти"
     }
 
 }

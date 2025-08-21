@@ -24,14 +24,15 @@
     justify-content: center;
     text-align: center;
     cursor: pointer;
-    background-color: #66b3ff;
+    background-color: #23A96A;
     border-radius: 5px;
-    border: 1px solid #007bff;
+
     transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
 }
 
 .clickable-header:hover {
-    background-color: #007bff;
+    background-color: #075033;
+    border: 1px solid #007bff;
 }
 
 #clickable-header {
@@ -63,4 +64,8 @@
     border-radius: 4px;
     transition: all 0.3s ease;
     cursor: pointer;
+}
+
+.logo-bechtle{
+    margin-left:5px;
 }

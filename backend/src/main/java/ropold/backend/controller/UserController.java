@@ -36,9 +36,9 @@ public class UserController {
                 "username", user.getUsername(),
                 "email", user.getEmail(),
                 "role", user.getRole(),
-                "avatarUrl", user.getAvatarUrl(),
-                "createdAt", user.getCreatedAt(),
-                "lastLoginAt", user.getLastLoginAt()
+                "avatarUrl", user.getAvatarUrl() != null ? user.getAvatarUrl() : "",
+                "createdAt", user.getCreatedAt() != null ? user.getCreatedAt().toString() : "",
+                "lastLoginAt", user.getLastLoginAt() != null ? user.getLastLoginAt().toString() : ""
         );
     }
 }

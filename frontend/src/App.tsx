@@ -10,6 +10,7 @@ import Profile from "./components/Profile.tsx";
 import Navbar from "./components/Navbar.tsx";
 import { getUser as fetchUser, getUserDetails as fetchUserDetails } from "./App-Functions.ts";
 import {DefaultUser, type UserModel} from "./components/model/UserModel.ts";
+import Scanner from "./components/Scanner.tsx";
 
 
 export default function App() {
@@ -44,6 +45,7 @@ export default function App() {
             <Route path="*" element={<NotFound />} />
             <Route path="/" element={<Welcome language={language}/>}/>
             <Route element={<ProtectedRoute user={user}/>}>
+                <Route path="/scanner/*" element={<Scanner />} />
                 <Route path="/profile/*" element={<Profile user={user} userDetails={userDetails}/>} />
             </Route>
         </Routes>

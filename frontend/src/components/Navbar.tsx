@@ -102,6 +102,7 @@ export default function Navbar(props: NavbarProps) {
 
             {props.user !== "anonymousUser" ? (
                 <>
+                    <button className="button-group-button" onClick={() => navigate("/scanner")}>Scanner</button>
                     <button className="button-group-button" onClick={() => navigate("/profile")}>Profile</button>
                     <button className="button-group-button" onClick={logoutFromAzure}>{translatedInfo["Logout"][props.language]}</button>
                 </>

@@ -42,7 +42,7 @@ public class UserService {
                             azureUser.getAttribute("name"),
                             azureUser.getAttribute("email"),
                             "ROLE_USER",
-                            null, // avatarUrl
+                            null,
                             LocalDateTime.now(),
                             LocalDateTime.now()
                     );

@@ -12,5 +12,5 @@ export const DefaultServicePartner: ServicePartnerModel = {
     name: "Loading...",
     contactPerson: "Loading...",
     notes: "Loading...",
-    imageUrl: undefined
+    imageUrl: ""
 };

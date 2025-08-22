@@ -1,6 +1,21 @@
+import type {ServicePartnerModel} from "./model/ServicePartnerModel.ts";
+import {useNavigate} from "react-router-dom";
 
-export default function ServicePartnerCard(){
+type ServicePartnerCardProps = {
+    servicePartner: ServicePartnerModel;
+    language: string;
+}
+
+export default function ServicePartnerCard(props: Readonly<ServicePartnerCardProps>) {
+    const navigate = useNavigate();
+
+    const handleCardClick = () => {
+        navigate(`/service-partner/${props.servicePartner.id}`);
+    }
+
     return (
-        <h2>ServicePartnerCard</h2>
+        <div className="service-partner-card" onClick={handleCardClick}>
+            <h2>{props.servicePartner.name}</h2>
+        </div>
     )
 }

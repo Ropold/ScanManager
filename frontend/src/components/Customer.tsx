@@ -26,10 +26,12 @@ export default function Customer(props: Readonly<CustomerProps>) {
             const name = customer.name.toLowerCase();
             const contactPerson = customer.contactPerson.toLowerCase();
             const notes = customer.notes.toLowerCase();
+            const id = customer.id.toLowerCase();
             return (
                 name.includes(searchQuery) ||
                 contactPerson.includes(searchQuery) ||
-                notes.includes(searchQuery)
+                notes.includes(searchQuery) ||
+                id.includes(searchQuery)
             );
         });
     }

@@ -6,7 +6,7 @@ import {Route, Routes} from "react-router-dom";
 import Footer from "./components/Footer.tsx";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
 import Profile from "./components/Profile.tsx";
-import Navbar from "./components/Navbar.tsx";
+import NavBar from "./components/NavBar.tsx";
 import {DefaultUser, type UserModel} from "./components/model/UserModel.ts";
 import Scanner from "./components/Scanner.tsx";
 import Customer from "./components/Customer.tsx";
@@ -23,6 +23,8 @@ import {
     fetchAllServicePartner
 } from "./App-Functions.ts";
 import CustomerDetails from "./components/CustomerDetails.tsx";
+import ScannerDetails from "./components/ScannerDetails.tsx";
+import ServicePartnerDetails from "./components/ServicePartnerDetails.tsx";
 
 
 export default function App() {
@@ -68,15 +70,17 @@ export default function App() {
 
   return (
     <>
-        <Navbar user={user} getUser={getUser} language={language} setLanguage={setLanguage}/>
+        <NavBar user={user} getUser={getUser} language={language} setLanguage={setLanguage}/>
         <Routes>
             <Route path="*" element={<NotFound />} />
             <Route path="/" element={<Welcome language={language}/>}/>
             <Route element={<ProtectedRoute user={user}/>}>
-                <Route path="/scanner/*" element={<Scanner language={language} allScanner={allScanner}/>} />
+                <Route path="/scanner" element={<Scanner language={language} allScanner={allScanner}/>} />
+                <Route path="/scanner/:id" element={<ScannerDetails language={language} />} />
                 <Route path="/customer" element={<Customer language={language} allCustomer={allCustomer}/>} />
-                <Route path="/customer/:id" element={<CustomerDetails />} />
-                <Route path="/service-partner/*" element={<ServicePartner language={language} allServicePartner={allServicePartner}/>} />
+                <Route path="/customer/:id" element={<CustomerDetails language={language} />} />
+                <Route path="/service-partner" element={<ServicePartner language={language} allServicePartner={allServicePartner}/>} />
+                <Route path="/service-partner/:id" element={<ServicePartnerDetails language={language} />} />
                 <Route path="/profile/*" element={<Profile user={user} userDetails={userDetails} language={language} setLanguage={setLanguage}/>} />
             </Route>
         </Routes>

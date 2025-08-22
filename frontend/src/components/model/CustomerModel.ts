@@ -12,5 +12,5 @@ export const DefaultCustomer: CustomerModel = {
     name: "Loading...",
     contactPerson: "Loading...",
     notes: "Loading...",
-    imageUrl: undefined
+    imageUrl: ""
 };

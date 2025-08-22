@@ -1,3 +1,4 @@
+import "./styles/SearchBar.css"
 
 type SearchBarProps = {
     searchQuery: string;

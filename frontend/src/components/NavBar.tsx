@@ -16,7 +16,7 @@ type NavbarProps = {
     setLanguage: React.Dispatch<React.SetStateAction<string>>
 }
 
-export default function Navbar(props: Readonly<NavbarProps>) {
+export default function NavBar(props: Readonly<NavbarProps>) {
 
     const navigate = useNavigate();
 
@@ -62,7 +62,7 @@ export default function Navbar(props: Readonly<NavbarProps>) {
                         }}
                     >
                         <img src={scannerLogo} alt="Scanner Logo" className="logo-image" />
-                        <h2 className="header-title">Scanner</h2>
+                        <h2 className="header-title">{translatedInfo["Scanner"][props.language]}</h2>
                     </div>
 
                     <div
@@ -72,7 +72,7 @@ export default function Navbar(props: Readonly<NavbarProps>) {
                         }}
                     >
                         <img src={customerLogo} alt="Customer Logo" className="logo-image" />
-                        <h2 className="header-title">Customers</h2>
+                        <h2 className="header-title">{translatedInfo["Customers"][props.language]}</h2>
                     </div>
 
                     <div
@@ -82,10 +82,10 @@ export default function Navbar(props: Readonly<NavbarProps>) {
                         }}
                     >
                         <img src={servicePartnerLogo} alt="Scanner Logo" className="logo-image" />
-                        <h2 className="header-title">Service Partner</h2>
+                        <h2 className="header-title">{translatedInfo["Service Partners"][props.language]}</h2>
                     </div>
 
-                    <button className="button-group-button" onClick={() => navigate("/profile")}>Profile</button>
+                    <button className="button-group-button" onClick={() => navigate("/profile")}>{translatedInfo["Profile"][props.language]}</button>
                     <button className="button-group-button" onClick={logoutFromAzure}>{translatedInfo["Logout"][props.language]}</button>
                 </>
             ) : (

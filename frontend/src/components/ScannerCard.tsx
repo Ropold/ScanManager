@@ -1,6 +1,21 @@
+import type {ScannerModel} from "./model/ScannerModel.ts";
+import {useNavigate} from "react-router-dom";
 
-export default function ScannerCard(){
+type ScannerCardProps = {
+    scanner: ScannerModel
+    language: string
+}
+
+export default function ScannerCard(props: Readonly<ScannerCardProps>) {
+    const navigate = useNavigate();
+
+    const handleCardClick = () => {
+        navigate(`/scanner/${props.scanner.id}`);
+    }
+
     return(
-        <h2>ScannerCard</h2>
+        <div className="scanner-card" onClick={handleCardClick}>
+            <h2>{props.scanner.deviceName}</h2>
+        </div>
     )
 }

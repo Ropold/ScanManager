@@ -19,3 +19,8 @@
 .margin-right-5{
     margin-right: 5px;
 }
+
+.button-grey {
+    background-color: #999;
+    cursor: default;
+}

@@ -24,22 +24,25 @@
     justify-content: center;
     text-align: center;
     cursor: pointer;
-    background-color: #66b3ff;
+    background-color: #23A96A;
     border-radius: 5px;
-    border: 1px solid #007bff;
+    border: 1px solid transparent;
     transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
 }
 
 .clickable-header:hover {
-    background-color: #007bff;
+    background-color: #075033;
+    border: 1px solid #007bff;
 }
 
-#clickable-header {
+#clickable-header-home {
     background-color: #66b3ff;
+    border: 1px solid transparent;
 }
 
-#clickable-header:hover {
+#clickable-header-home:hover {
     background-color: #007bff;
+    border: 1px solid transparent;
 }
 
 .header-title {
@@ -50,7 +53,7 @@
     text-align: center;
     background: none;
     border: none;
-    padding: 6px 12px;
+    padding: 7px 5px;
     cursor: pointer;
     text-transform: none;
     letter-spacing: normal;
@@ -63,4 +66,8 @@
     border-radius: 4px;
     transition: all 0.3s ease;
     cursor: pointer;
+}
+
+.logo-bechtle{
+    margin-left:5px;
 }

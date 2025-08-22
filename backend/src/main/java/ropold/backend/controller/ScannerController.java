@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ropold.backend.exception.notfoundexceptions.CustomerNotFoundException;
 import ropold.backend.exception.notfoundexceptions.ScannerNotFoundException;
 import ropold.backend.model.ScannerModel;
 import ropold.backend.service.ScannerService;
@@ -14,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/scanners")
+@RequestMapping("/api/scanner")
 @RequiredArgsConstructor
 public class ScannerController {
 

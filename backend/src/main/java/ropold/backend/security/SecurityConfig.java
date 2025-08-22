@@ -71,7 +71,7 @@ public class SecurityConfig {
             String microsoftId = azureUser.getAttribute("sub");
             String email = azureUser.getAttribute("email");
             String username = azureUser.getAttribute("name");
-            String avatarUrl = azureUser.getAttribute("picture");
+            //String avatarUrl = azureUser.getAttribute("picture");
 
             UserModel user = userRepository.findByMicrosoftId(microsoftId)
                     .orElseGet(() -> {
@@ -81,9 +81,9 @@ public class SecurityConfig {
                                 username != null ? username : email,
                                 email,
                                 "ROLE_USER",
-                                avatarUrl,
+                                null,
                                 LocalDateTime.now(),
-                                null
+                                LocalDateTime.now()
                         );
                         return userRepository.save(newUser);
                     });

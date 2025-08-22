@@ -1,6 +1,7 @@
 import * as React from "react";
 import {LanguagesImages} from "./utils/FlagImages.ts";
 import {translatedInfo} from "./utils/TranslatedInfo.ts";
+import "./styles/Profile.css"
 
 type ProfileProps = {
     user: string;
@@ -16,14 +17,18 @@ export default function Profile(props: Readonly<ProfileProps>){
 
     return (
         <>
-            <div
-                className="clickable-header"
-                onClick={() => setShowLanguagePopup(true)}
-            >
-                <h2 className="header-title">
-                    {translatedInfo["Language"][props.language] ?? props.language}
-                </h2>
-                <img src={LanguagesImages[props.language]} alt="Language Logo" className="logo-image" />
+            <h2>Profile</h2>
+            <div className="change-language-container">
+                <p className="margin-right-5">Change Language:</p>
+                <div
+                    className="clickable-header"
+                    onClick={() => setShowLanguagePopup(true)}
+                >
+                    <h2 className="header-title">
+                        {translatedInfo["Language"][props.language] ?? props.language}
+                    </h2>
+                    <img src={LanguagesImages[props.language]} alt="Language Logo" className="logo-image" />
+                </div>
             </div>
 
             {showLanguagePopup && (
@@ -66,29 +71,31 @@ export default function Profile(props: Readonly<ProfileProps>){
             )}
 
             <>
-                <h2>Profile</h2>
                 {props.userDetails ? (
                     <div>
-                        <p>ID: {props.userDetails.id}</p>
-                        <p>Microsoft ID: {props.userDetails.microsoftId}</p>
-                        <p>Username: {props.userDetails.username}</p>
-                        <p>Email: {props.userDetails.email}</p>
-                        <p>Role: {props.userDetails.role}</p>
+                        <p><strong>SQL-ID:</strong> {props.userDetails.id}</p>
+                        <p><strong>Microsoft ID:</strong> {props.userDetails.microsoftId}</p>
+                        <p><strong>Username:</strong> {props.userDetails.username}</p>
+                        <p><strong>Email:</strong> {props.userDetails.email}</p>
+                        <p><strong>Role:</strong> {props.userDetails.role}</p>
                         {props.userDetails.avatarUrl && (
-                            <img
-                                className="profile-container-img"
-                                src={props.userDetails.avatarUrl}
-                                alt={props.userDetails.username}
-                            />
+                            <div>
+                                <p><strong>Avatar:</strong></p>
+                                <img
+                                    className="profile-container-img"
+                                    src={props.userDetails.avatarUrl}
+                                    alt={props.userDetails.username}
+                                />
+                            </div>
                         )}
                         <p>
-                            Created At:{" "}
+                            <strong>Created At:</strong>{" "}
                             {props.userDetails.createdAt
                                 ? new Date(props.userDetails.createdAt).toLocaleString()
                                 : "—"}
                         </p>
                         <p>
-                            Last Login At:{" "}
+                            <strong>Last Login At:</strong>{" "}
                             {props.userDetails.lastLoginAt
                                 ? new Date(props.userDetails.lastLoginAt).toLocaleString()
                                 : "—"}

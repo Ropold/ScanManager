@@ -2,7 +2,6 @@ import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import "./styles/Navbar.css"
 import * as React from "react";
-import {LanguagesImages} from "./utils/FlagImages.ts";
 import {translatedInfo} from "./utils/TranslatedInfo.ts";
 import "./styles/Popup.css"
 import bechtleLogoSmall from "../assets/logo-bechtle-small.svg"
@@ -18,7 +17,6 @@ type NavbarProps = {
 }
 
 export default function Navbar(props: Readonly<NavbarProps>) {
-    const [showLanguagePopup, setShowLanguagePopup] = React.useState(false);
 
     const navigate = useNavigate();
 
@@ -53,54 +51,6 @@ export default function Navbar(props: Readonly<NavbarProps>) {
                 <img src={bechtleLogoSmall} alt="Bechtle Small Logo" className="logo-image logo-bechtle" />
                 <h2 className="header-title">Home</h2>
             </div>
-            <div
-                className="clickable-header"
-                onClick={() => setShowLanguagePopup(true)}
-            >
-                <h2 className="header-title">
-                    {translatedInfo["Language"][props.language] ?? props.language}
-                </h2>
-                <img src={LanguagesImages[props.language]} alt="Language Logo" className="logo-image" />
-            </div>
-
-            {showLanguagePopup && (
-                <div
-                    className="popup-overlay"
-                    onClick={() => setShowLanguagePopup(false)}
-                >
-                    <div
-                        className="popup-content"
-                        onClick={(e) => e.stopPropagation()}
-                    >
-                        <h2>Select Language</h2>
-                        <div className="popup-language-options">
-                            {["de","en","pl","es","fr","it","cz","pt","hu","nl","gr","ru"].map((lang) => (
-                                <button
-                                    key={lang}
-                                    className="language-option-button"
-                                    onClick={() => {
-                                        props.setLanguage(lang);
-                                        setShowLanguagePopup(false);
-                                    }}
-                                >
-                                    <img
-                                        src={LanguagesImages[lang]}
-                                        alt={lang}
-                                        className="language-flag"
-                                    />
-                                    {translatedInfo["Language"][lang]}
-                                </button>
-                            ))}
-                        </div>
-                        <button
-                            className="popup-cancel margin-top-20"
-                            onClick={() => setShowLanguagePopup(false)}
-                        >
-                            Cancel
-                        </button>
-                    </div>
-                </div>
-            )}
 
 
             {props.user !== "anonymousUser" ? (

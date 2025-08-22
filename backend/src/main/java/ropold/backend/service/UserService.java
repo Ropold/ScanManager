@@ -7,6 +7,7 @@ import ropold.backend.exception.notfoundexceptions.UserNotFoundException;
 import ropold.backend.model.UserModel;
 import ropold.backend.repository.UserRepository;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
@@ -27,17 +28,23 @@ public class UserService {
 
     public UserModel createOrUpdateFromAzure(OAuth2User azureUser) {
         String microsoftId = azureUser.getAttribute("sub");
+
         return userRepository.findByMicrosoftId(microsoftId)
+                .map(existingUser -> {
+                    existingUser.setLastLoginAt(LocalDateTime.now());
+                    return userRepository.save(existingUser);
+                })
                 .orElseGet(() -> {
+
                     UserModel newUser = new UserModel(
                             UUID.randomUUID(),
                             microsoftId,
                             azureUser.getAttribute("name"),
                             azureUser.getAttribute("email"),
                             "ROLE_USER",
-                            azureUser.getAttribute("picture"),
-                            java.time.LocalDateTime.now(),
-                            null
+                            null, // avatarUrl
+                            LocalDateTime.now(),
+                            LocalDateTime.now()
                     );
                     return userRepository.save(newUser);
                 });

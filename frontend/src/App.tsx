@@ -50,7 +50,7 @@ export default function App() {
                 <Route path="/scanner/*" element={<Scanner />} />
                 <Route path="/customer/*" element={<Customer />} />
                 <Route path="/service-partner/*" element={<ServicePartner />} />
-                <Route path="/profile/*" element={<Profile user={user} userDetails={userDetails}/>} />
+                <Route path="/profile/*" element={<Profile user={user} userDetails={userDetails} language={language} setLanguage={setLanguage}/>} />
             </Route>
         </Routes>
         <Footer language={language}/>

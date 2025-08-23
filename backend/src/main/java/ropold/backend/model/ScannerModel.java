@@ -37,6 +37,10 @@ public class ScannerModel {
     private String invoiceNumber;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "device_type", length = 50)
+    private DeviceType deviceType;
+
+    @Enumerated(EnumType.STRING)
     @Column(name = "contract_type", length = 50)
     private ContractType contractType;
 

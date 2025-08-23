@@ -42,9 +42,10 @@ public class UserService {
                             azureUser.getAttribute("name"),
                             azureUser.getAttribute("email"),
                             "ROLE_USER",
-                            null,
+                            "de",
                             LocalDateTime.now(),
-                            LocalDateTime.now()
+                            LocalDateTime.now(),
+                            null
                     );
                     return userRepository.save(newUser);
                 });

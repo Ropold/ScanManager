@@ -10,6 +10,8 @@ import huPic from "../../assets/flags/hu.svg";
 import nlPic from "../../assets/flags/nl.svg";
 import grPic from "../../assets/flags/gr.svg";
 import ruPic from "../../assets/flags/ru.svg";
+import trPic from "../../assets/flags/tr.svg";
+import irPic from "../../assets/flags/ir.svg";
 
 export const flagImages: Record<string, string> = {
     de: dePic,
@@ -24,6 +26,8 @@ export const flagImages: Record<string, string> = {
     nl: nlPic,
     gr: grPic,
     ru: ruPic,
+    tr: trPic,
+    ir: irPic
 }
 
 
@@ -40,6 +44,8 @@ export const LanguagesImages: Record<string, string> = {
     nl: nlPic,
     gr: grPic,
     ru: ruPic,
+    tr: trPic,
+    ir: irPic
 };
 
 export const countryNameToIsoCode: Record<string, string> = {
@@ -55,5 +61,7 @@ export const countryNameToIsoCode: Record<string, string> = {
     "Netherlands": "nl",
     "Greece": "gr",
     "Russia": "ru"
+    ,"Turkey": "tr"
+    ,"Iran": "ir"
 }
 

@@ -31,6 +31,7 @@ export default function ScannerDetails(props: Readonly<ScannerDetailsProps>) {
                     <p><strong>{translatedInfo["Serial Number"][props.language]}:</strong> {scanner.serialNumber || "—"}</p>
                     <p><strong>{translatedInfo["Contract Number"][props.language]}:</strong> {scanner.contractNumber || "—"}</p>
                     <p><strong>{translatedInfo["Invoice Number"][props.language]}:</strong> {scanner.invoiceNumber || "—"}</p>
+                    <p><strong>{translatedInfo["Device Type"][props.language]}:</strong> {scanner.deviceType}</p>
                     <p><strong>{translatedInfo["Contract Type"][props.language]}:</strong> {scanner.contractType}</p>
                     <p><strong>{translatedInfo["Status"][props.language]}:</strong> {scanner.status}</p>
                     <p><strong>{translatedInfo["No Maintenance"][props.language]}:</strong> {scanner.noMaintenance ? translatedInfo["Yes"][props.language] : translatedInfo["No"][props.language]}</p>

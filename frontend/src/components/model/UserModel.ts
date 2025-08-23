@@ -5,9 +5,10 @@ export type UserModel = {
     username: string;
     email: string;
     role: string;
-    avatarUrl?: string;
+    preferredLanguage: string;
     createdAt: string;
     lastLoginAt?: string;
+    avatarUrl?: string;
 }
 
 export const DefaultUser: UserModel = {
@@ -15,8 +16,9 @@ export const DefaultUser: UserModel = {
     microsoftId: "0",
     username: "Loading...",
     email: "Loading...",
-    role: "guest",
+    role: "USER",
+    preferredLanguage: "de",
     avatarUrl: undefined,
-    createdAt: "Loading...",
-    lastLoginAt: undefined
+    lastLoginAt: undefined,
+    createdAt: "Loading..."
 };

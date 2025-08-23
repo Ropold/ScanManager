@@ -7,6 +7,7 @@ export type ScannerModel = {
     serialNumber?: string;
     contractNumber?: string;
     invoiceNumber?: string;
+    deviceType: DeviceType;
     contractType: ContractType;
     status: ScannerStatus;
     noMaintenance?: boolean;
@@ -28,6 +29,10 @@ export type ContractType =
     "AUTORENEWAL" |
     "FIXED_END"
 
+export type DeviceType =
+    "SCANNER" |
+    "FLATBED_UNIT"
+
 export const DefaultScanner: ScannerModel = {
     id: "0",
     customerId: "0",
@@ -36,6 +41,7 @@ export const DefaultScanner: ScannerModel = {
     serialNumber: "",
     contractNumber: "",
     invoiceNumber: "",
+    deviceType: "SCANNER",
     contractType: "AUTORENEWAL",
     status: "ACTIVE",
     noMaintenance: false,

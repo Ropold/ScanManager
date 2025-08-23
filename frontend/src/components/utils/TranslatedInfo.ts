@@ -12,7 +12,9 @@ export const translatedInfo: Record<string, Record<string, string>> = {
          "hu": "Magyar",
          "nl": "Nederlands",
          "gr": "Ελληνικά",
-         "ru": "Русский"
+         "ru": "Русский",
+         "tr": "Türkçe",
+         "ir": "فارسی"
     },
     "Welcome": {
        "de": "Willkommen",
@@ -26,7 +28,9 @@ export const translatedInfo: Record<string, Record<string, string>> = {
        "hu": "Üdvözöljük",
        "nl": "Velkommen",
        "gr": "Καλώς ήρθατε",
-       "ru": "Добро пожаловать"
+       "ru": "Добро пожаловать",
+       "tr": "Hoşgeldiniz",
+       "ir": "خوش آمدید"
     },
     "Footer-Info": {
         "de": "Scan Manager 2025 von R.Stolz",
@@ -40,7 +44,9 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "hu": "Scan Manager 2025 R.Stolz által",
         "nl": "Scan Manager 2025 door R.Stolz",
         "gr": "Scan Manager 2025 από R.Stolz",
-        "ru": "Scan Manager 2025 от R.Stolz"
+        "ru": "Scan Manager 2025 от R.Stolz",
+        "tr": "R.Stolz tarafından Scan Manager 2025",
+        "ir": "Scan Manager 2025 توسط R.Stolz"
     },
     "Login": {
         "de": "Mit Azure anmelden",
@@ -54,7 +60,9 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "hu": "Bejelentkezés Azure-val",
         "nl": "Inloggen met Azure",
         "gr": "Σύνδεση με το Azure",
-        "ru": "Войти через Azure"
+        "ru": "Войти через Azure",
+        "tr": "Azure ile giriş yap",
+        "ir": "ورود با Azure"
     },
     "Logout": {
         "de": "Abmelden",
@@ -68,7 +76,9 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "hu": "Kijelentkezés",
         "nl": "Uitloggen",
         "gr": "Αποσύνδεση",
-        "ru": "Выйти"
+        "ru": "Выйти",
+        "tr": "Çıkış yap",
+        "ir": "خروج"
     },
     "Profile": {
         "de": "Profile",
@@ -82,7 +92,9 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "hu": "Profil",
         "nl": "Profiel",
         "gr": "Προφίλ",
-        "ru": "Профиль"
+        "ru": "Профиль",
+        "tr": "Profil",
+        "ir": "پروفایل"
     },
     "Customers": {
         "de": "Kunden",
@@ -96,7 +108,9 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "hu": "Ügyfelek",
         "nl": "Klanten",
         "gr": "Πελάτες",
-        "ru": "Клиенты"
+        "ru": "Клиенты",
+        "tr": "Müşteriler",
+        "ir": "مشتریان"
     },
     "Service Partners": {
         "de": "Service Partner",
@@ -110,7 +124,9 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "hu": "Szolgáltatói partnerek",
         "nl": "Servicepartners",
         "gr": "Συνεργάτες υπηρεσιών",
-        "ru": "Сервисные партнеры"
+        "ru": "Сервисные партнеры",
+        "tr": "Hizmet Ortakları",
+        "ir": "شرکای خدماتی"
     },
     "Scanner": {
         "de": "Scanner",
@@ -124,7 +140,9 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "hu": "Szkenner",
         "nl": "Scanner",
         "gr": "Σαρωτής",
-        "ru": "Сканер"
+        "ru": "Сканер",
+        "tr": "Tarayıcı",
+        "ir": "اسکنر"
     },
     "Name": {
         "de": "Name",
@@ -138,7 +156,9 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "hu": "Név",
         "nl": "Naam",
         "gr": "Όνομα",
-        "ru": "Имя"
+        "ru": "Имя",
+        "tr": "İsim",
+        "ir": "نام"
     },
     "Contact Person":{
         "de": "Ansprechpartner",
@@ -152,7 +172,9 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "hu": "Kapcsolattartó személy",
         "nl": "Contactpersoon",
         "gr": "Υπεύθυνος επικοινωνίας",
-        "ru": "Контактное лицо"
+        "ru": "Контактное лицо",
+        "tr": "İletişim Kişisi",
+        "ir": "شخص تماس"
     },
     "Notes": {
         "de": "Notizen",
@@ -166,7 +188,9 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "hu": "Jegyzetek",
         "nl": "Notities",
         "gr": "Σημειώσεις",
-        "ru": "Заметки"
+        "ru": "Заметки",
+        "tr": "Notlar",
+        "ir": "یادداشت‌ها"
     },
     "Image": {
         "de": "Bild",
@@ -180,7 +204,9 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "hu": "Kép",
         "nl": "Afbeelding",
         "gr": "Εικόνα",
-        "ru": "Изображение"
+        "ru": "Изображение",
+        "tr": "Görüntü",
+        "ir": "تصویر"
     },
     "SQL-ID": {
         "de": "SQL-ID",
@@ -194,7 +220,9 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "hu": "SQL-azonosító",
         "nl": "SQL-ID",
         "gr": "SQL-ταυτότητα",
-        "ru": "SQL-ИД"
+        "ru": "SQL-ИД",
+        "tr": "SQL-ID",
+        "ir": "SQL-ID"
     },
     "Loading": {
         "de": "Laden",
@@ -208,7 +236,9 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "hu": "Betöltés",
         "nl": "Laden",
         "gr": "Φόρτωση",
-        "ru": "Загрузка"
+        "ru": "Загрузка",
+        "tr": "Yükleniyor",
+        "ir": "در حال بارگذاری"
     },
     "Device Name": {
         "de": "Gerätename",
@@ -222,7 +252,9 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "hu": "Eszköz neve",
         "nl": "Apparaatnaam",
         "gr": "Όνομα συσκευής",
-        "ru": "Имя устройства"
+        "ru": "Имя устройства",
+        "tr": "Cihaz Adı",
+        "ir": "نام دستگاه"
     },
     "Serial Number": {
         "de": "Seriennummer",
@@ -236,7 +268,9 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "hu": "Sorozatszám",
         "nl": "Serienummer",
         "gr": "Αριθμός σειράς",
-        "ru": "Серийный номер"
+        "ru": "Серийный номер",
+        "tr": "Seri Numarası",
+        "ir": "شماره سریال"
     },
     "Contract Number":{
         "de": "Vertragsnummer",
@@ -250,7 +284,9 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "hu": "Szerződésszám",
         "nl": "Contractnummer",
         "gr": "Αριθμός σύμβασης",
-        "ru": "Номер контракта"
+        "ru": "Номер контракта",
+        "tr": "Sözleşme Numarası",
+        "ir": "شماره قرارداد"
     },
     "Invoice Number": {
         "de": "Rechnungsnummer",
@@ -264,7 +300,9 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "hu": "Számlaszám",
         "nl": "Factuurnummer",
         "gr": "Αριθμός τιμολογίου",
-        "ru": "Номер счета"
+        "ru": "Номер счета",
+        "tr": "Fatura Numarası",
+        "ir": "شماره فاکتور"
     },
     "Contract Type":{
         "de": "Vertragsart",
@@ -278,7 +316,9 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "hu": "Szerződés típusa",
         "nl": "Contracttype",
         "gr": "Τύπος σύμβασης",
-        "ru": "Тип контракта"
+        "ru": "Тип контракта",
+        "tr": "Sözleşme Türü",
+        "ir": "نوع قرارداد"
     },
     "Status": {
         "de": "Status",
@@ -292,7 +332,9 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "hu": "Állapot",
         "nl": "Status",
         "gr": "Κατάσταση",
-        "ru": "Статус"
+        "ru": "Статус",
+        "tr": "Durum",
+        "ir": "وضعیت"
     },
     "No Maintenance":{
         "de": "Keine Wartung",
@@ -306,7 +348,9 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "hu": "Nincs karbantartás",
         "nl": "Geen onderhoud",
         "gr": "Χωρίς συντήρηση",
-        "ru": "Нет обслуживания"
+        "ru": "Нет обслуживания",
+        "tr": "Bakım Yok",
+        "ir": "بدون نگهداری"
     },
     "Start Date": {
         "de": "Startdatum",
@@ -320,7 +364,9 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "hu": "Kezdő dátum",
         "nl": "Startdatum",
         "gr": "Ημερομηνία έναρξης",
-        "ru": "Дата начала"
+        "ru": "Дата начала",
+        "tr": "Başlangıç Tarihi",
+        "ir": "تاریخ شروع"
     },
     "End Date":{
         "de": "Enddatum",
@@ -334,7 +380,9 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "hu": "Befejező dátum",
         "nl": "Einddatum",
         "gr": "Ημερομηνία λήξης",
-        "ru": "Дата окончания"
+        "ru": "Дата окончания",
+        "tr": "Bitiş Tarihi",
+        "ir": "تاریخ پایان"
     },
     "Purchase Price":{
         "de": "Kaufpreis",
@@ -348,7 +396,9 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "hu": "Vételár",
         "nl": "Aankoopprijs",
         "gr": "Τιμή αγοράς",
-        "ru": "Цена покупки"
+        "ru": "Цена покупки",
+        "tr": "Satın Alma Fiyatı",
+        "ir": "قیمت خرید"
     },
     "Sale Price":{
         "de": "Verkaufspreis",
@@ -362,7 +412,9 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "hu": "Eladási ár",
         "nl": "Verkoopprijs",
         "gr": "Τιμή πώλησης",
-        "ru": "Цена продажи"
+        "ru": "Цена продажи",
+        "tr": "Satış Fiyatı",
+        "ir": "قیمت فروش"
     },
     "Depreciation": {
         "de": "Abschreibung",
@@ -376,7 +428,9 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "hu": "Értékcsökkenés",
         "nl": "Afschrijving",
         "gr": "Αποσβέσεις",
-        "ru": "Амортизация"
+        "ru": "Амортизация",
+        "tr": "Amortisman",
+        "ir": "استهلاک"
     },
     "Customer ID":{
         "de": "Kunden-ID",
@@ -390,7 +444,9 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "hu": "Ügyfél azonosító",
         "nl": "Klant-ID",
         "gr": "Ταυτότητα πελάτη",
-        "ru": "Идентификатор клиента"
+        "ru": "Идентификатор клиента",
+        "tr": "Müşteri Kimliği",
+        "ir": "شناسه مشتری"
     },
     "Service Partner ID": {
         "de": "Service Partner ID",
@@ -404,7 +460,9 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "hu": "Szolgáltatói partner azonosító",
         "nl": "Servicepartner-ID",
         "gr": "Ταυτότητα συνεργάτη υπηρεσιών",
-        "ru": "Идентификатор сервисного партнера"
+        "ru": "Идентификатор сервисного партнера",
+        "tr": "Hizmet Ortağı Kimliği",
+        "ir": "شناسه شریک خدمات"
     },
     "Maintenance Content":{
         "de": "Wartungsinhalt",
@@ -418,7 +476,9 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "hu": "Karbantartási tartalom",
         "nl": "Onderhoudsinhoud",
         "gr": "Περιεχόμενο συντήρησης",
-        "ru": "Содержание обслуживания"
+        "ru": "Содержание обслуживания",
+        "tr": "Bakım İçeriği",
+        "ir": "محتوای نگهداری"
     },
     "Yes": {
         "de": "Ja",
@@ -432,7 +492,9 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "hu": "Igen",
         "nl": "Ja",
         "gr": "Ναι",
-        "ru": "Да"
+        "ru": "Да",
+        "tr": "Evet",
+        "ir": "بله"
     },
     "No": {
         "de": "Nein",
@@ -446,7 +508,25 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "hu": "Nem",
         "nl": "Nee",
         "gr": "Όχι",
-        "ru": "Нет"
+        "ru": "Нет",
+        "tr": "Hayır",
+        "ir": "خیر"
     },
+    "Device Type": {
+        "de": "Gerätetyp",
+        "en": "Device Type",
+        "pl": "Typ urządzenia",
+        "es": "Tipo de dispositivo",
+        "fr": "Type d'appareil",
+        "it": "Tipo di dispositivo",
+        "cz": "Typ zařízení",
+        "pt": "Tipo de dispositivo",
+        "hu": "Eszköz típusa",
+        "nl": "Apparaattype",
+        "gr": "Τύπος συσκευής",
+        "ru": "Тип устройства",
+        "tr": "Cihaz Türü",
+        "ir": "نوع دستگاه"
+    }
 
 }

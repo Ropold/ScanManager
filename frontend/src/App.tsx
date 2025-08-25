@@ -68,6 +68,10 @@ export default function App() {
         }
     }, [user]);
 
+    useEffect(() => {
+        setLanguage(userDetails?.preferredLanguage ?? "de");
+    }, [userDetails]);
+
   return (
     <>
         <NavBar user={user} getUser={getUser} language={language} setLanguage={setLanguage}/>

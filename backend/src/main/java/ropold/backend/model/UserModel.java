@@ -32,12 +32,15 @@ public class UserModel {
     @Column(name = "role", nullable = false, length = 50)
     private String role;
 
-    @Column(name = "avatar_url", length = 500)
-    private String avatarUrl;
+    @Column(name = "preferred_language", length = 2)
+    private String preferredLanguage;
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "last_login_at")
     private LocalDateTime lastLoginAt;
+
+    @Column(name = "avatar_url", length = 500)
+    private String avatarUrl;
 }

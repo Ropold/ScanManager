@@ -2,10 +2,11 @@ import * as React from "react";
 import {LanguagesImages} from "./utils/FlagImages.ts";
 import {translatedInfo} from "./utils/TranslatedInfo.ts";
 import "./styles/Profile.css"
+import type {UserModel} from "./model/UserModel.ts";
 
 type ProfileProps = {
     user: string;
-    userDetails: UserDetails | null;
+    userDetails: UserModel | null;
     language: string;
     setLanguage: React.Dispatch<React.SetStateAction<string>>
 }
@@ -42,7 +43,7 @@ export default function Profile(props: Readonly<ProfileProps>){
                     >
                         <h2>Select Language</h2>
                         <div className="popup-language-options">
-                            {["de","en","pl","es","fr","it","cz","pt","hu","nl","gr","ru"].map((lang) => (
+                            {["de","en","pl","es","fr","it","cz","pt","hu","nl","gr","ru","tr","ir"].map((lang) => (
                                 <button
                                     key={lang}
                                     className="language-option-button"

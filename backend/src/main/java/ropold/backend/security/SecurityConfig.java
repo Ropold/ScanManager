@@ -80,10 +80,11 @@ public class SecurityConfig {
                                 microsoftId,
                                 username != null ? username : email,
                                 email,
-                                "ROLE_USER",
-                                null,
+                                "USER",
+                                "de",
                                 LocalDateTime.now(),
-                                LocalDateTime.now()
+                                LocalDateTime.now(),
+                                null
                         );
                         return userRepository.save(newUser);
                     });

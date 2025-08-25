@@ -15,6 +15,7 @@ public class CustomerService {
 
     private final CloudinaryService cloudinaryService;
     private final CustomerRepository customerRepository;
+    private final ImageUploadUtil imageUploadUtil;
 
     public List<CustomerModel> getAllCustomers() {
         return customerRepository.findAll();
@@ -32,13 +33,11 @@ public class CustomerService {
     public CustomerModel updateCustomer(CustomerModel updatedCustomer) {
         CustomerModel existingCustomer = getCustomerById(updatedCustomer.getId());
 
-        boolean oldHadImage = existingCustomer.getImageUrl() != null && !existingCustomer.getImageUrl().isBlank();
-        boolean nowNoImage = updatedCustomer.getImageUrl() == null || updatedCustomer.getImageUrl().isBlank();
-        boolean imageWasReplaced = oldHadImage && !existingCustomer.getImageUrl().equals(updatedCustomer.getImageUrl());
-
-        if (oldHadImage && (nowNoImage || imageWasReplaced)) {
-            cloudinaryService.deleteImage(existingCustomer.getImageUrl());
-        }
+        // Cleanup mit ImageUploadUtil
+        imageUploadUtil.cleanupOldImageIfNeeded(
+                existingCustomer.getImageUrl(),
+                updatedCustomer.getImageUrl()
+        );
 
         return customerRepository.save(updatedCustomer);
     }

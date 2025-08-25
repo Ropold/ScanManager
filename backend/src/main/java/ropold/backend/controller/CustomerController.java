@@ -11,6 +11,7 @@ import ropold.backend.exception.notfoundexceptions.CustomerNotFoundException;
 import ropold.backend.model.CustomerModel;
 import ropold.backend.service.CloudinaryService;
 import ropold.backend.service.CustomerService;
+import ropold.backend.service.ImageUploadUtil;
 
 import java.io.IOException;
 import java.util.List;
@@ -23,6 +24,7 @@ public class CustomerController {
 
     private final CustomerService customerService;
     private final CloudinaryService cloudinaryService;
+    private final ImageUploadUtil imageUploadUtil;
 
     @GetMapping
     public List<CustomerModel> getAllCustomers() {
@@ -77,14 +79,7 @@ public class CustomerController {
         }
 
         CustomerModel existingCustomer = customerService.getCustomerById(id);
-        String newImageUrl;
-        if (image != null && !image.isEmpty()) {
-            newImageUrl = cloudinaryService.uploadImage(image);
-        } else if (customerModel.getImageUrl() == null || customerModel.getImageUrl().isBlank()) {
-            newImageUrl = null;
-        } else {
-            newImageUrl = existingCustomer.getImageUrl();
-        }
+        String newImageUrl = imageUploadUtil.determineImageUrl(image, customerModel.getImageUrl(), existingCustomer.getImageUrl());
 
         CustomerModel updatedCustomer = new CustomerModel(
                 existingCustomer.getId(),

@@ -3,6 +3,7 @@ import {LanguagesImages} from "./utils/FlagImages.ts";
 import {translatedInfo} from "./utils/TranslatedInfo.ts";
 import "./styles/Profile.css"
 import type {UserModel} from "./model/UserModel.ts";
+import axios from "axios";
 
 type ProfileProps = {
     user: string;
@@ -15,6 +16,16 @@ type ProfileProps = {
 export default function Profile(props: Readonly<ProfileProps>){
 
     const [showLanguagePopup, setShowLanguagePopup] = React.useState(false);
+
+    function setPreferredLanguage(languageIso: string) {
+        axios.post(`/api/users/me/language/${languageIso}`)
+            .then(() => {
+                console.log("Language updated successfully");
+            })
+            .catch((error) => {
+                console.error("Error updating language:", error);
+            });
+    }
 
     return (
         <>
@@ -43,21 +54,22 @@ export default function Profile(props: Readonly<ProfileProps>){
                     >
                         <h2>Select Language</h2>
                         <div className="popup-language-options">
-                            {["de","en","pl","es","fr","it","cz","pt","hu","nl","gr","ru","tr","ir"].map((lang) => (
+                            {["de","en","pl","es","fr","it","cz","pt","hu","nl","gr","ru","tr","ir"].map((language) => (
                                 <button
-                                    key={lang}
+                                    key={language}
                                     className="language-option-button"
                                     onClick={() => {
-                                        props.setLanguage(lang);
+                                        props.setLanguage(language);
+                                        setPreferredLanguage(language);
                                         setShowLanguagePopup(false);
                                     }}
                                 >
                                     <img
-                                        src={LanguagesImages[lang]}
-                                        alt={lang}
+                                        src={LanguagesImages[language]}
+                                        alt={language}
                                         className="language-flag"
                                     />
-                                    {translatedInfo["Language"][lang]}
+                                    {translatedInfo["Language"][language]}
                                 </button>
                             ))}
                         </div>

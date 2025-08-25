@@ -50,6 +50,12 @@ public class UserService {
                     return userRepository.save(newUser);
                 });
     }
+
+    public void setPreferredLanguage(String microsoftId, String languageIso) {
+        UserModel user = getUserByMicrosoftId(microsoftId);
+        user.setPreferredLanguage(languageIso);
+        userRepository.save(user);
+    }
 }
 
 

@@ -129,5 +129,4 @@ public class ScannerController {
         scannerService.deleteScanner(id);
     }
 
-
 }

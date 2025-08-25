@@ -15,6 +15,7 @@ public class CustomerService {
 
     private final CloudinaryService cloudinaryService;
     private final CustomerRepository customerRepository;
+    private final ImageUploadUtil imageUploadUtil;
 
     public List<CustomerModel> getAllCustomers() {
         return customerRepository.findAll();
@@ -24,4 +25,31 @@ public class CustomerService {
         return customerRepository.findById(id)
                 .orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
     }
+
+    public CustomerModel addCustomer(CustomerModel customerModel) {
+        return customerRepository.save(customerModel);
+    }
+
+    public CustomerModel updateCustomer(CustomerModel updatedCustomer) {
+        CustomerModel existingCustomer = getCustomerById(updatedCustomer.getId());
+
+        // Cleanup mit ImageUploadUtil
+        imageUploadUtil.cleanupOldImageIfNeeded(
+                existingCustomer.getImageUrl(),
+                updatedCustomer.getImageUrl()
+        );
+
+        return customerRepository.save(updatedCustomer);
+    }
+
+    public void deleteCustomer(UUID id) {
+        CustomerModel customerModel = customerRepository.findById(id)
+                .orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
+
+        if (customerModel.getImageUrl() != null) {
+            cloudinaryService.deleteImage(customerModel.getImageUrl());
+        }
+        customerRepository.deleteById(id);
+    }
+
 }

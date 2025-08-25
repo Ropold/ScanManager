@@ -15,6 +15,7 @@ public class ServicePartnerService {
 
     private final CloudinaryService cloudinaryService;
     private final ServicePartnerRepository servicePartnerRepository;
+    private final ImageUploadUtil imageUploadUtil;
 
     public List<ServicePartnerModel> getAllServicePartners() {
         return servicePartnerRepository.findAll();
@@ -25,4 +26,29 @@ public class ServicePartnerService {
                 .orElseThrow(() -> new ServicePartnerNotFoundException("Service Partner not found with id: " + id));
     }
 
+    public ServicePartnerModel addServicePartner(ServicePartnerModel servicePartnerModel) {
+        return servicePartnerRepository.save(servicePartnerModel);
+    }
+
+    public ServicePartnerModel updateServicePartner(ServicePartnerModel updatedServicePartner) {
+        ServicePartnerModel servicePartnerModel = getServicePartnerById(updatedServicePartner.getId());
+
+        // Cleanup mit ImageUploadUtil
+        imageUploadUtil.cleanupOldImageIfNeeded(
+                servicePartnerModel.getImageUrl(),
+                updatedServicePartner.getImageUrl()
+        );
+
+        return servicePartnerRepository.save(updatedServicePartner);
+    }
+
+    public void deleteServicePartner(UUID id) {
+        ServicePartnerModel servicePartnerModel = servicePartnerRepository.findById(id)
+                .orElseThrow(() -> new ServicePartnerNotFoundException("Service Partner not found with id: " + id));
+
+        if (servicePartnerModel.getImageUrl() != null) {
+            cloudinaryService.deleteImage(servicePartnerModel.getImageUrl());
+        }
+        servicePartnerRepository.deleteById(id);
+    }
 }

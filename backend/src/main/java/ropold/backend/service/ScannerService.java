@@ -15,6 +15,7 @@ public class ScannerService {
 
     private final CloudinaryService cloudinaryService;
     private final ScannerRepository scannerRepository;
+    private final ImageUploadUtil imageUploadUtil;
 
     public List<ScannerModel> getAllScanners() {
         return scannerRepository.findAll();
@@ -24,5 +25,32 @@ public class ScannerService {
         return scannerRepository.findById(id)
                 .orElseThrow(() -> new ScannerNotFoundException("Scanner not found with id: " + id));
 
+    }
+
+    public ScannerModel addScanner(ScannerModel scannerModel) {
+        return scannerRepository.save(scannerModel);
+    }
+
+    public ScannerModel updateScanner(ScannerModel updatedScanner) {
+        ScannerModel existingScanner = getScannerById(updatedScanner.getId());
+
+        // Cleanup mit ImageUploadUtil
+        imageUploadUtil.cleanupOldImageIfNeeded(
+                existingScanner.getImageUrl(),
+                updatedScanner.getImageUrl()
+        );
+
+        return scannerRepository.save(updatedScanner);
+    }
+
+    public void deleteScanner(UUID id) {
+        ScannerModel scannerModel = scannerRepository.findById(id)
+                .orElseThrow(() -> new ScannerNotFoundException("Scanner not found with id: " + id));
+
+        if (scannerModel.getImageUrl() != null) {
+            cloudinaryService.deleteImage(scannerModel.getImageUrl());
+        }
+
+        scannerRepository.deleteById(id);
     }
 }

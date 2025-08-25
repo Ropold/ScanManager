@@ -528,5 +528,4 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "tr": "Cihaz Türü",
         "ir": "نوع دستگاه"
     }
-
 }

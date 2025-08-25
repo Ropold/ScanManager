@@ -5,10 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import ropold.backend.exception.notfoundexceptions.CustomerNotFoundException;
-import ropold.backend.exception.notfoundexceptions.ScannerNotFoundException;
-import ropold.backend.exception.notfoundexceptions.ServicePartnerNotFoundException;
-import ropold.backend.exception.notfoundexceptions.UserNotFoundException;
+import ropold.backend.exception.notfoundexceptions.*;
 
 @Slf4j
 @RestControllerAdvice
@@ -31,6 +28,12 @@ public class GlobalExceptionHandler {
     public ErrorResponse handleNotFoundException(RuntimeException e) {
         log.error("NotFoundException: {}", e.getMessage(), e);
         return new ErrorResponse("NOT_FOUND", e.getMessage());
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public AccessDeniedError handleAccessDeniedException(AccessDeniedException e) {
+        return new AccessDeniedError(e.getMessage());
     }
 
 }

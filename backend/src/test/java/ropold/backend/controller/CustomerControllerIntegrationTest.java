@@ -16,6 +16,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ropold.backend.model.CustomerModel;
 import ropold.backend.repository.CustomerRepository;
 
@@ -127,6 +128,77 @@ class CustomerControllerIntegrationTest {
 
         List<CustomerModel> allCustomers = customerRepository.findAll();
         Assertions.assertEquals(1, allCustomers.size());
+    }
+
+    @Test
+    void testPostCustomer_shouldReturnForbidden_whenUnauthenticated() throws Exception {
+        customerRepository.deleteAll();
+
+        Uploader mockUploader = mock(Uploader.class);
+        when(mockUploader.upload(any(), anyMap())).thenReturn(Map.of("secure_url", "https://www.test.de/"));
+        when(cloudinary.uploader()).thenReturn(mockUploader);
+
+        customerRepository.deleteAll();
+
+        mockMvc.perform(multipart("/api/customers")
+                        .file(new MockMultipartFile("image", "image.jpg", "image/jpeg", "image".getBytes()))
+                        .file(new MockMultipartFile("customerModel", "", "application/json", """
+                {
+                  "name": "Max Mustermann3",
+                  "contactPerson": "Contact Person3",
+                  "notes": "Notes3"
+                }
+                """.getBytes())))
+                .andExpect(status().isInternalServerError());
+    }
+
+    @Test
+    @WithMockUser(username = "test-user", authorities = {"OIDC_USER"})
+    void testUpdateCustomerWithPut_shouldReturnOk() throws Exception {
+        OAuth2User mockOAuth2User = mock(OAuth2User.class);
+        when(mockOAuth2User.getName()).thenReturn("test-user");
+        when(mockOAuth2User.getAttribute("sub")).thenReturn("microsoft-id-123");
+
+        OAuth2AuthenticationToken authToken = new OAuth2AuthenticationToken(
+                mockOAuth2User,
+                List.of(new SimpleGrantedAuthority("OIDC_USER")),
+                "azure"  // registrationId wichtig!
+        );
+
+        SecurityContextHolder.getContext().setAuthentication(authToken);
+
+        Uploader mockUploader = mock(Uploader.class);
+        when(mockUploader.upload(any(), anyMap())).thenReturn(Map.of("secure_url", "https://example.com/updated-image.jpg"));
+        when(cloudinary.uploader()).thenReturn(mockUploader);
+
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/api/customers/00000000-0000-0000-0000-000000000001")
+                        .file(new MockMultipartFile("image", "image.jpg", "image/jpeg", "image".getBytes()))
+                        .file(new MockMultipartFile("customerModel", "", "application/json", """
+                        {
+                          "id": "00000000-0000-0000-0000-000000000001",
+                          "name": "Max Mustermann Updated",
+                          "contactPerson": "Contact Person1 Updated",
+                          "notes": "Notes1 Updated",
+                          "imageUrl": "https://example.com/updated-image.jpg"
+                        }
+                    """.getBytes()))
+                        .contentType("multipart/form-data")
+                        .with(request -> {
+                            request.setMethod("PUT");
+                            return request;
+                        }))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value("Max Mustermann Updated"))
+                .andExpect(jsonPath("$.contactPerson").value("Contact Person1 Updated"))
+                .andExpect(jsonPath("$.notes").value("Notes1 Updated"))
+                .andExpect(jsonPath("$.imageUrl").value("https://example.com/updated-image.jpg"));
+
+        CustomerModel updated = customerRepository.findById(java.util.UUID.fromString("00000000-0000-0000-0000-000000000001")).orElseThrow();
+        Assertions.assertEquals("Max Mustermann Updated", updated.getName());
+        Assertions.assertEquals("Contact Person1 Updated", updated.getContactPerson());
+        Assertions.assertEquals("Notes1 Updated", updated.getNotes());
+        Assertions.assertEquals("https://example.com/updated-image.jpg", updated.getImageUrl());
+
     }
 
 

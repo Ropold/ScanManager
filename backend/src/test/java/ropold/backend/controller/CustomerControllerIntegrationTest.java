@@ -9,10 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ropold.backend.model.CustomerModel;
 import ropold.backend.repository.CustomerRepository;
 
@@ -24,8 +27,10 @@ import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 
 
 @SpringBootTest
@@ -89,34 +94,35 @@ class CustomerControllerIntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "test-user", authorities = {"OIDC_USER"})
     void testPostCustomer_shouldReturnCreated() throws Exception {
-
         OAuth2User mockOAuth2User = mock(OAuth2User.class);
-        when(mockOAuth2User.getName()).thenReturn("user");
+        when(mockOAuth2User.getName()).thenReturn("test-user");
+        when(mockOAuth2User.getAttribute("sub")).thenReturn("microsoft-id-123");
 
-        org.springframework.security.core.context.SecurityContextHolder.getContext().setAuthentication(
-                new org.springframework.security.authentication.UsernamePasswordAuthenticationToken(
-                        mockOAuth2User, null, java.util.Collections.singleton(
-                        new org.springframework.security.core.authority.SimpleGrantedAuthority("ROLE_USER")
-                )
-                )
+        OAuth2AuthenticationToken authToken = new OAuth2AuthenticationToken(
+                mockOAuth2User,
+                List.of(new SimpleGrantedAuthority("OIDC_USER")),
+                "azure"  // registrationId wichtig!
         );
+
+        SecurityContextHolder.getContext().setAuthentication(authToken);
 
         Uploader mockUploader = mock(Uploader.class);
         when(mockUploader.upload(any(), anyMap())).thenReturn(Map.of("secure_url", "https://www.test.de/"));
         when(cloudinary.uploader()).thenReturn(mockUploader);
 
-        mockMvc.perform(MockMvcRequestBuilders.multipart("/api/customers")
+        customerRepository.deleteAll();
+
+        mockMvc.perform(multipart("/api/customers")
                         .file(new MockMultipartFile("image", "image.jpg", "image/jpeg", "image".getBytes()))
                         .file(new MockMultipartFile("customerModel", "", "application/json", """
-                                    {
-                                      "id": null,
-                                      "name": "Max Mustermann3",
-                                      "contact_person": "Contact Person3",
-                                      "notes": "Notes3",
-                                      "imageUrl": "https://example.com/customer3.jpg"
-                                    }
-                                """.getBytes())))
+                {
+                  "name": "Max Mustermann3",
+                  "contactPerson": "Contact Person3",
+                  "notes": "Notes3"
+                }
+                """.getBytes())))
                 .andExpect(status().isCreated());
 
         List<CustomerModel> allCustomers = customerRepository.findAll();

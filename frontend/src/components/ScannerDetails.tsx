@@ -15,7 +15,7 @@ export default function ScannerDetails(props: Readonly<ScannerDetailsProps>) {
     useEffect(() => {
         if(!id) return;
         axios
-            .get(`/api/scanner/${id}`)
+            .get(`/api/scanners/${id}`)
             .then((response) => setScanner(response.data))
             .catch((error) => console.error("Error fetching customer details", error));
     }, [id]);

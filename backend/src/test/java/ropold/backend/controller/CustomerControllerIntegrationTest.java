@@ -32,8 +32,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
-
 @SpringBootTest
 @AutoConfigureMockMvc
 class CustomerControllerIntegrationTest {
@@ -132,7 +130,6 @@ class CustomerControllerIntegrationTest {
 
     @Test
     void testPostCustomer_shouldReturnForbidden_whenUnauthenticated() throws Exception {
-        customerRepository.deleteAll();
 
         Uploader mockUploader = mock(Uploader.class);
         when(mockUploader.upload(any(), anyMap())).thenReturn(Map.of("secure_url", "https://www.test.de/"));
@@ -154,7 +151,7 @@ class CustomerControllerIntegrationTest {
 
     @Test
     @WithMockUser(username = "test-user", authorities = {"OIDC_USER"})
-    void testUpdateCustomerWithPut_shouldReturnOk() throws Exception {
+    void testUpdateCustomerWithPut() throws Exception {
         OAuth2User mockOAuth2User = mock(OAuth2User.class);
         when(mockOAuth2User.getName()).thenReturn("test-user");
         when(mockOAuth2User.getAttribute("sub")).thenReturn("microsoft-id-123");

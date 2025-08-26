@@ -1,4 +1,4 @@
 package ropold.backend.controller;
 
-public class UserControllerIntegrationTest {
+class UserControllerIntegrationTest {
 }

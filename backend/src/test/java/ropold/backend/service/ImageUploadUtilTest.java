@@ -1,4 +1,4 @@
 package ropold.backend.service;
 
-public class ImageUploadUtilTest {
+class ImageUploadUtilTest {
 }

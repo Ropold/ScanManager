@@ -201,5 +201,29 @@ class CustomerControllerIntegrationTest {
 
     }
 
+    @Test
+    @WithMockUser(username = "test-user", authorities = {"OIDC_USER"})
+    void testDeleteCustomer_shouldReturnNoContent() throws Exception {
+        OAuth2User mockOAuth2User = mock(OAuth2User.class);
+        when(mockOAuth2User.getName()).thenReturn("test-user");
+        when(mockOAuth2User.getAttribute("sub")).thenReturn("microsoft-id-123");
+
+        OAuth2AuthenticationToken authToken = new OAuth2AuthenticationToken(
+                mockOAuth2User,
+                List.of(new SimpleGrantedAuthority("OIDC_USER")),
+                "azure"  // registrationId wichtig!
+        );
+
+        SecurityContextHolder.getContext().setAuthentication(authToken);
+
+        Uploader mockUploader = mock(Uploader.class);
+        when(mockUploader.upload(any(), anyMap())).thenReturn(Map.of("secure_url", "https://example.com/updated-image.jpg"));
+        when(cloudinary.uploader()).thenReturn(mockUploader);
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/customers/00000000-0000-0000-0000-000000000001"))
+                .andExpect(status().isNoContent());
+        Assertions.assertFalse(customerRepository.existsById(java.util.UUID.fromString("00000000-0000-0000-0000-000000000001")));
+    }
+
 
 }

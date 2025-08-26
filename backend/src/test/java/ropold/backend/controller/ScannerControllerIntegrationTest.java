@@ -16,6 +16,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ropold.backend.model.*;
 import ropold.backend.repository.CustomerRepository;
 import ropold.backend.repository.ScannerRepository;
@@ -223,4 +224,88 @@ class ScannerControllerIntegrationTest {
         List<ScannerModel> scanners = scannerRepository.findAll();
         Assertions.assertEquals(2, scanners.size());
     }
+
+    @Test
+    @WithMockUser(username = "test-user", authorities = {"OIDC_USER"})
+    void testUpdateScannerWithPut() throws Exception{
+
+        OAuth2User mockOAuth2User = mock(OAuth2User.class);
+        when(mockOAuth2User.getName()).thenReturn("test-user");
+        when(mockOAuth2User.getAttribute("sub")).thenReturn("microsoft-id-123");
+
+        OAuth2AuthenticationToken authToken = new OAuth2AuthenticationToken(
+                mockOAuth2User,
+                List.of(new SimpleGrantedAuthority("OIDC_USER")),
+                "azure"  // registrationId wichtig!
+        );
+
+        SecurityContextHolder.getContext().setAuthentication(authToken);
+
+        Uploader mockUploader = mock(Uploader.class);
+        when(mockUploader.upload(any(), anyMap())).thenReturn(Map.of("secure_url", "https://example.com/updated-image.jpg"));
+        when(cloudinary.uploader()).thenReturn(mockUploader);
+
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/api/scanners/00000000-0000-0000-0000-000000000001")
+                        .file(new MockMultipartFile("image", "image.jpg", "image/jpeg", "image".getBytes()))
+                        .file(new MockMultipartFile("scannerModel", "", "application/json", """
+                        {
+                         "id": "00000000-0000-0000-0000-000000000001",
+                         "customerId": "00000000-0000-0000-0000-000000000101",
+                         "servicePartnerId": "00000000-0000-0000-0000-000000000011",
+                         "deviceName": "Test Scanner 3 Updated",
+                         "serialNumber": "SN-003",
+                         "contractNumber": "CN-003",
+                         "invoiceNumber": "IN-003",
+                         "deviceType": "SCANNER",
+                         "contractType": "AUTORENEWAL",
+                         "status": "ACTIVE",
+                         "noMaintenance": false,
+                         "startDate": "2024-03-01",
+                         "endDate": "2027-03-01",
+                         "purchasePrice": 1700.00,
+                         "salePrice": 2000.00,
+                         "depreciation": 400.00,
+                         "maintenanceContent": "Test maintenance",
+                         "note": "Test note 3",
+                         "imageUrl": "https://example.com/updated-image.jpg"
+                        }
+                    """.getBytes()))
+                        .contentType("multipart/form-data")
+                        .with(request -> {
+                            request.setMethod("PUT");
+                            return request;
+                        }))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.deviceName").value("Test Scanner 3 Updated"))
+                .andExpect(jsonPath("$.imageUrl").value("https://example.com/updated-image.jpg"));
+
+        ScannerModel updatedScanner = scannerRepository.findById(UUID.fromString("00000000-0000-0000-0000-000000000001")).orElseThrow();
+        Assertions.assertEquals("Test Scanner 3 Updated", updatedScanner.getDeviceName());
+        Assertions.assertEquals("https://example.com/updated-image.jpg", updatedScanner.getImageUrl());
+    }
+
+    @Test
+    @WithMockUser(username = "test-user", authorities = {"OIDC_USER"})
+    void testDeleteScanner() throws Exception {
+        OAuth2User mockOAuth2User = mock(OAuth2User.class);
+        when(mockOAuth2User.getName()).thenReturn("test-user");
+        when(mockOAuth2User.getAttribute("sub")).thenReturn("microsoft-id-123");
+
+        OAuth2AuthenticationToken authToken = new OAuth2AuthenticationToken(
+                mockOAuth2User,
+                List.of(new SimpleGrantedAuthority("OIDC_USER")),
+                "azure"  // registrationId wichtig!
+        );
+
+        SecurityContextHolder.getContext().setAuthentication(authToken);
+
+        Uploader mockUploader = mock(Uploader.class);
+        when(mockUploader.upload(any(), anyMap())).thenReturn(Map.of("secure_url", "https://example.com/updated-image.jpg"));
+        when(cloudinary.uploader()).thenReturn(mockUploader);
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/scanners/00000000-0000-0000-0000-000000000001"))
+                .andExpect(status().isNoContent());
+        Assertions.assertFalse(scannerRepository.existsById(java.util.UUID.fromString("00000000-0000-0000-0000-000000000001")));
+    }
+
 }

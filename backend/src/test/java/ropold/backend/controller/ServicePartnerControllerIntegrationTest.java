@@ -41,6 +41,7 @@ class ServicePartnerControllerIntegrationTest {
 
     @Autowired
     private ServicePartnerRepository servicePartnerRepository;
+
     @Autowired
     private MockMvc mockMvc;
 

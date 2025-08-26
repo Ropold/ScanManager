@@ -129,14 +129,7 @@ class CustomerControllerIntegrationTest {
     }
 
     @Test
-    void testPostCustomer_shouldReturnForbidden_whenUnauthenticated() throws Exception {
-
-        Uploader mockUploader = mock(Uploader.class);
-        when(mockUploader.upload(any(), anyMap())).thenReturn(Map.of("secure_url", "https://www.test.de/"));
-        when(cloudinary.uploader()).thenReturn(mockUploader);
-
-        customerRepository.deleteAll();
-
+    void testPostCustomer_shouldReturnForbiddenWhenNotAuthenticated() throws Exception {
         mockMvc.perform(multipart("/api/customers")
                         .file(new MockMultipartFile("image", "image.jpg", "image/jpeg", "image".getBytes()))
                         .file(new MockMultipartFile("customerModel", "", "application/json", """
@@ -146,7 +139,10 @@ class CustomerControllerIntegrationTest {
                   "notes": "Notes3"
                 }
                 """.getBytes())))
-                .andExpect(status().isInternalServerError());
+                .andExpect(status().isForbidden());
+
+        List<CustomerModel> allCustomers = customerRepository.findAll();
+        Assertions.assertEquals(2, allCustomers.size());
     }
 
     @Test

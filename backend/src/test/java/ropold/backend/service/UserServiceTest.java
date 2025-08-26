@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.security.oauth2.core.user.OAuth2User;
+import ropold.backend.exception.notfoundexceptions.UserNotFoundException;
 import ropold.backend.model.UserModel;
 import ropold.backend.repository.UserRepository;
 
@@ -64,6 +66,102 @@ class UserServiceTest {
         RuntimeException exception = assertThrows(RuntimeException.class, () -> userService.getUserById(userId));
         assertEquals("User not found", exception.getMessage());
         verify(userRepository, times(1)).findById(userId);
+    }
+
+    @Test
+    void getUserByMicrosoftId_UserExists_ReturnsUser() {
+        String microsoftId = "test-microsoft-id";
+        when(userRepository.findByMicrosoftId(microsoftId)).thenReturn(Optional.of(testUser));
+
+        UserModel result = userService.getUserByMicrosoftId(microsoftId);
+
+        assertNotNull(result);
+        assertEquals(testUser, result);
+        verify(userRepository, times(1)).findByMicrosoftId(microsoftId);
+    }
+
+    @Test
+    void getUserByMicrosoftId_UserDoesNotExist_ThrowsException() {
+        String microsoftId = "non-existent-microsoft-id";
+        when(userRepository.findByMicrosoftId(microsoftId)).thenReturn(Optional.empty());
+
+        UserNotFoundException exception = assertThrows(UserNotFoundException.class,
+                () -> userService.getUserByMicrosoftId(microsoftId));
+        assertEquals("User not found", exception.getMessage());
+        verify(userRepository, times(1)).findByMicrosoftId(microsoftId);
+    }
+
+    // Tests für createOrUpdateFromAzure
+    @Test
+    void createOrUpdateFromAzure_ExistingUser_UpdatesLastLogin() {
+        OAuth2User mockAzureUser = mock(OAuth2User.class);
+        when(mockAzureUser.getAttribute("sub")).thenReturn("microsoftId");
+        when(userRepository.findByMicrosoftId("microsoftId")).thenReturn(Optional.of(testUser));
+        when(userRepository.save(any(UserModel.class))).thenReturn(testUser);
+
+        UserModel result = userService.createOrUpdateFromAzure(mockAzureUser);
+
+        assertNotNull(result);
+        assertNotNull(testUser.getLastLoginAt());
+        verify(userRepository, times(1)).findByMicrosoftId("microsoftId");
+        verify(userRepository, times(1)).save(testUser);
+    }
+
+    @Test
+    void createOrUpdateFromAzure_NewUser_CreatesUser() {
+        OAuth2User mockAzureUser = mock(OAuth2User.class);
+        when(mockAzureUser.getAttribute("sub")).thenReturn("new-microsoft-id");
+        when(mockAzureUser.getAttribute("name")).thenReturn("New User");
+        when(mockAzureUser.getAttribute("email")).thenReturn("newuser@example.com");
+        when(userRepository.findByMicrosoftId("new-microsoft-id")).thenReturn(Optional.empty());
+
+        UserModel savedUser = new UserModel(
+                UUID.randomUUID(),
+                "new-microsoft-id",
+                "New User",
+                "newuser@example.com",
+                "ROLE_USER",
+                "de",
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                null
+        );
+        when(userRepository.save(any(UserModel.class))).thenReturn(savedUser);
+
+        UserModel result = userService.createOrUpdateFromAzure(mockAzureUser);
+
+        assertNotNull(result);
+        verify(userRepository, times(1)).findByMicrosoftId("new-microsoft-id");
+        verify(userRepository, times(1)).save(any(UserModel.class));
+    }
+
+    // Tests für setPreferredLanguage
+    @Test
+    void setPreferredLanguage_ValidUser_UpdatesLanguage() {
+        String microsoftId = "microsoftId";
+        String newLanguage = "en";
+        when(userRepository.findByMicrosoftId(microsoftId)).thenReturn(Optional.of(testUser));
+        when(userRepository.save(any(UserModel.class))).thenReturn(testUser);
+
+        userService.setPreferredLanguage(microsoftId, newLanguage);
+
+        assertEquals(newLanguage, testUser.getPreferredLanguage());
+        verify(userRepository, times(1)).findByMicrosoftId(microsoftId);
+        verify(userRepository, times(1)).save(testUser);
+    }
+
+    @Test
+    void setPreferredLanguage_UserNotFound_ThrowsException() {
+        String microsoftId = "non-existent-id";
+        String newLanguage = "fr";
+        when(userRepository.findByMicrosoftId(microsoftId)).thenReturn(Optional.empty());
+
+        UserNotFoundException exception = assertThrows(UserNotFoundException.class,
+                () -> userService.setPreferredLanguage(microsoftId, newLanguage));
+
+        assertEquals("User not found", exception.getMessage());
+        verify(userRepository, times(1)).findByMicrosoftId(microsoftId);
+        verify(userRepository, never()).save(any(UserModel.class));
     }
 }
 

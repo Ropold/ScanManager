@@ -28,7 +28,7 @@ export function fetchUserDetails(setUserDetails: (details: UserModel | null) => 
 }
 
 export function fetchAllScanner(setAllScanner: (scanners: ScannerModel[]) => void) {
-    axios.get("/api/scanner")
+    axios.get("/api/scanners")
         .then((response) => {
             setAllScanner(response.data as ScannerModel[]);
         })
@@ -48,7 +48,7 @@ export function fetchAllCustomer(setAllCustomer: (customers: CustomerModel[]) =>
 }
 
 export function fetchAllServicePartner(setAllServicePartner: (partners: ServicePartnerModel[]) => void) {
-    axios.get("/api/service-partner")
+    axios.get("/api/service-partners")
         .then((response) => {
             setAllServicePartner(response.data as ServicePartnerModel[]);
         })

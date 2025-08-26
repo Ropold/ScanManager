@@ -32,18 +32,17 @@ public class SecurityConfig {
     private static final String CUSTOMER = "/api/customers/**";
     private static final String SCANNER = "/api/scanners/**";
     private static final String SERVICE_PARTNER = "/api/service-partners/**";
+    private static final String USER = "/api/users/**";
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(a -> a
-                        .requestMatchers(HttpMethod.GET, CUSTOMER, SCANNER, SERVICE_PARTNER).permitAll()
-                        .requestMatchers(HttpMethod.POST, CUSTOMER, SCANNER, SERVICE_PARTNER).authenticated()
-                        .requestMatchers(HttpMethod.PUT, CUSTOMER, SCANNER, SERVICE_PARTNER).authenticated()
-                        .requestMatchers(HttpMethod.DELETE, CUSTOMER, SCANNER, SERVICE_PARTNER).authenticated()
-                        .requestMatchers("/api/users/me").permitAll()
-                        .requestMatchers("/api/users/me/details").permitAll()
+                        .requestMatchers(HttpMethod.GET, CUSTOMER, SCANNER, SERVICE_PARTNER, USER).permitAll()
+                        .requestMatchers(HttpMethod.POST, CUSTOMER, SCANNER, SERVICE_PARTNER,USER).authenticated()
+                        .requestMatchers(HttpMethod.PUT, CUSTOMER, SCANNER, SERVICE_PARTNER,USER).authenticated()
+                        .requestMatchers(HttpMethod.DELETE, CUSTOMER, SCANNER, SERVICE_PARTNER,USER).authenticated()
                         .anyRequest().permitAll()
                 )
                 .logout(l -> l.logoutUrl("/api/users/logout")

@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/scanner")
+@RequestMapping("/api/scanners")
 @RequiredArgsConstructor
 public class ScannerController {
 

@@ -15,7 +15,7 @@ export default function ServicePartnerDetails(props: Readonly<ServicePartnerDeta
     useEffect(() => {
         if(!id) return;
         axios
-            .get(`/api/service-partner/${id}`)
+            .get(`/api/service-partners/${id}`)
             .then(response => setServicePartner(response.data))
             .catch(error => {
                 console.error("Error fetching service partner details", error);

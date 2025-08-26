@@ -11,11 +11,11 @@ import ropold.backend.exception.notfoundexceptions.*;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(RuntimeException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErrorResponse handleRuntimeException(RuntimeException e) {
-        log.error("Unhandled RuntimeException: {}", e.getMessage(), e);
-        return new ErrorResponse("INTERNAL_ERROR", e.getMessage());
+    @ExceptionHandler(AccessDeniedException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ErrorResponse handleAccessDeniedException(AccessDeniedException e) {
+        log.warn("Access denied: {}", e.getMessage());
+        return new ErrorResponse("ACCESS_DENIED", e.getMessage());
     }
 
     @ExceptionHandler({
@@ -30,10 +30,10 @@ public class GlobalExceptionHandler {
         return new ErrorResponse("NOT_FOUND", e.getMessage());
     }
 
-    @ExceptionHandler(AccessDeniedException.class)
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    public AccessDeniedError handleAccessDeniedException(AccessDeniedException e) {
-        return new AccessDeniedError(e.getMessage());
+    @ExceptionHandler(RuntimeException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponse handleRuntimeException(RuntimeException e) {
+        log.error("Unhandled RuntimeException: {}", e.getMessage(), e);
+        return new ErrorResponse("INTERNAL_ERROR", e.getMessage());
     }
-
 }

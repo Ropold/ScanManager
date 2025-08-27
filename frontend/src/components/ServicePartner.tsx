@@ -23,15 +23,20 @@ export default function ServicePartner(props: Readonly<ServicePartnerProps>) {
         const searchQuery = query.toLowerCase();
 
         return servicePartners.filter(servicePartner => {
+            const id = servicePartner.id.toLowerCase();
+            const creditorNrNavision= servicePartner.creditorNrNavision?.toLowerCase() || "";
             const name = servicePartner.name?.toLowerCase() || "";
             const contactPerson = servicePartner.contactPerson?.toLowerCase() || "";
+            const contactDetails= servicePartner.contactDetails?.toLowerCase() || "";
             const notes = servicePartner.notes?.toLowerCase() || "";
-            const id = servicePartner.id.toLowerCase();
+
             return (
-                name.includes(searchQuery) ||
+                id.includes(searchQuery) ||
+                creditorNrNavision.includes(searchQuery) ||
                 contactPerson.includes(searchQuery) ||
+                contactDetails.includes(searchQuery) ||
                 notes.includes(searchQuery) ||
-                id.includes(searchQuery)
+                name.includes(searchQuery)
             );
         });
     }

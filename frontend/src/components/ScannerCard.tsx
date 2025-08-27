@@ -15,7 +15,7 @@ export default function ScannerCard(props: Readonly<ScannerCardProps>) {
 
     return(
         <div className="scanner-card" onClick={handleCardClick}>
-            <h2>{props.scanner.deviceName}</h2>
+            <h2>{props.scanner.modelName}</h2>
         </div>
     )
 }

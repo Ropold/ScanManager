@@ -28,13 +28,15 @@ export default function ServicePartnerDetails(props: Readonly<ServicePartnerDeta
             <h2>Service Partner Details</h2>
             {servicePartner ? (
                 <div className="service-partner-details">
-                    <p><strong>{translatedInfo["SQL-ID"][props.language]}:</strong> {servicePartner.id}</p>
-                    <p><strong>{translatedInfo["Name"][props.language]}:</strong> {servicePartner.name}</p>
-                    <p><strong>{translatedInfo["Contact Person"][props.language]}:</strong> {servicePartner.contactPerson}</p>
-                    <p><strong>{translatedInfo["Notes"][props.language]}:</strong> {servicePartner.notes || "—"}</p>
+                    <p><strong>{translatedInfo["sql-id"][props.language]}:</strong> {servicePartner.id}</p>
+                    <p><strong>{translatedInfo["creditorNrNavision"][props.language]}:</strong> {servicePartner.creditorNrNavision}</p>
+                    <p><strong>{translatedInfo["name"][props.language]}:</strong> {servicePartner.name}</p>
+                    <p><strong>{translatedInfo["contactPerson"][props.language]}:</strong> {servicePartner.contactPerson}</p>
+                    <p><strong>{translatedInfo["contactDetails"][props.language]}:</strong> {servicePartner.contactDetails}</p>
+                    <p><strong>{translatedInfo["notes"][props.language]}:</strong> {servicePartner.notes || "—"}</p>
                     {servicePartner.imageUrl && (
                         <div>
-                            <p><strong>{translatedInfo["Image"][props.language]}:</strong></p>
+                            <p><strong>{translatedInfo["image"][props.language]}:</strong></p>
                             <img
                                 className="details-image"
                                 src={servicePartner.imageUrl}
@@ -42,6 +44,12 @@ export default function ServicePartnerDetails(props: Readonly<ServicePartnerDeta
                             />
                         </div>
                     )}
+                    <p><strong>{translatedInfo["isArchived"][props.language]}:</strong>
+                        {servicePartner.isArchived
+                            ? translatedInfo["Yes"][props.language]
+                            : translatedInfo["No"][props.language]
+                        }
+                    </p>
                 </div>
             ) : (
                 <p>{translatedInfo["Loading"][props.language]}...</p>

@@ -22,40 +22,54 @@ export default function Scanner(props: Readonly<ScannerProps>) {
         const searchQuery = query.toLowerCase();
 
         return scanners.filter(scanner => {
-            const deviceName = scanner.deviceName?.toLowerCase() || "";
-            const serialNumber = scanner.serialNumber?.toLowerCase() || "";
-            const contractNumber = scanner.contractNumber?.toLowerCase() || "";
-            const invoiceNumber = scanner.invoiceNumber?.toLowerCase() || "";
-            const maintenanceContent = scanner.maintenanceContent?.toLowerCase() || "";
-            const note = scanner.note?.toLowerCase() || "";
             const id = scanner.id.toLowerCase();
-            const customerId = scanner.customerId.toLowerCase();
-            const servicePartnerId = scanner.servicePartnerId.toLowerCase();
-            const contractType = scanner.contractType.toString().toLowerCase();
-            const status = scanner.status.toString().toLowerCase();
+            const customerId = scanner.customerId?.toLowerCase() || "";
+            const servicePartnerId = scanner.servicePartnerId?.toLowerCase() || "";
+            const modelName = scanner.modelName?.toLowerCase() || "";
+            const manufacturerCode = scanner.manufacturerCode?.toLowerCase() || "";
+            const serialNumber = scanner.serialNumber?.toLowerCase() || "";
+            const scannerNrNavision = scanner.scannerNrNavision?.toLowerCase() || "";
+            const contractNumber = scanner.contractNumber?.toLowerCase() || "";
+            const startDate = scanner.startDate || "";
+            const endDate = scanner.endDate || "";
+            const slaMaintenance = scanner.slaMaintenance?.toLowerCase() || "";
+            const locationAddress = scanner.locationAddress?.toLowerCase() || "";
+            const contactPersonDetails = scanner.contactPersonDetails?.toLowerCase() || "";
+            const acquisitionDate = scanner.acquisitionDate || "";
+            const purchasedBy = scanner.purchasedBy?.toLowerCase() || "";
+            const deviceType = scanner.deviceType?.toString().toLowerCase() || "";
+            const contractType = scanner.contractType?.toString().toLowerCase() || "";
+            const status = scanner.status?.toString().toLowerCase() || "";
             const purchasePrice = scanner.purchasePrice?.toString() || "";
             const salePrice = scanner.salePrice?.toString() || "";
             const depreciation = scanner.depreciation?.toString() || "";
-            const startDate = scanner.startDate || "";
-            const endDate = scanner.endDate || "";
+            const notes = scanner.notes?.toLowerCase() || "";
+            const isArchived = scanner.isArchived?.toString() || "";
 
             return (
                 id.includes(searchQuery) ||
                 customerId.includes(searchQuery) ||
                 servicePartnerId.includes(searchQuery) ||
-                deviceName.includes(searchQuery) ||
+                modelName.includes(searchQuery) ||
+                manufacturerCode.includes(searchQuery) ||
                 serialNumber.includes(searchQuery) ||
+                scannerNrNavision.includes(searchQuery) ||
                 contractNumber.includes(searchQuery) ||
-                invoiceNumber.includes(searchQuery) ||
+                startDate.includes(searchQuery) ||
+                endDate.includes(searchQuery) ||
+                slaMaintenance.includes(searchQuery) ||
+                locationAddress.includes(searchQuery) ||
+                contactPersonDetails.includes(searchQuery) ||
+                acquisitionDate.includes(searchQuery) ||
+                purchasedBy.includes(searchQuery) ||
+                deviceType.includes(searchQuery) ||
                 contractType.includes(searchQuery) ||
                 status.includes(searchQuery) ||
-                maintenanceContent.includes(searchQuery) ||
-                note.includes(searchQuery) ||
                 purchasePrice.includes(searchQuery) ||
                 salePrice.includes(searchQuery) ||
                 depreciation.includes(searchQuery) ||
-                startDate.includes(searchQuery) ||
-                endDate.includes(searchQuery)
+                notes.includes(searchQuery) ||
+                isArchived.includes(searchQuery)
             );
         });
     }

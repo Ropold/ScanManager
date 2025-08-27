@@ -16,18 +16,28 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ServicePartnerModel {
+
     @Id
     private UUID id;
 
-    @Column(name = "name")
+    @Column(name = "creditor_nr_navision", length = 50)
+    private String creditorNrNavision;
+
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "contact_person")
     private String contactPerson;
 
-    @Column(name = "notes", length = 1000)
+    @Column(name = "contact_details", columnDefinition = "NVARCHAR(MAX)")
+    private String contactDetails;
+
+    @Column(name = "notes", columnDefinition = "NVARCHAR(MAX)")
     private String notes;
 
     @Column(name = "image_url", length = 500)
     private String imageUrl;
+
+    @Column(name = "is_archived", nullable = false, columnDefinition = "BIT DEFAULT 0")
+    private Boolean isArchived = false;
 }

@@ -24,3 +24,20 @@
     background-color: #999;
     cursor: default;
 }
+
+.add-new-customer-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.button-blue {
+    background-color: #66b3ff;
+    border: 1px solid transparent;
+}
+
+.button-blue:hover {
+    background-color: #007bff;
+    border: 1px solid transparent;
+}

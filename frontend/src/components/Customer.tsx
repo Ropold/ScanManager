@@ -1,6 +1,6 @@
 import SearchBar from "./SearchBar.tsx";
 import type {CustomerModel} from "./model/CustomerModel.ts";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import CustomerCard from "./CustomerCard.tsx";
 
@@ -14,6 +14,8 @@ export default function Customer(props: Readonly<CustomerProps>) {
     const [filteredCustomers, setFilteredCustomers] = useState<CustomerModel[]>([]);
 
     const location = useLocation();
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         window.scroll(0, 0);
@@ -42,8 +44,11 @@ export default function Customer(props: Readonly<CustomerProps>) {
 
     return (
         <>
-        <h2>Customers</h2>
+            <div className="add-new-customer-button">
 
+                <h2>Customers</h2>
+                <button className="button-blue" onClick={()=> navigate("/add-new-customer")}>add new Customer</button>
+            </div>
         <SearchBar
            searchQuery={searchQuery}
            setSearchQuery={setSearchQuery}

@@ -21,7 +21,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
 
-public class CloudinaryServiceTest {
+class CloudinaryServiceTest {
 
     @Mock
     private Cloudinary cloudinary;

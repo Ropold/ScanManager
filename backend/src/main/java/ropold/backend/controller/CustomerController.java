@@ -59,10 +59,13 @@ public class CustomerController {
         return customerService.addCustomer(
                 new CustomerModel(
                         UUID.randomUUID(),
+                        customerModel.getDebitorNrNavision(),
                         customerModel.getName(),
                         customerModel.getContactPerson(),
+                        customerModel.getContactDetails(),
                         customerModel.getNotes(),
-                        imageUrl
+                        imageUrl,
+                        customerModel.getIsArchived()
                 )
         );
     }
@@ -83,10 +86,13 @@ public class CustomerController {
 
         CustomerModel updatedCustomer = new CustomerModel(
                 existingCustomer.getId(),
+                customerModel.getDebitorNrNavision(),
                 customerModel.getName(),
                 customerModel.getContactPerson(),
+                customerModel.getContactDetails(),
                 customerModel.getNotes(),
-                newImageUrl
+                newImageUrl,
+                customerModel.getIsArchived()
         );
 
         return customerService.updateCustomer(updatedCustomer);

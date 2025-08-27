@@ -51,18 +51,24 @@ class CustomerControllerIntegrationTest {
 
         CustomerModel customerModel1 = new CustomerModel(
                 java.util.UUID.fromString("00000000-0000-0000-0000-000000000001"),
+                "DEB-2024-001",
                 "Max Mustermann",
                 "Contact Person1",
+                "Musterstraße 123, 12345 Berlin, Tel: +49 30 123456, Email: kontakt@mustermann.de",
                 "Notes1",
-                "http://example.com/customer1.jpg"
+                "http://example.com/customer1.jpg",
+                false
         );
 
         CustomerModel customerModel2 = new CustomerModel(
                 java.util.UUID.fromString("00000000-0000-0000-0000-000000000002"),
+                "DEB-2024-002",
                 "Erika Musterfrau",
                 "Contact Person2",
+                "Beispielweg 45, 80331 München, Tel: +49 89 987654, Email: info@musterfrau.com",
                 "Notes2",
-                "http://example.com/customer2.jpg"
+                "http://example.com/customer2.jpg",
+                false
         );
 
         customerRepository.saveAll(java.util.List.of(customerModel1, customerModel2));

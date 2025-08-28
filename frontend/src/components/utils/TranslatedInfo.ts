@@ -144,22 +144,6 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "tr": "Tarayıcı",
         "ir": "اسکنر"
     },
-    "name": {
-        "de": "Name",
-        "en": "Name",
-        "pl": "Nazwa",
-        "es": "Nombre",
-        "fr": "Nom",
-        "it": "Nome",
-        "cz": "Jméno",
-        "pt": "Nome",
-        "hu": "Név",
-        "nl": "Naam",
-        "gr": "Όνομα",
-        "ru": "Имя",
-        "tr": "İsim",
-        "ir": "نام"
-    },
     "contactPerson":{
         "de": "Ansprechpartner",
         "en": "Contact Person",
@@ -703,5 +687,37 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "ru": "Куплено у",
         "tr": "Tarafından satın alındı",
         "ir": "خریداری شده توسط"
+    },
+    "customerName": {
+        "de": "Kundenname",
+        "en": "Customer Name",
+        "pl": "Nazwa klienta",
+        "es": "Nombre del cliente",
+        "fr": "Nom du client",
+        "it": "Nome del cliente",
+        "cz": "Název zákazníka",
+        "pt": "Nome do cliente",
+        "hu": "Ügyfél neve",
+        "nl": "Klantnaam",
+        "gr": "Όνομα πελάτη",
+        "ru": "Имя клиента",
+        "tr": "Müşteri Adı",
+        "ir": "نام مشتری"
+    },
+    "servicePartnerName": {
+        "de": "Service Partner Name",
+        "en": "Service Partner Name",
+        "pl": "Nazwa partnera serwisowego",
+        "es": "Nombre del socio de servicio",
+        "fr": "Nom du partenaire de service",
+        "it": "Nome del partner di servizio",
+        "cz": "Název servisního partnera",
+        "pt": "Nome do parceiro de serviço",
+        "hu": "Szolgáltatói partner neve",
+        "nl": "Naam servicepartner",
+        "gr": "Όνομα συνεργάτη υπηρεσιών",
+        "ru": "Имя сервисного партнера",
+        "tr": "Hizmet Ortağı Adı",
+        "ir": "نام شریک خدمات"
     }
 }

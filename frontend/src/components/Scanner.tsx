@@ -3,10 +3,14 @@ import {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import SearchBar from "./SearchBar.tsx";
 import ScannerCard from "./ScannerCard.tsx";
+import type {CustomerModel} from "./model/CustomerModel.ts";
+import type {ServicePartnerModel} from "./model/ServicePartnerModel.ts";
 
 type ScannerProps = {
     language: string;
     allScanner: ScannerModel[]
+    allCustomer: CustomerModel[];
+    allServicePartner: ServicePartnerModel[];
 }
 
 export default function Scanner(props: Readonly<ScannerProps>) {
@@ -89,6 +93,8 @@ export default function Scanner(props: Readonly<ScannerProps>) {
                 <ScannerCard
                     key={s.id}
                     scanner={s}
+                    allCustomer={props.allCustomer}
+                    allServicePartner={props.allServicePartner}
                     language={props.language}
                 />
             ))}

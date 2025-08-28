@@ -79,7 +79,7 @@ export default function App() {
             <Route path="*" element={<NotFound />} />
             <Route path="/" element={<Welcome language={language}/>}/>
             <Route element={<ProtectedRoute user={user}/>}>
-                <Route path="/scanner" element={<Scanner language={language} allScanner={allScanner}/>} />
+                <Route path="/scanner" element={<Scanner language={language} allScanner={allScanner} allCustomer={allCustomer} allServicePartner={allServicePartner} />} />
                 <Route path="/scanner/:id" element={<ScannerDetails language={language} />} />
                 <Route path="/customer" element={<Customer language={language} allCustomer={allCustomer}/>} />
                 <Route path="/customer/:id" element={<CustomerDetails language={language} />} />

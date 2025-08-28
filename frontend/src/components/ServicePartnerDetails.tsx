@@ -30,7 +30,7 @@ export default function ServicePartnerDetails(props: Readonly<ServicePartnerDeta
                 <div className="service-partner-details">
                     <p><strong>{translatedInfo["sql-id"][props.language]}:</strong> {servicePartner.id}</p>
                     <p><strong>{translatedInfo["creditorNrNavision"][props.language]}:</strong> {servicePartner.creditorNrNavision}</p>
-                    <p><strong>{translatedInfo["name"][props.language]}:</strong> {servicePartner.name}</p>
+                    <p><strong>{translatedInfo["servicePartnerName"][props.language]}:</strong> {servicePartner.name}</p>
                     <p><strong>{translatedInfo["contactPerson"][props.language]}:</strong> {servicePartner.contactPerson}</p>
                     <p><strong>{translatedInfo["contactDetails"][props.language]}:</strong> {servicePartner.contactDetails}</p>
                     <p><strong>{translatedInfo["notes"][props.language]}:</strong> {servicePartner.notes || "—"}</p>

@@ -28,7 +28,7 @@ export default function CustomerDetails(props: Readonly<CustomerDetailsProps>) {
                 <div className="customer-details">
                     <p><strong>{translatedInfo["sql-id"][props.language]}:</strong> {customer.id}</p>
                     <p><strong>{translatedInfo["debitorNrNavision"][props.language]}:</strong> {customer.debitorNrNavision}</p>
-                    <p><strong>{translatedInfo["name"][props.language]}:</strong> {customer.name}</p>
+                    <p><strong>{translatedInfo["customerName"][props.language]}:</strong> {customer.name}</p>
                     <p><strong>{translatedInfo["contactPerson"][props.language]}:</strong> {customer.contactPerson}</p>
                     <p><strong>{translatedInfo["contactDetails"][props.language]}:</strong> {customer.contactDetails}</p>
                     <p><strong>{translatedInfo["notes"][props.language]}:</strong> {customer.notes}</p>

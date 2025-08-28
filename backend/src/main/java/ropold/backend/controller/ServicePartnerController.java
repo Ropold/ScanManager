@@ -27,8 +27,13 @@ public class ServicePartnerController {
     private final ImageUploadUtil imageUploadUtil;
 
     @GetMapping
-    public List<ServicePartnerModel> getServicePartners() {
-        return servicePartnerService.getAllServicePartners();
+    public List<ServicePartnerModel> getAllActiveServicePartners() {
+        return servicePartnerService.getAllActiveServicePartners();
+    }
+
+    @GetMapping("/archive")
+    public List<ServicePartnerModel> getAllArchivedServicePartners() {
+        return servicePartnerService.getAllArchivedServicePartners();
     }
 
     @GetMapping("{id}")

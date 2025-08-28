@@ -17,8 +17,12 @@ public class ServicePartnerService {
     private final ServicePartnerRepository servicePartnerRepository;
     private final ImageUploadUtil imageUploadUtil;
 
-    public List<ServicePartnerModel> getAllServicePartners() {
-        return servicePartnerRepository.findAll();
+    public List<ServicePartnerModel> getAllActiveServicePartners() {
+        return servicePartnerRepository.findByIsArchivedFalse();
+    }
+
+    public List<ServicePartnerModel> getAllArchivedServicePartners() {
+        return servicePartnerRepository.findByIsArchivedTrue();
     }
 
     public ServicePartnerModel getServicePartnerById(UUID id) {

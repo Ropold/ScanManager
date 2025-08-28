@@ -27,8 +27,13 @@ public class CustomerController {
     private final ImageUploadUtil imageUploadUtil;
 
     @GetMapping
-    public List<CustomerModel> getAllCustomers() {
-        return customerService.getAllCustomers();
+    public List<CustomerModel> getAllActiveCustomers() {
+        return customerService.getAllActiveCustomers();
+    }
+
+    @GetMapping("/archive")
+    public List<CustomerModel> getAllArchivedCustomers() {
+        return customerService.getAllArchivedCustomers();
     }
 
     @GetMapping("/{id}")

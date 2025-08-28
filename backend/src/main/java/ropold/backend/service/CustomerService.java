@@ -17,8 +17,12 @@ public class CustomerService {
     private final CustomerRepository customerRepository;
     private final ImageUploadUtil imageUploadUtil;
 
-    public List<CustomerModel> getAllCustomers() {
-        return customerRepository.findAll();
+    public List<CustomerModel> getAllActiveCustomers() {
+        return customerRepository.findByIsArchivedFalse();
+    }
+
+    public List<CustomerModel> getAllArchivedCustomers() {
+        return customerRepository.findByIsArchivedTrue();
     }
 
     public CustomerModel getCustomerById(UUID id) {

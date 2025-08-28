@@ -29,7 +29,7 @@ public class ScannerController {
         return scannerService.getAllActiveScanners();
     }
 
-    @GetMapping("/archive")
+    @GetMapping("/archived")
     public List<ScannerModel> getAllArchivedScanners(){
         return scannerService.getAllArchivedScanners();
     }

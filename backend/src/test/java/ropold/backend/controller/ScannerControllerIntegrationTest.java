@@ -153,6 +153,13 @@ class ScannerControllerIntegrationTest {
     }
 
     @Test
+    void testGetAllArchivedScanners() throws Exception {
+        mockMvc.perform(get("/api/scanners/archived"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(0));
+    }
+
+    @Test
     void testGetScannerById() throws Exception {
         mockMvc.perform(get("/api/scanners/00000000-0000-0000-0000-000000000001"))
                 .andExpect(status().isOk())

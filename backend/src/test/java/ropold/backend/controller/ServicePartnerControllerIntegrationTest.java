@@ -84,6 +84,13 @@ class ServicePartnerControllerIntegrationTest {
     }
 
     @Test
+    void testGetAllArchivedServicePartners() throws Exception {
+       mockMvc.perform(get("/api/service-partners/archived"))
+               .andExpect(status().isOk())
+               .andExpect(jsonPath("$.length()").value(0));
+    }
+
+    @Test
     void testGetServicePartnerById() throws Exception {
         mockMvc.perform(get("/api/service-partners/00000000-0000-0000-0000-000000000001"))
                 .andExpect(status().isOk())

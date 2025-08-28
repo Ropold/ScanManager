@@ -51,7 +51,7 @@ class CustomerServiceTest {
     }
 
     @Test
-    void testGetAllCustomers() {
+    void testGetAllActiveCustomers() {
         List<CustomerModel> result = customerService.getAllActiveCustomers();
         assertEquals(customerModels, result);
     }

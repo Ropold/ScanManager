@@ -31,7 +31,7 @@ public class ServicePartnerController {
         return servicePartnerService.getAllActiveServicePartners();
     }
 
-    @GetMapping("/archive")
+    @GetMapping("/archived")
     public List<ServicePartnerModel> getAllArchivedServicePartners() {
         return servicePartnerService.getAllArchivedServicePartners();
     }

@@ -84,6 +84,13 @@ class CustomerControllerIntegrationTest {
     }
 
     @Test
+    void testGetArchivedCustomers_shouldReturnArchivedCustomers() throws Exception {
+        mockMvc.perform(get("/api/customers/archived"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(0));
+    }
+
+    @Test
     void testGetCustomerById_shouldReturnCustomer() throws Exception {
         mockMvc.perform(get("/api/customers/00000000-0000-0000-0000-000000000001"))
                 .andExpect(status().isOk())

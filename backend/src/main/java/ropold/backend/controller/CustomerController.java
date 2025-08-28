@@ -31,7 +31,7 @@ public class CustomerController {
         return customerService.getAllActiveCustomers();
     }
 
-    @GetMapping("/archive")
+    @GetMapping("/archived")
     public List<CustomerModel> getAllArchivedCustomers() {
         return customerService.getAllArchivedCustomers();
     }

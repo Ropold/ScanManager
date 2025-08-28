@@ -46,12 +46,13 @@ class CustomerServiceTest {
         );
 
         customerModels = List.of(customerModel1, customerModel2);
-        when(customerRepository.findAll()).thenReturn(customerModels);
+        when(customerRepository.findByIsArchivedFalse()).thenReturn(customerModels);
+        when(customerRepository.findByIsArchivedTrue()).thenReturn(customerModels);
     }
 
     @Test
     void testGetAllCustomers() {
-        List<CustomerModel> result = customerService.getAllCustomers();
+        List<CustomerModel> result = customerService.getAllActiveCustomers();
         assertEquals(customerModels, result);
     }
 

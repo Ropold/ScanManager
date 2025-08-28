@@ -82,12 +82,13 @@ class ScannerServiceTest {
         );
 
         scannerModels = java.util.List.of(scannerModel1, scannerModel2);
-        when(scannerRepository.findAll()).thenReturn(scannerModels);
+        when(scannerRepository.findByIsArchivedFalse()).thenReturn(scannerModels);
+        when(scannerRepository.findByIsArchivedTrue()).thenReturn(scannerModels);
     }
 
     @Test
     void testGetAllScanners() {
-        List<ScannerModel> result = scannerService.getAllScanners();
+        List<ScannerModel> result = scannerService.getAllActiveScanners();
         assertEquals(scannerModels, result);
     }
 

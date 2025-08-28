@@ -42,12 +42,14 @@ class ServicePartnerServiceTest {
                 false
         );
         servicePartnerModels = List.of(servicePartnerModel1, servicePartnerModel2);
-        when(servicePartnerRepository.findAll()).thenReturn(servicePartnerModels);
+        when(servicePartnerRepository.findByIsArchivedFalse()).thenReturn(servicePartnerModels);
+        when(servicePartnerRepository.findByIsArchivedTrue()).thenReturn(servicePartnerModels);
+
     }
 
     @Test
     void testGetAllServicePartners() {
-        List<ServicePartnerModel> result = servicePartnerService.getAllServicePartners();
+        List<ServicePartnerModel> result = servicePartnerService.getAllActiveServicePartners();
         assertEquals(servicePartnerModels, result);
     }
 

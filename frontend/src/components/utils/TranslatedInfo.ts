@@ -418,7 +418,7 @@ export const translatedInfo: Record<string, Record<string, string>> = {
     },
     "customerID":{
         "de": "Kunden-ID",
-        "en": "Customer ID",
+        "en": "Customers ID",
         "pl": "ID klienta",
         "es": "ID del cliente",
         "fr": "ID du client",
@@ -690,7 +690,7 @@ export const translatedInfo: Record<string, Record<string, string>> = {
     },
     "customerName": {
         "de": "Kundenname",
-        "en": "Customer Name",
+        "en": "Customers Name",
         "pl": "Nazwa klienta",
         "es": "Nombre del cliente",
         "fr": "Nom du client",

@@ -23,7 +23,7 @@ export default function SearchBar(props: Readonly<SearchBarProps>) {
 
             <button
                 onClick={handleReset}
-                className={`${props.searchQuery ? "button-group-button" : "button-grey"}`}
+                className={`${props.searchQuery ? "button-group-button" : "button-grey-search"}`}
             >
                 Reset Filters
             </button>

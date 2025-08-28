@@ -20,12 +20,20 @@
     margin-right: 5px;
 }
 
-.button-grey {
+.button-grey-search {
     background-color: #999;
     cursor: default;
 }
 
-.add-new-customer-button{
+.button-gey{
+    background-color: #999;
+}
+
+.button-gey:hover {
+    background-color: #555;
+}
+
+.add-new-button{
     display: flex;
     justify-content: center;
     align-items: center;

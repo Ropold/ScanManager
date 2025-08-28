@@ -58,7 +58,7 @@ export default function NavBar(props: Readonly<NavbarProps>) {
                     <div
                         className="clickable-header padding-left-5"
                         onClick={() => {
-                            navigate("/scanner");
+                            navigate("/scanners");
                         }}
                     >
                         <img src={scannerLogo} alt="Scanner Logo" className="logo-image" />
@@ -68,17 +68,17 @@ export default function NavBar(props: Readonly<NavbarProps>) {
                     <div
                         className="clickable-header padding-left-5"
                         onClick={() => {
-                            navigate("/customer");
+                            navigate("/customers");
                         }}
                     >
-                        <img src={customerLogo} alt="Customer Logo" className="logo-image" />
+                        <img src={customerLogo} alt="Customers Logo" className="logo-image" />
                         <h2 className="header-title">{translatedInfo["Customers"][props.language]}</h2>
                     </div>
 
                     <div
                         className="clickable-header padding-left-5"
                         onClick={() => {
-                            navigate("/service-partner");
+                            navigate("/service-partners");
                         }}
                     >
                         <img src={servicePartnerLogo} alt="Scanner Logo" className="logo-image" />

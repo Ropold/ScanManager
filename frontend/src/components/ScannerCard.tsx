@@ -16,7 +16,7 @@ export default function ScannerCard(props: Readonly<ScannerCardProps>) {
     const navigate = useNavigate();
 
     const handleCardClick = () => {
-        navigate(`/scanner/${props.scanner.id}`);
+        navigate(`/scanners/${props.scanner.id}`);
     }
 
     const customerName = props.allCustomer.find(
@@ -31,6 +31,7 @@ export default function ScannerCard(props: Readonly<ScannerCardProps>) {
         <div className="scanner-card" onClick={handleCardClick}>
             <div className="scanner-card-section">
                 <p><strong>{translatedInfo["modelName"][props.language]}:</strong> {props.scanner.modelName || "—"}</p>
+                <p><strong>{translatedInfo["serialNumber"][props.language]}:</strong> {props.scanner.serialNumber || "—"}</p>
                 <p><strong>{translatedInfo["customerName"][props.language]}:</strong> {customerName}</p>
                 <p><strong>{translatedInfo["startDate"][props.language]}:</strong> {props.scanner.startDate || "—"}</p>
                 <p><strong>{translatedInfo["endDate"][props.language]}:</strong> {props.scanner.endDate || "—"}</p>

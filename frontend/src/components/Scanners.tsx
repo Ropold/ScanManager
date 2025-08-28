@@ -1,6 +1,6 @@
 import type {ScannerModel} from "./model/ScannerModel.ts";
 import {useEffect, useState} from "react";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import SearchBar from "./SearchBar.tsx";
 import ScannerCard from "./ScannerCard.tsx";
 import type {CustomerModel} from "./model/CustomerModel.ts";
@@ -13,11 +13,12 @@ type ScannerProps = {
     allServicePartner: ServicePartnerModel[];
 }
 
-export default function Scanner(props: Readonly<ScannerProps>) {
+export default function Scanners(props: Readonly<ScannerProps>) {
     const [searchQuery, setSearchQuery] = useState<string>("");
     const [filteredScanners, setFilteredScanners] = useState<ScannerModel[]>([]);
 
     const location = useLocation();
+    const navigate = useNavigate();
     useEffect(() => {
         window.scroll(0, 0);
     }, [location]);
@@ -81,24 +82,29 @@ export default function Scanner(props: Readonly<ScannerProps>) {
     useEffect(() => {
         setFilteredScanners(filterScanners(props.allScanner, searchQuery));
     }, [props.allScanner, searchQuery]);
+
     return(
         <>
-        <h2>Scanner</h2>
-        <SearchBar
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-        />
-        <div className="scanner-card-container">
-            {filteredScanners.map((s: ScannerModel) => (
-                <ScannerCard
-                    key={s.id}
-                    scanner={s}
-                    allCustomer={props.allCustomer}
-                    allServicePartner={props.allServicePartner}
-                    language={props.language}
-                />
-            ))}
-        </div>
+
+            <div className="add-new-button">
+                <button className="button-blue" onClick={()=> navigate("add")}>add new Scanner</button>
+                <button className="button-gey" onClick={()=> navigate("archive")}>Archive Scanners</button>
+            </div>
+            <SearchBar
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+            />
+            <div className="scanner-card-container">
+                {filteredScanners.map((s: ScannerModel) => (
+                    <ScannerCard
+                        key={s.id}
+                        scanner={s}
+                        allCustomer={props.allCustomer}
+                        allServicePartner={props.allServicePartner}
+                        language={props.language}
+                    />
+                ))}
+            </div>
 
         </>
     )

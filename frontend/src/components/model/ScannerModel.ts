@@ -1,24 +1,29 @@
 
 export type ScannerModel = {
     id: string;
-    customerId: string;
-    servicePartnerId: string;
-    deviceName?: string;
+    customerId?: string;
+    servicePartnerId?: string;
+    modelName?: string;
+    manufacturerCode?: string;
     serialNumber?: string;
+    scannerNrNavision?: string;
     contractNumber?: string;
-    invoiceNumber?: string;
-    deviceType: DeviceType;
-    contractType: ContractType;
-    status: ScannerStatus;
-    noMaintenance?: boolean;
     startDate?: string;
     endDate?: string;
+    slaMaintenance?: string;
+    locationAddress?: string;
+    contactPersonDetails?: string;
+    acquisitionDate?: string;
+    purchasedBy?: string;
+    deviceType?: DeviceType;
+    contractType?: ContractType;
+    status?: ScannerStatus;
     purchasePrice?: number;
     salePrice?: number;
     depreciation?: number;
-    maintenanceContent?: string;
-    note?: string;
+    notes?: string;
     imageUrl?: string;
+    isArchived?: boolean;
 }
 
 export type ScannerStatus =
@@ -27,30 +32,35 @@ export type ScannerStatus =
 
 export type ContractType =
     "AUTORENEWAL" |
-    "FIXED_END"
+    "FIXED_END";
 
 export type DeviceType =
     "SCANNER" |
-    "FLATBED_UNIT"
+    "FLATBED_UNIT";
 
 export const DefaultScanner: ScannerModel = {
     id: "0",
-    customerId: "0",
-    servicePartnerId: "0",
-    deviceName: "",
+    customerId: undefined,
+    servicePartnerId: undefined,
+    modelName: "",
+    manufacturerCode: "",
     serialNumber: "",
+    scannerNrNavision: "",
     contractNumber: "",
-    invoiceNumber: "",
+    startDate: undefined,
+    endDate: undefined,
+    slaMaintenance: "",
+    locationAddress: "",
+    contactPersonDetails: "",
+    acquisitionDate: undefined,
+    purchasedBy: "",
     deviceType: "SCANNER",
     contractType: "AUTORENEWAL",
     status: "ACTIVE",
-    noMaintenance: false,
-    startDate: undefined,
-    endDate: undefined,
     purchasePrice: 0,
     salePrice: 0,
     depreciation: 0,
-    maintenanceContent: "",
-    note: "",
-    imageUrl: undefined
+    notes: "",
+    imageUrl: undefined,
+    isArchived: false
 }

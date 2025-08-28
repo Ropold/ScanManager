@@ -59,10 +59,13 @@ public class ServicePartnerController {
         return servicePartnerService.addServicePartner(
                 new ServicePartnerModel(
                         UUID.randomUUID(),
+                        servicePartnerModel.getCreditorNrNavision(),
                         servicePartnerModel.getName(),
                         servicePartnerModel.getContactPerson(),
+                        servicePartnerModel.getContactDetails(),
                         servicePartnerModel.getNotes(),
-                        imageUrl
+                        imageUrl,
+                        false
                 )
         );
     }
@@ -83,10 +86,13 @@ public class ServicePartnerController {
 
         ServicePartnerModel updatedServicePartner = new ServicePartnerModel(
                 existingServicePartner.getId(),
+                servicePartnerModel.getCreditorNrNavision(),
                 servicePartnerModel.getName(),
                 servicePartnerModel.getContactPerson(),
+                servicePartnerModel.getContactDetails(),
                 servicePartnerModel.getNotes(),
-                newImageUrl
+                newImageUrl,
+                existingServicePartner.getIsArchived()
         );
 
         return servicePartnerService.updateServicePartner(updatedServicePartner);

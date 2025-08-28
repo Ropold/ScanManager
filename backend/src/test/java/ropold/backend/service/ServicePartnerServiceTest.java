@@ -23,17 +23,23 @@ class ServicePartnerServiceTest {
     void setUp() {
         ServicePartnerModel servicePartnerModel1 = new ServicePartnerModel(
                 java.util.UUID.fromString("00000000-0000-0000-0000-000000000001"),
-                "Service Partner 1",
+                "KRED-3001",
+                "Canon Deutschland GmbH",
                 "Contact Person 1",
+                "Europark Fichtenhain A10, 47807 Krefeld, Tel: +49 2151 345-0, Email: service@canon.de",
                 "Notes 1",
-                "http://example.com/partner1.jpg"
+                "http://example.com/partner1.jpg",
+                false
         );
         ServicePartnerModel servicePartnerModel2 = new ServicePartnerModel(
                 java.util.UUID.fromString("00000000-0000-0000-0000-000000000002"),
-                "Service Partner 2",
+                "KRED-3002",
+                "Kodak Alaris Germany GmbH",
                 "Contact Person 2",
+                "Hemshofstraße 14E, 68163 Mannheim, Tel: +49 621 43001-0, Email: support@kodakalaris.com",
                 "Notes 2",
-                "http://example.com/partner2.jpg"
+                "http://example.com/partner2.jpg",
+                false
         );
         servicePartnerModels = List.of(servicePartnerModel1, servicePartnerModel2);
         when(servicePartnerRepository.findAll()).thenReturn(servicePartnerModels);
@@ -57,10 +63,13 @@ class ServicePartnerServiceTest {
     void testAddServicePartner() {
         ServicePartnerModel newPartner = new ServicePartnerModel(
                 java.util.UUID.fromString("00000000-0000-0000-0000-000000000003"),
-                "Service Partner 3",
+                "KRED-3003",
+                "Ricoh Deutschland GmbH",
                 "Contact Person 3",
+                "Vahrenwalder Straße 315, 30179 Hannover, Tel: +49 511 6742-0, Email: service@ricoh.de",
                 "Notes 3",
-                "http://example.com/partner3.jpg"
+                "http://example.com/partner3.jpg",
+                false
         );
         when(servicePartnerRepository.save(newPartner)).thenReturn(newPartner);
         ServicePartnerModel result = servicePartnerService.addServicePartner(newPartner);
@@ -72,10 +81,13 @@ class ServicePartnerServiceTest {
         ServicePartnerModel existingPartner = servicePartnerModels.getFirst();
         ServicePartnerModel updatedPartner = new ServicePartnerModel(
                 existingPartner.getId(),
-                "Updated Service Partner 1",
+                existingPartner.getCreditorNrNavision(),
+                "Canon Europe B.V.",
                 "Updated Contact Person 1",
+                "Bovenkerkerweg 59, 1185 XB Amstelveen, Netherlands, Tel: +31 20 545-8545, Email: support@canon.eu",
                 "Updated Notes 1",
-                "http://example.com/updated_partner1.jpg"
+                "http://example.com/updated_partner1.jpg",
+                existingPartner.getIsArchived()
         );
 
         when(servicePartnerRepository.findById(existingPartner.getId())).thenReturn(java.util.Optional.of(existingPartner));

@@ -10,7 +10,7 @@ export default function CustomerCard(props: Readonly<CustomerCardProps>) {
     const navigate = useNavigate();
 
     const handleCardClick = () => {
-        navigate(`/customer/${props.customer.id}`);
+        navigate(`/customers/${props.customer.id}`);
     }
 
     return(

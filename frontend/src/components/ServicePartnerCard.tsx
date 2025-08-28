@@ -10,7 +10,7 @@ export default function ServicePartnerCard(props: Readonly<ServicePartnerCardPro
     const navigate = useNavigate();
 
     const handleCardClick = () => {
-        navigate(`/service-partner/${props.servicePartner.id}`);
+        navigate(`/service-partners/${props.servicePartner.id}`);
     }
 
     return (

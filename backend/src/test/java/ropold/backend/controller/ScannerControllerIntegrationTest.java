@@ -64,62 +64,78 @@ class ScannerControllerIntegrationTest {
 
         ServicePartnerModel servicePartnerModel1 = new ServicePartnerModel(
                 java.util.UUID.fromString("00000000-0000-0000-0000-000000000011"),
+                "KRED-3001",
                 "Test Partner 1",
                 "Contact Person 1",
+                "Servicestraße 15, 70173 Stuttgart, Tel: +49 711 123456, Email: info@testpartner1.de",
                 "Notes 1",
-                "http://partner1.com"
+                "http://partner1.com",
+                false
         );
 
         CustomerModel customerModel1 = new CustomerModel(
                 java.util.UUID.fromString("00000000-0000-0000-0000-000000000101"),
+                "DEB-2024-001",
                 "Max Mustermann",
                 "Contact Person1",
+                "Musterstraße 123, 12345 Berlin, Tel: +49 30 123456, Email: kontakt@mustermann.de",
                 "Notes1",
-                "http://example.com/customer1.jpg"
+                "http://example.com/customer1.jpg",
+                false
         );
 
         ScannerModel scannerModel1 = new ScannerModel(
                 java.util.UUID.fromString("00000000-0000-0000-0000-000000000001"),
                 UUID.fromString("00000000-0000-0000-0000-000000000101"),
                 UUID.fromString("00000000-0000-0000-0000-000000000011"),
-                "Test Scanner",
+                "Canon imageFORMULA DR-C240",
+                "CAN",
                 "SN-001",
+                "SCN-001",
                 "CN-001",
-                "IN-001",
+                LocalDate.of(2024, 1, 1),
+                LocalDate.of(2027, 1, 1),
+                "Wartung alle 6 Monate",
+                "Hauptgebäude, Raum 101",
+                "Hans Müller, Tel: +49 30 123456",
+                LocalDate.of(2023, 12, 15),
+                "Also Holding AG",
                 DeviceType.SCANNER,
                 ContractType.AUTORENEWAL,
                 ScannerStatus.ACTIVE,
-                false,
-                LocalDate.of(2024, 1, 1),
-                LocalDate.of(2027, 1, 1),
                 new BigDecimal("1500.00"),
                 new BigDecimal("1800.00"),
                 new BigDecimal("300.00"),
-                "Standard maintenance",
                 "Test note",
-                "http://example.com/scanner1.jpg"
+                "http://example.com/scanner1.jpg",
+                false
         );
 
         ScannerModel scannerModel2 = new ScannerModel(
                 java.util.UUID.fromString("00000000-0000-0000-0000-000000000002"),
                 UUID.fromString("00000000-0000-0000-0000-000000000101"),
                 UUID.fromString("00000000-0000-0000-0000-000000000011"),
-                "Test Scanner 2",
+                "Kodak i2900 Scanner",
+                "KOD",
                 "SN-002",
+                "SCN-002",
                 "CN-002",
-                "IN-002",
+                LocalDate.of(2024, 2, 1),
+                LocalDate.of(2027, 2, 1),
+                "Wartung alle 4 Monate",
+                "Nebengebäude, Etage 2",
+                "Eva Schmidt, Tel: +49 89 987654",
+                LocalDate.of(2024, 1, 20),
+                "Computacenter AG",
                 DeviceType.SCANNER,
                 ContractType.AUTORENEWAL,
                 ScannerStatus.ACTIVE,
-                false,
-                LocalDate.of(2024, 2, 1),
-                LocalDate.of(2027, 2, 1),
                 new BigDecimal("1600.00"),
                 new BigDecimal("1900.00"),
                 new BigDecimal("350.00"),
-                "Premium maintenance",
                 "Test note 2",
-                "http://example.com/scanner2.jpg"
+                "http://example.com/scanner2.jpg",
+                false
         );
 
         servicePartnerRepository.save(servicePartnerModel1);
@@ -128,19 +144,19 @@ class ScannerControllerIntegrationTest {
     }
 
     @Test
-    void testGetAllScanners() throws  Exception {
+    void testGetAllScanners() throws Exception {
         mockMvc.perform(get("/api/scanners"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(2))
-                .andExpect(jsonPath("$[0].deviceName").value("Test Scanner"))
-                .andExpect(jsonPath("$[1].deviceName").value("Test Scanner 2"));
+                .andExpect(jsonPath("$[0].modelName").value("Canon imageFORMULA DR-C240"))
+                .andExpect(jsonPath("$[1].modelName").value("Kodak i2900 Scanner"));
     }
 
     @Test
     void testGetScannerById() throws Exception {
         mockMvc.perform(get("/api/scanners/00000000-0000-0000-0000-000000000001"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.deviceName").value("Test Scanner"))
+                .andExpect(jsonPath("$.modelName").value("Canon imageFORMULA DR-C240"))
                 .andExpect(jsonPath("$.serialNumber").value("SN-001"));
     }
 
@@ -168,25 +184,29 @@ class ScannerControllerIntegrationTest {
         mockMvc.perform(multipart("/api/scanners")
                         .file(new MockMultipartFile("image", "image.jpg", "image/jpeg", "image".getBytes()))
                         .file(new MockMultipartFile("scannerModel", "", "application/json", """
-           {
-             "customerId": "00000000-0000-0000-0000-000000000101",
-             "servicePartnerId": "00000000-0000-0000-0000-000000000011",
-             "deviceName": "Test Scanner 3",
-             "serialNumber": "SN-003",
-             "contractNumber": "CN-003",
-             "invoiceNumber": "IN-003",
-             "deviceType": "SCANNER",
-             "contractType": "AUTORENEWAL",
-             "status": "ACTIVE",
-             "noMaintenance": false,
-             "startDate": "2024-03-01",
-             "endDate": "2027-03-01",
-             "purchasePrice": 1700.00,
-             "salePrice": 2000.00,
-             "depreciation": 400.00,
-             "maintenanceContent": "Test maintenance",
-             "note": "Test note 3"
-           }
+            {
+              "customerId": "00000000-0000-0000-0000-000000000101",
+              "servicePartnerId": "00000000-0000-0000-0000-000000000011",
+              "modelName": "Canon imageFORMULA DR-C225W",
+              "manufacturerCode": "CAN",
+              "serialNumber": "SN-003",
+              "scannerNrNavision": "SCN-003",
+              "contractNumber": "CN-003",
+              "deviceType": "SCANNER",
+              "contractType": "AUTORENEWAL",
+              "status": "ACTIVE",
+              "startDate": "2024-03-01",
+              "endDate": "2027-03-01",
+              "slaMaintenance": "Wartung alle 6 Monate",
+              "locationAddress": "Testgebäude, Raum 103",
+              "contactPersonDetails": "Klaus Test, Tel: +49 30 999888",
+              "acquisitionDate": "2024-02-15",
+              "purchasedBy": "Cancom SE",
+              "purchasePrice": 1700.00,
+              "salePrice": 2000.00,
+              "depreciation": 400.00,
+              "notes": "Test note 3"
+            }
            """.getBytes())))
                 .andExpect(status().isCreated());
 
@@ -199,25 +219,29 @@ class ScannerControllerIntegrationTest {
         mockMvc.perform(multipart("/api/scanners")
                         .file(new MockMultipartFile("image", "image.jpg", "image/jpeg", "image".getBytes()))
                         .file(new MockMultipartFile("scannerModel", "", "application/json", """
-           {
-             "customerId": "00000000-0000-0000-0000-000000000101",
-             "servicePartnerId": "00000000-0000-0000-0000-000000000011",
-             "deviceName": "Test Scanner 3",
-             "serialNumber": "SN-003",
-             "contractNumber": "CN-003",
-             "invoiceNumber": "IN-003",
-             "deviceType": "SCANNER",
-             "contractType": "AUTORENEWAL",
-             "status": "ACTIVE",
-             "noMaintenance": false,
-             "startDate": "2024-03-01",
-             "endDate": "2027-03-01",
-             "purchasePrice": 1700.00,
-             "salePrice": 2000.00,
-             "depreciation": 400.00,
-             "maintenanceContent": "Test maintenance",
-             "note": "Test note 3"
-           }
+            {
+              "customerId": "00000000-0000-0000-0000-000000000101",
+              "servicePartnerId": "00000000-0000-0000-0000-000000000011",
+              "modelName": "Canon imageFORMULA DR-C225W",
+              "manufacturerCode": "CAN",
+              "serialNumber": "SN-003",
+              "scannerNrNavision": "SCN-003",
+              "contractNumber": "CN-003",
+              "deviceType": "SCANNER",
+              "contractType": "AUTORENEWAL",
+              "status": "ACTIVE",
+              "startDate": "2024-03-01",
+              "endDate": "2027-03-01",
+              "slaMaintenance": "Wartung alle 6 Monate",
+              "locationAddress": "Testgebäude, Raum 103",
+              "contactPersonDetails": "Klaus Test, Tel: +49 30 999888",
+              "acquisitionDate": "2024-02-15",
+              "purchasedBy": "Cancom SE",
+              "purchasePrice": 1700.00,
+              "salePrice": 2000.00,
+              "depreciation": 400.00,
+              "notes": "Test note 3"
+            }
            """.getBytes())))
                 .andExpect(status().isForbidden());
 
@@ -236,7 +260,7 @@ class ScannerControllerIntegrationTest {
         OAuth2AuthenticationToken authToken = new OAuth2AuthenticationToken(
                 mockOAuth2User,
                 List.of(new SimpleGrantedAuthority("OIDC_USER")),
-                "azure"  // registrationId wichtig!
+                "azure"
         );
 
         SecurityContextHolder.getContext().setAuthentication(authToken);
@@ -248,39 +272,44 @@ class ScannerControllerIntegrationTest {
         mockMvc.perform(MockMvcRequestBuilders.multipart("/api/scanners/00000000-0000-0000-0000-000000000001")
                         .file(new MockMultipartFile("image", "image.jpg", "image/jpeg", "image".getBytes()))
                         .file(new MockMultipartFile("scannerModel", "", "application/json", """
-                        {
-                         "id": "00000000-0000-0000-0000-000000000001",
-                         "customerId": "00000000-0000-0000-0000-000000000101",
-                         "servicePartnerId": "00000000-0000-0000-0000-000000000011",
-                         "deviceName": "Test Scanner 3 Updated",
-                         "serialNumber": "SN-003",
-                         "contractNumber": "CN-003",
-                         "invoiceNumber": "IN-003",
-                         "deviceType": "SCANNER",
-                         "contractType": "AUTORENEWAL",
-                         "status": "ACTIVE",
-                         "noMaintenance": false,
-                         "startDate": "2024-03-01",
-                         "endDate": "2027-03-01",
-                         "purchasePrice": 1700.00,
-                         "salePrice": 2000.00,
-                         "depreciation": 400.00,
-                         "maintenanceContent": "Test maintenance",
-                         "note": "Test note 3",
-                         "imageUrl": "https://example.com/updated-image.jpg"
-                        }
-                    """.getBytes()))
+                    {
+                     "id": "00000000-0000-0000-0000-000000000001",
+                     "customerId": "00000000-0000-0000-0000-000000000101",
+                     "servicePartnerId": "00000000-0000-0000-0000-000000000011",
+                     "modelName": "Canon imageFORMULA DR-G2140 Updated",
+                     "manufacturerCode": "CAN",
+                     "serialNumber": "SN-003-UPD",
+                     "scannerNrNavision": "SCN-003-UPD",
+                     "contractNumber": "CN-003-UPD",
+                     "deviceType": "SCANNER",
+                     "contractType": "AUTORENEWAL",
+                     "status": "ACTIVE",
+                     "startDate": "2024-03-01",
+                     "endDate": "2027-03-01",
+                     "slaMaintenance": "Wartung alle 3 Monate, Express-Service",
+                     "locationAddress": "Hauptgebäude, Raum 105 - Updated",
+                     "contactPersonDetails": "Maria Fischer Updated, Tel: +49 30 123999",
+                     "acquisitionDate": "2023-12-20",
+                     "purchasedBy": "Dataport AöR",
+                     "purchasePrice": 1700.00,
+                     "salePrice": 2000.00,
+                     "depreciation": 400.00,
+                     "notes": "Updated test note 3",
+                     "imageUrl": "https://example.com/updated-image.jpg",
+                     "isArchived": false
+                    }
+                """.getBytes()))
                         .contentType("multipart/form-data")
                         .with(request -> {
                             request.setMethod("PUT");
                             return request;
                         }))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.deviceName").value("Test Scanner 3 Updated"))
+                .andExpect(jsonPath("$.modelName").value("Canon imageFORMULA DR-G2140 Updated"))
                 .andExpect(jsonPath("$.imageUrl").value("https://example.com/updated-image.jpg"));
 
         ScannerModel updatedScanner = scannerRepository.findById(UUID.fromString("00000000-0000-0000-0000-000000000001")).orElseThrow();
-        Assertions.assertEquals("Test Scanner 3 Updated", updatedScanner.getDeviceName());
+        Assertions.assertEquals("Canon imageFORMULA DR-G2140 Updated", updatedScanner.getModelName());
         Assertions.assertEquals("https://example.com/updated-image.jpg", updatedScanner.getImageUrl());
     }
 

@@ -51,18 +51,24 @@ class ServicePartnerControllerIntegrationTest {
 
         ServicePartnerModel servicePartnerModel1 = new ServicePartnerModel(
                 java.util.UUID.fromString("00000000-0000-0000-0000-000000000001"),
+                "KRED-3001",
                 "Test Partner 1",
                 "Contact Person 1",
+                "Teststraße 10, 40210 Düsseldorf, Tel: +49 211 123456, Email: info@partner1.de",
                 "Notes 1",
-                "http://partner1.com"
+                "http://partner1.com",
+                false
         );
 
         ServicePartnerModel servicePartnerModel2 = new ServicePartnerModel(
                 java.util.UUID.fromString("00000000-0000-0000-0000-000000000002"),
+                "KRED-3002",
                 "Test Partner 2",
                 "Contact Person 2",
+                "Musterweg 20, 60594 Frankfurt, Tel: +49 69 987654, Email: service@partner2.de",
                 "Notes 2",
-                "http://partner2.com"
+                "http://partner2.com",
+                false
         );
 
         servicePartnerRepository.saveAll(java.util.List.of(servicePartnerModel1, servicePartnerModel2));

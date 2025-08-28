@@ -25,18 +25,24 @@ class CustomerServiceTest {
 
         CustomerModel customerModel1 = new CustomerModel(
                 java.util.UUID.fromString("00000000-0000-0000-0000-000000000001"),
+                "DEB-2024-001",
                 "Max Mustermann",
                 "Contact Person1",
+                "Musterstraße 123, 12345 Berlin, Tel: +49 30 123456, Email: kontakt@mustermann.de",
                 "Notes1",
-                "http://example.com/customer1.jpg"
+                "http://example.com/customer1.jpg",
+                false
         );
 
         CustomerModel customerModel2 = new CustomerModel(
                 java.util.UUID.fromString("00000000-0000-0000-0000-000000000002"),
+                "DEB-2024-002",
                 "Erika Musterfrau",
                 "Contact Person2",
+                "Beispielweg 45, 80331 München, Tel: +49 89 987654, Email: info@musterfrau.com",
                 "Notes2",
-                "http://example.com/customer2.jpg"
+                "http://example.com/customer2.jpg",
+                false
         );
 
         customerModels = List.of(customerModel1, customerModel2);
@@ -62,10 +68,13 @@ class CustomerServiceTest {
 
         CustomerModel customerModel3 = new CustomerModel(
                 java.util.UUID.fromString("00000000-0000-0000-0000-000000000003"),
+                "DEB-2024-003",
                 "Hans Beispiel",
                 "Contact Person3",
+                "Teststraße 78, 50667 Köln, Tel: +49 221 555123, Email: kontakt@beispiel.de",
                 "Notes3",
-                "http://example.com/customer3.jpg"
+                "http://example.com/customer3.jpg",
+                false
         );
         when(customerRepository.save(customerModel3)).thenReturn(customerModel3);
         CustomerModel expected = customerService.addCustomer(customerModel3);
@@ -77,10 +86,13 @@ class CustomerServiceTest {
     void testUpdateCustomer() {
         CustomerModel updatedCustomer = new CustomerModel(
                 java.util.UUID.fromString("00000000-0000-0000-0000-000000000001"),
+                "DEB-2024-001",
                 "Max Mustermann",
                 "New Contact Person1",
+                "Neue Straße 456, 10115 Berlin, Tel: +49 30 777888, Email: neu@mustermann.de",
                 "New Notes1",
-                "http://example.com/customer1.jpg"
+                "http://example.com/customer1.jpg",
+                false
         );
 
         when(customerRepository.findById(updatedCustomer.getId())).thenReturn(java.util.Optional.of(customerModels.getFirst()));

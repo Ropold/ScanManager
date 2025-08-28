@@ -144,23 +144,7 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "tr": "Tarayıcı",
         "ir": "اسکنر"
     },
-    "Name": {
-        "de": "Name",
-        "en": "Name",
-        "pl": "Nazwa",
-        "es": "Nombre",
-        "fr": "Nom",
-        "it": "Nome",
-        "cz": "Jméno",
-        "pt": "Nome",
-        "hu": "Név",
-        "nl": "Naam",
-        "gr": "Όνομα",
-        "ru": "Имя",
-        "tr": "İsim",
-        "ir": "نام"
-    },
-    "Contact Person":{
+    "contactPerson":{
         "de": "Ansprechpartner",
         "en": "Contact Person",
         "pl": "Osoba kontaktowa",
@@ -176,7 +160,7 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "tr": "İletişim Kişisi",
         "ir": "شخص تماس"
     },
-    "Notes": {
+    "notes": {
         "de": "Notizen",
         "en": "Notes",
         "pl": "Notatki",
@@ -192,7 +176,7 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "tr": "Notlar",
         "ir": "یادداشت‌ها"
     },
-    "Image": {
+    "image": {
         "de": "Bild",
         "en": "Image",
         "pl": "Obraz",
@@ -208,7 +192,7 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "tr": "Görüntü",
         "ir": "تصویر"
     },
-    "SQL-ID": {
+    "sql-id": {
         "de": "SQL-ID",
         "en": "SQL-ID",
         "pl": "SQL-ID",
@@ -240,23 +224,23 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "tr": "Yükleniyor",
         "ir": "در حال بارگذاری"
     },
-    "Device Name": {
-        "de": "Gerätename",
-        "en": "Device Name",
-        "pl": "Nazwa urządzenia",
-        "es": "Nombre del dispositivo",
-        "fr": "Nom de l'appareil",
-        "it": "Nome del dispositivo",
-        "cz": "Název zařízení",
-        "pt": "Nome do dispositivo",
-        "hu": "Eszköz neve",
-        "nl": "Apparaatnaam",
-        "gr": "Όνομα συσκευής",
-        "ru": "Имя устройства",
-        "tr": "Cihaz Adı",
-        "ir": "نام دستگاه"
+    "modelName": {
+        "de": "Modellname",
+        "en": "Model Name",
+        "pl": "Nazwa modelu",
+        "es": "Nombre del modelo",
+        "fr": "Nom du modèle",
+        "it": "Nome del modello",
+        "cz": "Název modelu",
+        "pt": "Nome do modelo",
+        "hu": "Modell neve",
+        "nl": "Modelnaam",
+        "gr": "Όνομα μοντέλου",
+        "ru": "Название модели",
+        "tr": "Model Adı",
+        "ir": "نام مدل"
     },
-    "Serial Number": {
+    "serialNumber": {
         "de": "Seriennummer",
         "en": "Serial Number",
         "pl": "Numer seryjny",
@@ -272,7 +256,7 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "tr": "Seri Numarası",
         "ir": "شماره سریال"
     },
-    "Contract Number":{
+    "contractNumber":{
         "de": "Vertragsnummer",
         "en": "Contract Number",
         "pl": "Numer umowy",
@@ -304,7 +288,7 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "tr": "Fatura Numarası",
         "ir": "شماره فاکتور"
     },
-    "Contract Type":{
+    "contractType":{
         "de": "Vertragsart",
         "en": "Contract Type",
         "pl": "Rodzaj umowy",
@@ -320,7 +304,7 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "tr": "Sözleşme Türü",
         "ir": "نوع قرارداد"
     },
-    "Status": {
+    "status": {
         "de": "Status",
         "en": "Status",
         "pl": "Status",
@@ -352,7 +336,7 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "tr": "Bakım Yok",
         "ir": "بدون نگهداری"
     },
-    "Start Date": {
+    "startDate": {
         "de": "Startdatum",
         "en": "Start Date",
         "pl": "Data rozpoczęcia",
@@ -368,7 +352,7 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "tr": "Başlangıç Tarihi",
         "ir": "تاریخ شروع"
     },
-    "End Date":{
+    "endDate":{
         "de": "Enddatum",
         "en": "End Date",
         "pl": "Data zakończenia",
@@ -384,7 +368,7 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "tr": "Bitiş Tarihi",
         "ir": "تاریخ پایان"
     },
-    "Purchase Price":{
+    "purchasePrice":{
         "de": "Kaufpreis",
         "en": "Purchase Price",
         "pl": "Cena zakupu",
@@ -400,7 +384,7 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "tr": "Satın Alma Fiyatı",
         "ir": "قیمت خرید"
     },
-    "Sale Price":{
+    "salePrice":{
         "de": "Verkaufspreis",
         "en": "Sale Price",
         "pl": "Cena sprzedaży",
@@ -416,7 +400,7 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "tr": "Satış Fiyatı",
         "ir": "قیمت فروش"
     },
-    "Depreciation": {
+    "depreciation": {
         "de": "Abschreibung",
         "en": "Depreciation",
         "pl": "Amortyzacja",
@@ -432,9 +416,9 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "tr": "Amortisman",
         "ir": "استهلاک"
     },
-    "Customer ID":{
+    "customerID":{
         "de": "Kunden-ID",
-        "en": "Customer ID",
+        "en": "Customers ID",
         "pl": "ID klienta",
         "es": "ID del cliente",
         "fr": "ID du client",
@@ -448,7 +432,7 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "tr": "Müşteri Kimliği",
         "ir": "شناسه مشتری"
     },
-    "Service Partner ID": {
+    "servicePartnerId": {
         "de": "Service Partner ID",
         "en": "Service Partner ID",
         "pl": "ID partnera serwisowego",
@@ -512,7 +496,7 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "tr": "Hayır",
         "ir": "خیر"
     },
-    "Device Type": {
+    "deviceType": {
         "de": "Gerätetyp",
         "en": "Device Type",
         "pl": "Typ urządzenia",
@@ -527,5 +511,213 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "ru": "Тип устройства",
         "tr": "Cihaz Türü",
         "ir": "نوع دستگاه"
+    },
+    "debitorNrNavision": {
+        "de": "Debitor Nr. Navision",
+        "en": "Debtor Number Navision",
+        "pl": "Nr Dłużnika Navision",
+        "es": "Núm. Deudor Navision",
+        "fr": "N° Débiteur Navision",
+        "it": "Num. Debitore Navision",
+        "cz": "Číslo Dlužníka Navision",
+        "pt": "Núm. Devedor Navision",
+        "hu": "Adós szám Navision",
+        "nl": "Debiteur Nr. Navision",
+        "gr": "Αρ. Χρεώστη Navision",
+        "ru": "Номер дебитора Navision",
+        "tr": "Borçlu No. Navision",
+        "ir": "شماره بدهکار Navision"
+    },
+    "contactDetails": {
+        "de": "Kontaktdaten",
+        "en": "Contact Details",
+        "pl": "Dane kontaktowe",
+        "es": "Detalles de contacto",
+        "fr": "Coordonnées",
+        "it": "Dettagli di contatto",
+        "cz": "Kontaktní údaje",
+        "pt": "Detalhes de contato",
+        "hu": "Kapcsolattartási adatok",
+        "nl": "Contactgegevens",
+        "gr": "Στοιχεία επικοινωνίας",
+        "ru": "Контактные данные",
+        "tr": "İletişim Detayları",
+        "ir": "جزئیات تماس"
+    },
+    "isArchived": {
+        "de": "Ist archiviert",
+        "en": "Is Archived",
+        "pl": "Jest zarchiwizowane",
+        "es": "Está archivado",
+        "fr": "Est archivé",
+        "it": "È archiviato",
+        "cz": "Je archivováno",
+        "pt": "Está arquivado",
+        "hu": "Archiválva",
+        "nl": "Is gearchiveerd",
+        "gr": "Αρχειοθετήθηκε",
+        "ru": "Архивировано",
+        "tr": "Arşivlendi",
+        "ir": "بایگانی شده است"
+    },
+    "creditorNrNavision": {
+        "de": "Kreditor Nr. Navision",
+        "en": "Creditor Number Navision",
+        "pl": "Nr Wierzyciela Navision",
+        "es": "Núm. Acreedor Navision",
+        "fr": "N° Créancier Navision",
+        "it": "Num. Creditore Navision",
+        "cz": "Číslo Věřitele Navision",
+        "pt": "Núm. Credor Navision",
+        "hu": "Hitelező szám Navision",
+        "nl": "Crediteur Nr. Navision",
+        "gr": "Αρ. Πιστωτή Navision",
+        "ru": "Номер кредитора Navision",
+        "tr": "Alacaklı No. Navision",
+        "ir": "شماره بستانکار Navision"
+    },
+    "manufacturerCode": {
+        "de": "Hersteller Code",
+        "en": "Manufacturer Code",
+        "pl": "Kod producenta",
+        "es": "Código del fabricante",
+        "fr": "Code du fabricant",
+        "it": "Codice del produttore",
+        "cz": "Kód výrobce",
+        "pt": "Código do fabricante",
+        "hu": "Gyártói kód",
+        "nl": "Fabrikantcode",
+        "gr": "Κωδικός κατασκευαστή",
+        "ru": "Код производителя",
+        "tr": "Üretici Kodu",
+        "ir": "کد سازنده"
+    },
+    "scannerNrNavision": {
+        "de": "Scanner Nr. Navision",
+        "en": "Scanner Number Navision",
+        "pl": "Nr Skanera Navision",
+        "es": "Núm. Escáner Navision",
+        "fr": "N° Scanner Navision",
+        "it": "Num. Scanner Navision",
+        "cz": "Číslo skeneru Navision",
+        "pt": "Núm. Scanner Navision",
+        "hu": "Szkenner szám Navision",
+        "nl": "Scanner Nr. Navision",
+        "gr": "Αρ. Σαρωτή Navision",
+        "ru": "Номер сканера Navision",
+        "tr": "Tarayıcı No. Navision",
+        "ir": "شماره اسکنر Navision"
+    },
+    "slaMaintenance": {
+        "de": "SLA Wartung",
+        "en": "SLA Maintenance",
+        "pl": "Konserwacja SLA",
+        "es": "Mantenimiento SLA",
+        "fr": "Maintenance SLA",
+        "it": "Manutenzione SLA",
+        "cz": "Údržba SLA",
+        "pt": "Manutenção SLA",
+        "hu": "SLA karbantartás",
+        "nl": "SLA-onderhoud",
+        "gr": "Συντήρηση SLA",
+        "ru": "Обслуживание по SLA",
+        "tr": "SLA Bakımı",
+        "ir": "نگهداری SLA"
+    },
+    "locationAddress": {
+        "de": "Standort Adresse",
+        "en": "Location Address",
+        "pl": "Adres lokalizacji",
+        "es": "Dirección de la ubicación",
+        "fr": "Adresse du lieu",
+        "it": "Indirizzo della sede",
+        "cz": "Adresa umístění",
+        "pt": "Endereço do local",
+        "hu": "Helyszín címe",
+        "nl": "Locatieadres",
+        "gr": "Διεύθυνση τοποθεσίας",
+        "ru": "Адрес местоположения",
+        "tr": "Konum Adresi",
+        "ir": "آدرس مکان"
+    },
+    "contactPersonDetails": {
+        "de": "Ansprechpartner Details",
+        "en": "Contact Person Details",
+        "pl": "Szczegóły osoby kontaktowej",
+        "es": "Detalles de la persona de contacto",
+        "fr": "Détails de la personne de contact",
+        "it": "Dettagli della persona di contatto",
+        "cz": "Podrobnosti o kontaktní osobě",
+        "pt": "Detalhes da pessoa de contato",
+        "hu": "Kapcsolattartó személy részletei",
+        "nl": "Contactpersoon details",
+        "gr": "Λεπτομέρειες υπεύθυνου επικοινωνίας",
+        "ru": "Данные контактного лица",
+        "tr": "İletişim Kişisi Detayları",
+        "ir": "جزئیات شخص تماس"
+    },
+    "acquisitionDate": {
+        "de": "Anschaffungsdatum",
+        "en": "Acquisition Date",
+        "pl": "Data nabycia",
+        "es": "Fecha de adquisición",
+        "fr": "Date d'acquisition",
+        "it": "Data di acquisizione",
+        "cz": "Datum pořízení",
+        "pt": "Data de aquisição",
+        "hu": "Beszerzés dátuma",
+        "nl": "Aankoopdatum",
+        "gr": "Ημερομηνία απόκτησης",
+        "ru": "Дата приобретения",
+        "tr": "Edinme Tarihi",
+        "ir": "تاریخ اکتساب"
+    },
+    "purchasedBy": {
+        "de": "Gekauft von",
+        "en": "Purchased By",
+        "pl": "Zakupione przez",
+        "es": "Comprado por",
+        "fr": "Acheté par",
+        "it": "Acquistato da",
+        "cz": "Zakoupeno kým",
+        "pt": "Comprado por",
+        "hu": "Vásárolta",
+        "nl": "Gekocht door",
+        "gr": "Αγοράστηκε από",
+        "ru": "Куплено у",
+        "tr": "Tarafından satın alındı",
+        "ir": "خریداری شده توسط"
+    },
+    "customerName": {
+        "de": "Kundenname",
+        "en": "Customers Name",
+        "pl": "Nazwa klienta",
+        "es": "Nombre del cliente",
+        "fr": "Nom du client",
+        "it": "Nome del cliente",
+        "cz": "Název zákazníka",
+        "pt": "Nome do cliente",
+        "hu": "Ügyfél neve",
+        "nl": "Klantnaam",
+        "gr": "Όνομα πελάτη",
+        "ru": "Имя клиента",
+        "tr": "Müşteri Adı",
+        "ir": "نام مشتری"
+    },
+    "servicePartnerName": {
+        "de": "Service Partner Name",
+        "en": "Service Partner Name",
+        "pl": "Nazwa partnera serwisowego",
+        "es": "Nombre del socio de servicio",
+        "fr": "Nom du partenaire de service",
+        "it": "Nome del partner di servizio",
+        "cz": "Název servisního partnera",
+        "pt": "Nome do parceiro de serviço",
+        "hu": "Szolgáltatói partner neve",
+        "nl": "Naam servicepartner",
+        "gr": "Όνομα συνεργάτη υπηρεσιών",
+        "ru": "Имя сервисного партнера",
+        "tr": "Hizmet Ortağı Adı",
+        "ir": "نام شریک خدمات"
     }
 }

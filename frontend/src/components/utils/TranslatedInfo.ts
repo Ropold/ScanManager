@@ -719,5 +719,21 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "ru": "Имя сервисного партнера",
         "tr": "Hizmet Ortağı Adı",
         "ir": "نام شریک خدمات"
+    },
+    "Add Customer": {
+        "de": "Kunden hinzufügen",
+        "en": "Add Customer",
+        "pl": "Dodaj klienta",
+        "es": "Agregar cliente",
+        "fr": "Ajouter un client",
+        "it": "Aggiungi cliente",
+        "cz": "Přidat zákazníka",
+        "pt": "Adicionar cliente",
+        "hu": "Ügyfél hozzáadása",
+        "nl": "Klant toevoegen",
+        "gr": "Προσθήκη πελάτη",
+        "ru": "Добавить клиента",
+        "tr": "Müşteri Ekle",
+        "ir": "افزودن مشتری"
     }
 }

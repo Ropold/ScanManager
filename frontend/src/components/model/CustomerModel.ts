@@ -7,7 +7,7 @@ export type CustomerModel = {
     contactDetails?: string;
     notes?: string;
     imageUrl?: string;
-    isArchived?: boolean;
+    isArchived: boolean;
 }
 
 export const DefaultCustomer: CustomerModel = {

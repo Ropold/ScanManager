@@ -23,7 +23,7 @@ export type ScannerModel = {
     depreciation?: number;
     notes?: string;
     imageUrl?: string;
-    isArchived?: boolean;
+    isArchived: boolean;
 }
 
 export type ScannerStatus =

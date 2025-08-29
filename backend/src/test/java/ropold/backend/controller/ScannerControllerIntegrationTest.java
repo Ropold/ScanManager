@@ -138,9 +138,36 @@ class ScannerControllerIntegrationTest {
                 false
         );
 
+        ScannerModel scannerModel3 = new ScannerModel(
+                java.util.UUID.fromString("00000000-0000-0000-0000-000000000003"),
+                UUID.fromString("00000000-0000-0000-0000-000000000101"),
+                UUID.fromString("00000000-0000-0000-0000-000000000011"),
+                "Panasonic KV-S2087",
+                "PAN",
+                "SN-003",
+                "SCN-003",
+                "CN-003",
+                LocalDate.of(2024, 3, 1),
+                LocalDate.of(2027, 3, 1),
+                "Wartung alle 6 Monate",
+                "Lagergebäude, Raum 001",
+                "Michael Weber, Tel: +49 30 111222",
+                LocalDate.of(2024, 2, 15),
+                "Also Holding AG",
+                DeviceType.SCANNER,
+                ContractType.FIXED_END,
+                ScannerStatus.EXPIRED,
+                new BigDecimal("2950.00"),
+                new BigDecimal("3400.00"),
+                new BigDecimal("680.00"),
+                "Archived test scanner",
+                "http://example.com/scanner3.jpg",
+                true
+        );
+
         servicePartnerRepository.save(servicePartnerModel1);
         customerRepository.save(customerModel1);
-        scannerRepository.saveAll(List.of(scannerModel1, scannerModel2));
+        scannerRepository.saveAll(List.of(scannerModel1, scannerModel2, scannerModel3));
     }
 
     @Test
@@ -156,7 +183,7 @@ class ScannerControllerIntegrationTest {
     void testGetAllArchivedScanners() throws Exception {
         mockMvc.perform(get("/api/scanners/archived"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(0));
+                .andExpect(jsonPath("$.length()").value(1));
     }
 
     @Test
@@ -253,7 +280,7 @@ class ScannerControllerIntegrationTest {
                 .andExpect(status().isForbidden());
 
         List<ScannerModel> scanners = scannerRepository.findAll();
-        Assertions.assertEquals(2, scanners.size());
+        Assertions.assertEquals(3, scanners.size());
     }
 
     @Test

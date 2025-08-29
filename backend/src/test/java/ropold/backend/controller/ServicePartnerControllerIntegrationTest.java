@@ -71,7 +71,18 @@ class ServicePartnerControllerIntegrationTest {
                 false
         );
 
-        servicePartnerRepository.saveAll(java.util.List.of(servicePartnerModel1, servicePartnerModel2));
+        ServicePartnerModel servicePartnerModel3 = new ServicePartnerModel(
+                java.util.UUID.fromString("00000000-0000-0000-0000-000000000003"),
+                "KRED-3003",
+                "Test Partner 3",
+                "Contact Person 3",
+                "Industriestraße 99, 10115 Berlin, Tel: +49 30 444555, Email: support@partner3.de",
+                "Notes 3",
+                "http://partner3.com",
+                true
+        );
+
+        servicePartnerRepository.saveAll(java.util.List.of(servicePartnerModel1, servicePartnerModel2, servicePartnerModel3));
     }
 
     @Test
@@ -87,7 +98,7 @@ class ServicePartnerControllerIntegrationTest {
     void testGetAllArchivedServicePartners() throws Exception {
        mockMvc.perform(get("/api/service-partners/archived"))
                .andExpect(status().isOk())
-               .andExpect(jsonPath("$.length()").value(0));
+               .andExpect(jsonPath("$.length()").value(1));
     }
 
     @Test
@@ -157,7 +168,9 @@ class ServicePartnerControllerIntegrationTest {
                   "notes": "Notes 3"
                 }
                 """.getBytes())))
-                .andExpect(status().isForbidden());
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.length()").value(2));
+
     }
 
     @Test

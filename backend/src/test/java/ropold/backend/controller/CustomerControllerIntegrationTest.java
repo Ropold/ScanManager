@@ -71,7 +71,18 @@ class CustomerControllerIntegrationTest {
                 false
         );
 
-        customerRepository.saveAll(java.util.List.of(customerModel1, customerModel2));
+        CustomerModel customerModel3 = new CustomerModel(
+                java.util.UUID.fromString("00000000-0000-0000-0000-000000000003"),
+                "DEB-2024-003",
+                "Hans Beispiel",
+                "Contact Person3",
+                "Teststraße 78, 50667 Köln, Tel: +49 221 555123, Email: kontakt@beispiel.de",
+                "Notes3",
+                "http://example.com/customer3.jpg",
+                true
+        );
+
+        customerRepository.saveAll(java.util.List.of(customerModel1, customerModel2, customerModel3));
     }
 
     @Test
@@ -87,7 +98,7 @@ class CustomerControllerIntegrationTest {
     void testGetArchivedCustomers_shouldReturnArchivedCustomers() throws Exception {
         mockMvc.perform(get("/api/customers/archived"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(0));
+                .andExpect(jsonPath("$.length()").value(1));
     }
 
     @Test
@@ -155,7 +166,7 @@ class CustomerControllerIntegrationTest {
                 .andExpect(status().isForbidden());
 
         List<CustomerModel> allCustomers = customerRepository.findAll();
-        Assertions.assertEquals(2, allCustomers.size());
+        Assertions.assertEquals(3, allCustomers.size());
     }
 
     @Test

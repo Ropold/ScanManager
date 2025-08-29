@@ -18,7 +18,7 @@ public class CustomerService {
     private final ImageUploadUtil imageUploadUtil;
 
     public List<CustomerModel> getAllActiveCustomers() {
-        return customerRepository.findByIsArchivedFalse();
+        return customerRepository.findByIsArchivedFalseOrderByNameAsc();
     }
 
     public List<CustomerModel> getAllArchivedCustomers() {

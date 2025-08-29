@@ -18,7 +18,7 @@ public class ServicePartnerService {
     private final ImageUploadUtil imageUploadUtil;
 
     public List<ServicePartnerModel> getAllActiveServicePartners() {
-        return servicePartnerRepository.findByIsArchivedFalse();
+        return servicePartnerRepository.findByIsArchivedFalseOrderByNameAsc();
     }
 
     public List<ServicePartnerModel> getAllArchivedServicePartners() {

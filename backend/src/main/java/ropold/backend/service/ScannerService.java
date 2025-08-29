@@ -18,7 +18,7 @@ public class ScannerService {
     private final ImageUploadUtil imageUploadUtil;
 
     public List<ScannerModel> getAllActiveScanners() {
-        return scannerRepository.findByIsArchivedFalse();
+        return scannerRepository.findByIsArchivedFalseOrderByEndDateAsc();
     }
 
     public List<ScannerModel> getAllArchivedScanners() {

@@ -111,7 +111,7 @@ class ScannerServiceTest {
 
         activeScanners = List.of(scannerModel1, scannerModel2);
         archivedScanners = List.of(scannerModel3);
-        when(scannerRepository.findByIsArchivedFalse()).thenReturn(activeScanners);
+        when(scannerRepository.findByIsArchivedFalseOrderByEndDateAsc()).thenReturn(activeScanners);
         when(scannerRepository.findByIsArchivedTrue()).thenReturn(archivedScanners);
     }
 

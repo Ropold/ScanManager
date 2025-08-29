@@ -55,7 +55,7 @@ class ServicePartnerServiceTest {
         );
         activeServicePartners = List.of(servicePartnerModel1, servicePartnerModel2);
         archivedServicePartners = List.of(servicePartnerModel3);
-        when(servicePartnerRepository.findByIsArchivedFalse()).thenReturn(activeServicePartners);
+        when(servicePartnerRepository.findByIsArchivedFalseOrderByNameAsc()).thenReturn(activeServicePartners);
         when(servicePartnerRepository.findByIsArchivedTrue()).thenReturn(archivedServicePartners);
     }
 

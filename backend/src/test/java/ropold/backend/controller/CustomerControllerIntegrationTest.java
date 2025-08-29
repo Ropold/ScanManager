@@ -90,8 +90,8 @@ class CustomerControllerIntegrationTest {
         mockMvc.perform(get("/api/customers"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(2))
-                .andExpect(jsonPath("$[0].name").value("Max Mustermann"))
-                .andExpect(jsonPath("$[1].name").value("Erika Musterfrau"));
+                .andExpect(jsonPath("$[0].name").value("Erika Musterfrau"))
+                .andExpect(jsonPath("$[1].name").value("Max Mustermann"));
     }
 
     @Test

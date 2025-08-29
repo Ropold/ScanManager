@@ -7,6 +7,6 @@ import java.util.List;
 import java.util.UUID;
 
 public interface ServicePartnerRepository extends JpaRepository<ServicePartnerModel, UUID> {
-    List<ServicePartnerModel> findByIsArchivedFalse();
+    List<ServicePartnerModel> findByIsArchivedFalseOrderByNameAsc();
     List<ServicePartnerModel> findByIsArchivedTrue();
 }

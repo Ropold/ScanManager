@@ -59,7 +59,7 @@ class CustomerServiceTest {
         activeCustomers = List.of(customerModel1, customerModel2);
         archivedCustomers = List.of(customerModel3);
 
-        when(customerRepository.findByIsArchivedFalse()).thenReturn(activeCustomers);
+        when(customerRepository.findByIsArchivedFalseOrderByNameAsc()).thenReturn(activeCustomers);
         when(customerRepository.findByIsArchivedTrue()).thenReturn(archivedCustomers);
     }
 

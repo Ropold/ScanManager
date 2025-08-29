@@ -23,7 +23,8 @@ class ScannerServiceTest {
     ImageUploadUtil imageUploadUtil = mock(ImageUploadUtil.class);
     ScannerService scannerService = new ScannerService(cloudinaryService, scannerRepository, imageUploadUtil);
 
-    List<ScannerModel> scannerModels;
+    List<ScannerModel> activeScanners;
+    List<ScannerModel> archivedScanners;
 
     @BeforeEach
     void setUp() {
@@ -81,19 +82,54 @@ class ScannerServiceTest {
                 false
         );
 
-        scannerModels = java.util.List.of(scannerModel1, scannerModel2);
-        when(scannerRepository.findAll()).thenReturn(scannerModels);
+        ScannerModel scannerModel3 = new ScannerModel(
+                java.util.UUID.fromString("00000000-0000-0000-0000-000000000003"),
+                java.util.UUID.fromString("10000000-0000-0000-0000-000000000001"),
+                java.util.UUID.fromString("20000000-0000-0000-0000-000000000001"),
+                "Ricoh fi-7300NX",
+                "RIC",
+                "SN-003",
+                "SCN-003",
+                "CN-003",
+                java.time.LocalDate.of(2022, 5, 1),
+                java.time.LocalDate.of(2024, 5, 1),
+                "Wartung alle 8 Monate",
+                "Lagergebäude, Raum 203",
+                "Julia Fischer, Tel: +49 40 777888",
+                java.time.LocalDate.of(2022, 4, 10),
+                "Cancom SE & Co. KGaA",
+                DeviceType.SCANNER,
+                ContractType.FIXED_END,
+                ScannerStatus.EXPIRED,
+                new java.math.BigDecimal("3200.00"),
+                new java.math.BigDecimal("3800.00"),
+                new java.math.BigDecimal("760.00"),
+                "Archivierter Scanner - Vertrag abgelaufen",
+                "http://example.com/scanner3.jpg",
+                true
+        );
+
+        activeScanners = List.of(scannerModel1, scannerModel2);
+        archivedScanners = List.of(scannerModel3);
+        when(scannerRepository.findByIsArchivedFalseOrderByEndDateAsc()).thenReturn(activeScanners);
+        when(scannerRepository.findByIsArchivedTrue()).thenReturn(archivedScanners);
     }
 
     @Test
     void testGetAllScanners() {
-        List<ScannerModel> result = scannerService.getAllScanners();
-        assertEquals(scannerModels, result);
+        List<ScannerModel> result = scannerService.getAllActiveScanners();
+        assertEquals(activeScanners, result);
+    }
+
+    @Test
+    void testGetAllArchivedScanners() {
+        List<ScannerModel> result = scannerService.getAllArchivedScanners();
+        assertEquals(archivedScanners, result);
     }
 
     @Test
     void testGetScannerById() {
-        ScannerModel expectedScanner = scannerModels.getFirst();
+        ScannerModel expectedScanner = activeScanners.getFirst();
         when(scannerRepository.findById(expectedScanner.getId())).thenReturn(java.util.Optional.of(expectedScanner));
         ScannerModel result = scannerService.getScannerById(expectedScanner.getId());
         assertEquals(expectedScanner, result);
@@ -141,7 +177,7 @@ class ScannerServiceTest {
 
     @Test
     void testUpdateScanner(){
-        ScannerModel existingScanner = scannerModels.getFirst();
+        ScannerModel existingScanner = activeScanners.getFirst();
         ScannerModel updatedScanner = new ScannerModel(
                 existingScanner.getId(),
                 existingScanner.getCustomerId(),
@@ -180,7 +216,7 @@ class ScannerServiceTest {
 
     @Test
     void testDeleteScanner(){
-        ScannerModel existingScanner = scannerModels.getFirst();
+        ScannerModel existingScanner = activeScanners.getFirst();
         when(scannerRepository.findById(existingScanner.getId())).thenReturn(java.util.Optional.of(existingScanner));
         scannerService.deleteScanner(existingScanner.getId());
         verify(scannerRepository).deleteById(existingScanner.getId());

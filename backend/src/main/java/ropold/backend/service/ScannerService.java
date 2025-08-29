@@ -17,8 +17,12 @@ public class ScannerService {
     private final ScannerRepository scannerRepository;
     private final ImageUploadUtil imageUploadUtil;
 
-    public List<ScannerModel> getAllScanners() {
-        return scannerRepository.findAll();
+    public List<ScannerModel> getAllActiveScanners() {
+        return scannerRepository.findByIsArchivedFalseOrderByEndDateAsc();
+    }
+
+    public List<ScannerModel> getAllArchivedScanners() {
+        return scannerRepository.findByIsArchivedTrue();
     }
 
     public ScannerModel getScannerById(UUID id) {

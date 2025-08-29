@@ -17,8 +17,8 @@ class CustomerServiceTest {
     ImageUploadUtil imageUploadUtil = mock(ImageUploadUtil.class);
     CustomerService customerService = new CustomerService(cloudinaryService, customerRepository, imageUploadUtil);
 
-    List<CustomerModel> customerModels;
-
+    List<CustomerModel> activeCustomers;
+    List<CustomerModel> archivedCustomers;
 
     @BeforeEach
     void setUp() {
@@ -45,19 +45,39 @@ class CustomerServiceTest {
                 false
         );
 
-        customerModels = List.of(customerModel1, customerModel2);
-        when(customerRepository.findAll()).thenReturn(customerModels);
+        CustomerModel customerModel3 = new CustomerModel(
+                java.util.UUID.fromString("00000000-0000-0000-0000-000000000003"),
+                "DEB-2024-003",
+                "Hans Beispiel",
+                "Contact Person3",
+                "Teststraße 78, 50667 Köln, Tel: +49 221 555123, Email: kontakt@beispiel.de",
+                "Notes3",
+                "http://example.com/customer3.jpg",
+                true
+        );
+
+        activeCustomers = List.of(customerModel1, customerModel2);
+        archivedCustomers = List.of(customerModel3);
+
+        when(customerRepository.findByIsArchivedFalseOrderByNameAsc()).thenReturn(activeCustomers);
+        when(customerRepository.findByIsArchivedTrue()).thenReturn(archivedCustomers);
     }
 
     @Test
-    void testGetAllCustomers() {
-        List<CustomerModel> result = customerService.getAllCustomers();
-        assertEquals(customerModels, result);
+    void testGetAllActiveCustomers() {
+        List<CustomerModel> result = customerService.getAllActiveCustomers();
+        assertEquals(activeCustomers, result);
+    }
+
+    @Test
+    void testGetAllArchivedCustomers() {
+        List<CustomerModel> result = customerService.getAllArchivedCustomers();
+        assertEquals(archivedCustomers, result);
     }
 
     @Test
     void testGetCustomerById() {
-        CustomerModel expectedCustomer = customerModels.getFirst();
+        CustomerModel expectedCustomer = activeCustomers.getFirst();
         when(customerRepository.findById(expectedCustomer.getId())).thenReturn(java.util.Optional.of(expectedCustomer));
         CustomerModel result = customerService.getCustomerById(expectedCustomer.getId());
         assertEquals(expectedCustomer, result);
@@ -95,7 +115,7 @@ class CustomerServiceTest {
                 false
         );
 
-        when(customerRepository.findById(updatedCustomer.getId())).thenReturn(java.util.Optional.of(customerModels.getFirst()));
+        when(customerRepository.findById(updatedCustomer.getId())).thenReturn(java.util.Optional.of(activeCustomers.getFirst()));
         when(customerRepository.save(updatedCustomer)).thenReturn(updatedCustomer);
 
         CustomerModel result = customerService.updateCustomer(updatedCustomer);
@@ -104,7 +124,7 @@ class CustomerServiceTest {
 
     @Test
     void testDeleteCustomer() {
-        CustomerModel customerModel = customerModels.getFirst();
+        CustomerModel customerModel = activeCustomers.getFirst();
         when(customerRepository.findById(customerModel.getId())).thenReturn(java.util.Optional.of(customerModel));
         customerService.deleteCustomer(java.util.UUID.fromString("00000000-0000-0000-0000-000000000001"));
         verify(customerRepository, times(1)).deleteById(customerModel.getId());

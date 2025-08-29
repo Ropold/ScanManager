@@ -17,7 +17,8 @@ class ServicePartnerServiceTest {
     ImageUploadUtil imageUploadUtil = mock(ImageUploadUtil.class);
     ServicePartnerService servicePartnerService = new ServicePartnerService(cloudinaryService, servicePartnerRepository, imageUploadUtil);
 
-    List<ServicePartnerModel> servicePartnerModels;
+    List<ServicePartnerModel> activeServicePartners;
+    List<ServicePartnerModel> archivedServicePartners;
 
     @BeforeEach
     void setUp() {
@@ -41,19 +42,38 @@ class ServicePartnerServiceTest {
                 "http://example.com/partner2.jpg",
                 false
         );
-        servicePartnerModels = List.of(servicePartnerModel1, servicePartnerModel2);
-        when(servicePartnerRepository.findAll()).thenReturn(servicePartnerModels);
+
+        ServicePartnerModel servicePartnerModel3 = new ServicePartnerModel(
+                java.util.UUID.fromString("00000000-0000-0000-0000-000000000003"),
+                "KRED-3003",
+                "Ricoh Deutschland GmbH",
+                "Contact Person 3",
+                "Vahrenwalder Straße 315, 30179 Hannover, Tel: +49 511 6742-0, Email: service@ricoh.de",
+                "Archivierter Service-Partner - Vertrag beendet",
+                "http://example.com/partner3.jpg",
+                true
+        );
+        activeServicePartners = List.of(servicePartnerModel1, servicePartnerModel2);
+        archivedServicePartners = List.of(servicePartnerModel3);
+        when(servicePartnerRepository.findByIsArchivedFalseOrderByNameAsc()).thenReturn(activeServicePartners);
+        when(servicePartnerRepository.findByIsArchivedTrue()).thenReturn(archivedServicePartners);
     }
 
     @Test
     void testGetAllServicePartners() {
-        List<ServicePartnerModel> result = servicePartnerService.getAllServicePartners();
-        assertEquals(servicePartnerModels, result);
+        List<ServicePartnerModel> result = servicePartnerService.getAllActiveServicePartners();
+        assertEquals(activeServicePartners, result);
+    }
+
+    @Test
+    void testGetAllArchivedServicePartners() {
+        List<ServicePartnerModel> result = servicePartnerService.getAllArchivedServicePartners();
+        assertEquals(archivedServicePartners, result);
     }
 
     @Test
     void testGetServicePartnerById() {
-        ServicePartnerModel expectedPartner = servicePartnerModels.getFirst();
+        ServicePartnerModel expectedPartner = activeServicePartners.getFirst();
         when(servicePartnerRepository.findById(expectedPartner.getId())).thenReturn(java.util.Optional.of(expectedPartner));
         ServicePartnerModel result = servicePartnerService.getServicePartnerById(expectedPartner.getId());
         assertEquals(expectedPartner, result);
@@ -78,7 +98,7 @@ class ServicePartnerServiceTest {
 
     @Test
     void testUpdateServicePartner() {
-        ServicePartnerModel existingPartner = servicePartnerModels.getFirst();
+        ServicePartnerModel existingPartner = activeServicePartners.getFirst();
         ServicePartnerModel updatedPartner = new ServicePartnerModel(
                 existingPartner.getId(),
                 existingPartner.getCreditorNrNavision(),
@@ -100,7 +120,7 @@ class ServicePartnerServiceTest {
 
     @Test
     void testDeleteServicePartner() {
-        ServicePartnerModel servicePartnerModel = servicePartnerModels.getFirst();
+        ServicePartnerModel servicePartnerModel = activeServicePartners.getFirst();
         when(servicePartnerRepository.findById(servicePartnerModel.getId())).thenReturn(java.util.Optional.of(servicePartnerModel));
         servicePartnerService.deleteServicePartner(servicePartnerModel.getId());
         verify(servicePartnerRepository, times(1)).deleteById(servicePartnerModel.getId());

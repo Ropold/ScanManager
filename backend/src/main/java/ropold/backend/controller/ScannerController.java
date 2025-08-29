@@ -25,8 +25,13 @@ public class ScannerController {
     private final ImageUploadUtil imageUploadUtil;
 
     @GetMapping
-    public List<ScannerModel> getAllScanners(){
-        return scannerService.getAllScanners();
+    public List<ScannerModel> getAllActiveScanners(){
+        return scannerService.getAllActiveScanners();
+    }
+
+    @GetMapping("/archived")
+    public List<ScannerModel> getAllArchivedScanners(){
+        return scannerService.getAllArchivedScanners();
     }
 
     @GetMapping("/{id}")

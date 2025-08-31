@@ -53,7 +53,7 @@ export default function Customers(props: Readonly<CustomerProps>) {
         <>
             <div className="add-new-button">
                 <button className="button-blue" onClick={()=> navigate("add")}>add new Customer</button>
-                <button className="button-gey" onClick={()=> navigate("archive")}>Archive Customers</button>
+                <button className="button-grey" onClick={()=> navigate("archive")}>Archive Customers</button>
             </div>
         <SearchBar
            searchQuery={searchQuery}

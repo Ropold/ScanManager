@@ -30,6 +30,12 @@ public class CustomerService {
                 .orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
     }
 
+    public CustomerModel toggleArchiveStatus(UUID id) {
+        CustomerModel customer = getCustomerById(id);
+        customer.setIsArchived(!customer.getIsArchived());
+        return customerRepository.save(customer);
+    }
+
     public CustomerModel addCustomer(CustomerModel customerModel) {
         return customerRepository.save(customerModel);
     }
@@ -55,5 +61,4 @@ public class CustomerService {
         }
         customerRepository.deleteById(id);
     }
-
 }

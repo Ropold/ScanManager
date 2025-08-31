@@ -88,7 +88,7 @@ export default function Scanners(props: Readonly<ScannerProps>) {
 
             <div className="add-new-button">
                 <button className="button-blue" onClick={()=> navigate("add")}>add new Scanner</button>
-                <button className="button-gey" onClick={()=> navigate("archive")}>Archive Scanners</button>
+                <button className="button-grey" onClick={()=> navigate("archive")}>Archive Scanners</button>
             </div>
             <SearchBar
                 searchQuery={searchQuery}

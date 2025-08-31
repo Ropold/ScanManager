@@ -1,0 +1,7 @@
+.details-container{
+    background-color: transparent;
+}
+
+.details-container.archived {
+    background-color: #e9ecef;
+}

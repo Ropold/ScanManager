@@ -30,6 +30,12 @@ public class ServicePartnerService {
                 .orElseThrow(() -> new ServicePartnerNotFoundException("Service Partner not found with id: " + id));
     }
 
+    public ServicePartnerModel toggleArchiveStatus(UUID id) {
+        ServicePartnerModel servicePartner = getServicePartnerById(id);
+        servicePartner.setIsArchived(!servicePartner.getIsArchived());
+        return servicePartnerRepository.save(servicePartner);
+    }
+
     public ServicePartnerModel addServicePartner(ServicePartnerModel servicePartnerModel) {
         return servicePartnerRepository.save(servicePartnerModel);
     }

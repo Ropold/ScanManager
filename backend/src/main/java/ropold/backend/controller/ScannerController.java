@@ -43,6 +43,14 @@ public class ScannerController {
         return scanner;
     }
 
+    @PutMapping("/{id}/archive")
+    public ScannerModel toggleArchiveStatus(@PathVariable UUID id, @AuthenticationPrincipal OAuth2User authentication){
+        if(authentication == null){
+            throw new AccessDeniedException("User not authenticated");
+        }
+        return scannerService.toggleArchiveStatus(id);
+    }
+
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public ScannerModel addScanner(

@@ -196,6 +196,69 @@ class ScannerControllerIntegrationTest {
 
     @Test
     @WithMockUser(username = "test-user", authorities = {"OIDC_USER"})
+    void testToggleArchiveStatus_shouldToggleFromActiveToArchived() throws Exception {
+        OAuth2User mockOAuth2User = mock(OAuth2User.class);
+        when(mockOAuth2User.getName()).thenReturn("test-user");
+        when(mockOAuth2User.getAttribute("sub")).thenReturn("microsoft-id-123");
+
+        OAuth2AuthenticationToken authToken = new OAuth2AuthenticationToken(
+                mockOAuth2User,
+                List.of(new SimpleGrantedAuthority("OIDC_USER")),
+                "azure"
+        );
+
+        SecurityContextHolder.getContext().setAuthentication(authToken);
+
+        // Verify scanner is initially not archived
+        ScannerModel scanner = scannerRepository.findById(UUID.fromString("00000000-0000-0000-0000-000000000001")).orElseThrow();
+        Assertions.assertFalse(scanner.getIsArchived());
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/scanners/00000000-0000-0000-0000-000000000001/archive"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value("00000000-0000-0000-0000-000000000001"))
+                .andExpect(jsonPath("$.modelName").value("Canon imageFORMULA DR-C240"))
+                .andExpect(jsonPath("$.isArchived").value(true));
+
+        // Verify scanner is now archived in database
+        ScannerModel updatedScanner = scannerRepository.findById(UUID.fromString("00000000-0000-0000-0000-000000000001")).orElseThrow();
+        Assertions.assertTrue(updatedScanner.getIsArchived());
+    }
+
+    @Test
+    @WithMockUser(username = "test-user", authorities = {"OIDC_USER"})
+    void testToggleArchiveStatus_shouldToggleFromArchivedToActive() throws Exception {
+        OAuth2User mockOAuth2User = mock(OAuth2User.class);
+        when(mockOAuth2User.getName()).thenReturn("test-user");
+        when(mockOAuth2User.getAttribute("sub")).thenReturn("microsoft-id-123");
+
+        OAuth2AuthenticationToken authToken = new OAuth2AuthenticationToken(
+                mockOAuth2User,
+                List.of(new SimpleGrantedAuthority("OIDC_USER")),
+                "azure"
+        );
+
+        SecurityContextHolder.getContext().setAuthentication(authToken);
+
+        // Use archived scanner (scannerModel3)
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/scanners/00000000-0000-0000-0000-000000000003/archive"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value("00000000-0000-0000-0000-000000000003"))
+                .andExpect(jsonPath("$.modelName").value("Panasonic KV-S2087"))
+                .andExpect(jsonPath("$.isArchived").value(false));
+
+        // Verify scanner is now active in database
+        ScannerModel updatedScanner = scannerRepository.findById(UUID.fromString("00000000-0000-0000-0000-000000000003")).orElseThrow();
+        Assertions.assertFalse(updatedScanner.getIsArchived());
+    }
+
+    @Test
+    void testToggleArchiveStatus_shouldReturnForbiddenWhenNotAuthenticated() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/scanners/00000000-0000-0000-0000-000000000001/archive"))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithMockUser(username = "test-user", authorities = {"OIDC_USER"})
     void testPostScanner_shouldReturnCreated() throws Exception {
         OAuth2User mockOAuth2User = mock(OAuth2User.class);
         when(mockOAuth2User.getName()).thenReturn("test-user");

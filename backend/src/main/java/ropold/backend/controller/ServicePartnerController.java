@@ -45,6 +45,14 @@ public class ServicePartnerController {
         return servicePartner;
     }
 
+    @PutMapping("/{id}/archive")
+    public ServicePartnerModel toggleArchiveStatus(@PathVariable UUID id, @AuthenticationPrincipal OAuth2User authentication) {
+        if(authentication == null){
+            throw new AccessDeniedException("User not authenticated");
+        }
+        return servicePartnerService.toggleArchiveStatus(id);
+    }
+
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public ServicePartnerModel addServicePartner(

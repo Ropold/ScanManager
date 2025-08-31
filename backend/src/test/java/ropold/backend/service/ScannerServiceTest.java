@@ -136,6 +136,92 @@ class ScannerServiceTest {
     }
 
     @Test
+    void testToggleArchiveStatus_shouldToggleFromActiveToArchived() {
+        // Given - Active scanner
+        ScannerModel activeScanner = activeScanners.getFirst(); // Canon DR-C240 (isArchived = false)
+        ScannerModel toggledScanner = new ScannerModel(
+                activeScanner.getId(),
+                activeScanner.getCustomerId(),
+                activeScanner.getServicePartnerId(),
+                activeScanner.getModelName(),
+                activeScanner.getManufacturerCode(),
+                activeScanner.getSerialNumber(),
+                activeScanner.getScannerNrNavision(),
+                activeScanner.getContractNumber(),
+                activeScanner.getStartDate(),
+                activeScanner.getEndDate(),
+                activeScanner.getSlaMaintenance(),
+                activeScanner.getLocationAddress(),
+                activeScanner.getContactPersonDetails(),
+                activeScanner.getAcquisitionDate(),
+                activeScanner.getPurchasedBy(),
+                activeScanner.getDeviceType(),
+                activeScanner.getContractType(),
+                activeScanner.getStatus(),
+                activeScanner.getPurchasePrice(),
+                activeScanner.getSalePrice(),
+                activeScanner.getDepreciation(),
+                activeScanner.getNotes(),
+                activeScanner.getImageUrl(),
+                true // Toggled to archived
+        );
+
+        when(scannerRepository.findById(activeScanner.getId())).thenReturn(java.util.Optional.of(activeScanner));
+        when(scannerRepository.save(any(ScannerModel.class))).thenReturn(toggledScanner);
+
+        // When
+        ScannerModel result = scannerService.toggleArchiveStatus(activeScanner.getId());
+
+        // Then
+        assertEquals(true, result.getIsArchived());
+        verify(scannerRepository).findById(activeScanner.getId());
+        verify(scannerRepository).save(argThat(scanner -> scanner.getIsArchived() == true));
+    }
+
+    @Test
+    void testToggleArchiveStatus_shouldToggleFromArchivedToActive() {
+        // Given - Archived scanner
+        ScannerModel archivedScanner = archivedScanners.getFirst(); // Ricoh fi-7300NX (isArchived = true)
+        ScannerModel toggledScanner = new ScannerModel(
+                archivedScanner.getId(),
+                archivedScanner.getCustomerId(),
+                archivedScanner.getServicePartnerId(),
+                archivedScanner.getModelName(),
+                archivedScanner.getManufacturerCode(),
+                archivedScanner.getSerialNumber(),
+                archivedScanner.getScannerNrNavision(),
+                archivedScanner.getContractNumber(),
+                archivedScanner.getStartDate(),
+                archivedScanner.getEndDate(),
+                archivedScanner.getSlaMaintenance(),
+                archivedScanner.getLocationAddress(),
+                archivedScanner.getContactPersonDetails(),
+                archivedScanner.getAcquisitionDate(),
+                archivedScanner.getPurchasedBy(),
+                archivedScanner.getDeviceType(),
+                archivedScanner.getContractType(),
+                archivedScanner.getStatus(),
+                archivedScanner.getPurchasePrice(),
+                archivedScanner.getSalePrice(),
+                archivedScanner.getDepreciation(),
+                archivedScanner.getNotes(),
+                archivedScanner.getImageUrl(),
+                false // Toggled to active
+        );
+
+        when(scannerRepository.findById(archivedScanner.getId())).thenReturn(java.util.Optional.of(archivedScanner));
+        when(scannerRepository.save(any(ScannerModel.class))).thenReturn(toggledScanner);
+
+        // When
+        ScannerModel result = scannerService.toggleArchiveStatus(archivedScanner.getId());
+
+        // Then
+        assertEquals(false, result.getIsArchived());
+        verify(scannerRepository).findById(archivedScanner.getId());
+        verify(scannerRepository).save(argThat(scanner -> scanner.getIsArchived() == false));
+    }
+
+    @Test
     void addScanner_ValidScanner_ReturnsSavedScanner() {
         // Given
         ScannerModel newScanner = new ScannerModel(

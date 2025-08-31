@@ -117,6 +117,69 @@ class ServicePartnerControllerIntegrationTest {
 
     @Test
     @WithMockUser(username = "test-user", authorities = {"OIDC_USER"})
+    void testToggleArchiveStatus_shouldToggleFromActiveToArchived() throws Exception {
+        OAuth2User mockOAuth2User = mock(OAuth2User.class);
+        when(mockOAuth2User.getName()).thenReturn("test-user");
+        when(mockOAuth2User.getAttribute("sub")).thenReturn("microsoft-id-123");
+
+        OAuth2AuthenticationToken authToken = new OAuth2AuthenticationToken(
+                mockOAuth2User,
+                List.of(new SimpleGrantedAuthority("OIDC_USER")),
+                "azure"
+        );
+
+        SecurityContextHolder.getContext().setAuthentication(authToken);
+
+        // Verify service partner is initially not archived
+        ServicePartnerModel servicePartner = servicePartnerRepository.findById(java.util.UUID.fromString("00000000-0000-0000-0000-000000000001")).orElseThrow();
+        Assertions.assertFalse(servicePartner.getIsArchived());
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/service-partners/00000000-0000-0000-0000-000000000001/archive"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value("00000000-0000-0000-0000-000000000001"))
+                .andExpect(jsonPath("$.name").value("Test Partner 1"))
+                .andExpect(jsonPath("$.isArchived").value(true));
+
+        // Verify service partner is now archived in database
+        ServicePartnerModel updatedServicePartner = servicePartnerRepository.findById(java.util.UUID.fromString("00000000-0000-0000-0000-000000000001")).orElseThrow();
+        Assertions.assertTrue(updatedServicePartner.getIsArchived());
+    }
+
+    @Test
+    @WithMockUser(username = "test-user", authorities = {"OIDC_USER"})
+    void testToggleArchiveStatus_shouldToggleFromArchivedToActive() throws Exception {
+        OAuth2User mockOAuth2User = mock(OAuth2User.class);
+        when(mockOAuth2User.getName()).thenReturn("test-user");
+        when(mockOAuth2User.getAttribute("sub")).thenReturn("microsoft-id-123");
+
+        OAuth2AuthenticationToken authToken = new OAuth2AuthenticationToken(
+                mockOAuth2User,
+                List.of(new SimpleGrantedAuthority("OIDC_USER")),
+                "azure"
+        );
+
+        SecurityContextHolder.getContext().setAuthentication(authToken);
+
+        // Use archived service partner (servicePartnerModel3)
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/service-partners/00000000-0000-0000-0000-000000000003/archive"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value("00000000-0000-0000-0000-000000000003"))
+                .andExpect(jsonPath("$.name").value("Test Partner 3"))
+                .andExpect(jsonPath("$.isArchived").value(false));
+
+        // Verify service partner is now active in database
+        ServicePartnerModel updatedServicePartner = servicePartnerRepository.findById(java.util.UUID.fromString("00000000-0000-0000-0000-000000000003")).orElseThrow();
+        Assertions.assertFalse(updatedServicePartner.getIsArchived());
+    }
+
+    @Test
+    void testToggleArchiveStatus_shouldReturnForbiddenWhenNotAuthenticated() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/service-partners/00000000-0000-0000-0000-000000000001/archive"))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithMockUser(username = "test-user", authorities = {"OIDC_USER"})
     void testPostServicePartner() throws Exception {
         OAuth2User mockOAuth2User = mock(OAuth2User.class);
         when(mockOAuth2User.getName()).thenReturn("test-user");

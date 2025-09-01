@@ -57,3 +57,35 @@ export function fetchAllServicePartner(setAllServicePartner: (partners: ServiceP
         });
 }
 
+export function fetchAllArchivedScanner(setAllArchivedScanner: (scanners: ScannerModel[]) =>void) {
+    axios.get("/api/scanners/archived")
+        .then((response) => {
+            setAllArchivedScanner(response.data as ScannerModel[]);
+        })
+        .catch((error) => {
+            console.error("Error fetching archived scanners:", error);
+        });
+}
+
+export function fetchAllArchivedCustomer(setAllArchivedCustomer: (customers: CustomerModel[]) => void) {
+    axios.get("/api/customers/archived")
+        .then((response) => {
+            setAllArchivedCustomer(response.data as CustomerModel[]);
+        })
+        .catch((error) => {
+            console.error("Error fetching archived customers:", error);
+        });
+}
+
+export function fetchAllArchivedServicePartner(setAllArchivedServicePartner: (partners: ServicePartnerModel[]) => void) {
+    axios.get("/api/service-partners/archived")
+        .then((response) => {
+            setAllArchivedServicePartner(response.data as ServicePartnerModel[]);
+        })
+        .catch((error) => {
+            console.error("Error fetching archived service partners:", error);
+        });
+}
+
+
+

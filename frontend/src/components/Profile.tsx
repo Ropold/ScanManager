@@ -6,9 +6,9 @@ import type {UserModel} from "./model/UserModel.ts";
 import axios from "axios";
 
 type ProfileProps = {
+    language: string;
     user: string;
     userDetails: UserModel | null;
-    language: string;
     setLanguage: React.Dispatch<React.SetStateAction<string>>
 }
 

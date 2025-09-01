@@ -8,9 +8,13 @@ import type {ServicePartnerModel} from "./model/ServicePartnerModel.ts";
 
 type ScannerProps = {
     language: string;
-    allScanner: ScannerModel[]
-    allCustomer: CustomerModel[];
-    allServicePartner: ServicePartnerModel[];
+    allActiveScanner: ScannerModel[]
+    allActiveCustomer: CustomerModel[];
+    allActiveServicePartner: ServicePartnerModel[];
+
+    allArchivedScanner: ScannerModel[]
+    allArchivedCustomer: CustomerModel[];
+    allArchivedServicePartner: ServicePartnerModel[];
 }
 
 export default function Scanners(props: Readonly<ScannerProps>) {

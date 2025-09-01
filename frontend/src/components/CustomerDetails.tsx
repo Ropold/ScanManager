@@ -4,13 +4,26 @@ import {type CustomerModel, DefaultCustomer} from "./model/CustomerModel.ts";
 import axios from "axios";
 import {translatedInfo} from "./utils/TranslatedInfo.ts";
 import "./styles/Details.css"
+import type {ScannerModel} from "./model/ScannerModel.ts";
+import ScannerCard from "./ScannerCard.tsx";
+import type {ServicePartnerModel} from "./model/ServicePartnerModel.ts";
 
 type CustomerDetailsProps = {
     language: string;
+
+    allActiveScanner: ScannerModel [];
+    allActiveCustomer: CustomerModel[];
+    allActiveServicePartner: ServicePartnerModel[];
+
+    allArchivedScanner: ScannerModel[];
+    allArchivedCustomer: CustomerModel[];
+    allArchivedServicePartner: ServicePartnerModel[];
 }
 
 export default function CustomerDetails(props: Readonly<CustomerDetailsProps>) {
     const [customer, setCustomer] = useState<CustomerModel>(DefaultCustomer);
+    const [filteredCustomerScanners, setFilteredCustomerScanners] = useState<ScannerModel[]>([]);
+
     const {id} = useParams<{id: string}>();
 
     useEffect(() => {
@@ -20,6 +33,17 @@ export default function CustomerDetails(props: Readonly<CustomerDetailsProps>) {
             .then((response) => setCustomer(response.data))
             .catch((error) => console.error("Error fetching customer details", error));
     }, [id]);
+
+    useEffect(() => {
+        if (!customer?.id) return;
+
+        const allScanners = [...props.allActiveScanner, ...props.allArchivedScanner];
+        const customerScanners = allScanners.filter(scanner =>
+            scanner.customerId === customer.id
+        );
+
+        setFilteredCustomerScanners(customerScanners);
+    }, [customer, props.allActiveScanner, props.allArchivedScanner]);
 
     function toggleArchiveStatus() {
         if (!customer) return;
@@ -63,8 +87,18 @@ export default function CustomerDetails(props: Readonly<CustomerDetailsProps>) {
                         <button className="button-delete">Delete</button>
                     </div>
 
-                    <div>
-                        <p>Scanner inc.</p>
+                    <div className="scanner-card-container">
+                        {filteredCustomerScanners.map((s: ScannerModel) => (
+                            <ScannerCard
+                                key={s.id}
+                                scanner={s}
+                                allActiveCustomer={props.allActiveCustomer}
+                                allActiveServicePartner={props.allActiveServicePartner}
+                                allArchivedCustomer={props.allArchivedCustomer}
+                                allArchivedServicePartner={props.allArchivedServicePartner}
+                                language={props.language}
+                            />
+                        ))}
                     </div>
                 </div>
             ) : (

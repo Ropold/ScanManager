@@ -7,8 +7,11 @@ import type {ServicePartnerModel} from "./model/ServicePartnerModel.ts";
 
 type ScannerCardProps = {
     scanner: ScannerModel
-    allCustomer: CustomerModel[]
-    allServicePartner: ServicePartnerModel[];
+    allActiveCustomer: CustomerModel[]
+    allActiveServicePartner: ServicePartnerModel[];
+
+    allArchivedCustomer?: CustomerModel[];
+    allArchivedServicePartner?: ServicePartnerModel[];
     language: string
 }
 

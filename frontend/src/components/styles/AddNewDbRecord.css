@@ -65,8 +65,16 @@
 
 
 .image-preview {
-    width: 150px;
+    width: auto;
+    height: 120px;
+    object-fit: cover;
     margin-top: 0.5rem;
+}
+
+.image-upload-container{
+    display: flex;
+    align-items: center;
+    gap: 20px;
 }
 
 

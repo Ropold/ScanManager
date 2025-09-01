@@ -43,6 +43,8 @@
 .button-blue {
     background-color: #66b3ff;
     border: 1px solid transparent;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .button-blue:hover {

@@ -4,6 +4,7 @@ import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {translatedInfo} from "./utils/TranslatedInfo.ts";
 import "./styles/AddNewDbRecord.css"
+import {onFileChange, onImageCancel} from "./utils/ComponentsFunctions.ts";
 
 type AddNewCustomerProps = {
     language: string;
@@ -60,13 +61,13 @@ export default function AddNewCustomer(props: Readonly<AddNewCustomerProps>) {
             });
     }
 
-    function onFileChange(e: React.ChangeEvent<HTMLInputElement>) {
-        if (e.target.files) {
-            const file = e.target.files[0];
-            setImage(file);
-        }
-    }
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        onFileChange(e, setImage);
+    };
 
+    const handleImageCancel = () => {
+        onImageCancel(setImage);
+    };
 
     return (
         <div>
@@ -117,24 +118,30 @@ export default function AddNewCustomer(props: Readonly<AddNewCustomerProps>) {
                           />
                      </label>
 
-                    <div className="margin-top-20">
+                    <div className="image-upload-container">
                         <label>
                             Image:
-                            <input type="file" onChange={onFileChange} />
-                            {image && (
+                            <input type="file" onChange={handleFileChange} />
+                        </label>
+                        {image && (
+                            <>
                                 <img
                                     src={URL.createObjectURL(image)}
-                                    alt={"image-preview"}
+                                    alt="image-preview"
                                     className="image-preview"
                                 />
-                            )}
-                        </label>
+                                <button
+                                    type="button"
+                                    onClick={handleImageCancel}
+                                    className="button-blue"
+                                >
+                                    Remove Image
+                                </button>
+                            </>
+                        )}
                     </div>
-
-                     <label>
-                          <button type="submit" className="button-blue margin-top-50">{translatedInfo["Add Customer"][props.language]}</button>
-                   </label>
                 </div>
+                <button type="submit" className="button-blue margin-top-50">{translatedInfo["Add Customer"][props.language]}</button>
             </form>
         </div>
     )

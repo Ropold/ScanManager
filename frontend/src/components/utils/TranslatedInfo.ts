@@ -735,5 +735,37 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "ru": "Добавить клиента",
         "tr": "Müşteri Ekle",
         "ir": "افزودن مشتری"
+    },
+    "Add Service Partner": {
+        "de": "Service Partner hinzufügen",
+        "en": "Add Service Partner",
+        "pl": "Dodaj partnera serwisowego",
+        "es": "Agregar socio de servicio",
+        "fr": "Ajouter un partenaire de service",
+        "it": "Aggiungi partner di servizio",
+        "cz": "Přidat servisního partnera",
+        "pt": "Adicionar parceiro de serviço",
+        "hu": "Szolgáltatói partner hozzáadása",
+        "nl": "Servicepartner toevoegen",
+        "gr": "Προσθήκη συνεργάτη υπηρεσιών",
+        "ru": "Добавить сервисного партнера",
+        "tr": "Hizmet Ortağı Ekle",
+        "ir": "افزودن شریک خدمات"
+    },
+    "Add New Scanner":{
+        "de": "Neuen Scanner hinzufügen",
+        "en": "Add New Scanner",
+        "pl": "Dodaj nowy skaner",
+        "es": "Agregar nuevo escáner",
+        "fr": "Ajouter un nouveau scanner",
+        "it": "Aggiungi nuovo scanner",
+        "cz": "Přidat nový skener",
+        "pt": "Adicionar novo scanner",
+        "hu": "Új szkenner hozzáadása",
+        "nl": "Nieuwe scanner toevoegen",
+        "gr": "Προσθήκη νέου σαρωτή",
+        "ru": "Добавить новый сканер",
+        "tr": "Yeni Tarayıcı Ekle",
+        "ir": "افزودن اسکنر جدید"
     }
 }

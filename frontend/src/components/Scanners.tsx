@@ -12,7 +12,6 @@ type ScannerProps = {
     allActiveCustomer: CustomerModel[];
     allActiveServicePartner: ServicePartnerModel[];
 
-    allArchivedScanner: ScannerModel[]
     allArchivedCustomer: CustomerModel[];
     allArchivedServicePartner: ServicePartnerModel[];
 }
@@ -84,8 +83,20 @@ export default function Scanners(props: Readonly<ScannerProps>) {
     }
 
     useEffect(() => {
-        setFilteredScanners(filterScanners(props.allScanner, searchQuery));
-    }, [props.allScanner, searchQuery]);
+        setFilteredScanners(filterScanners(props.allActiveScanner, searchQuery));
+    }, [props.allActiveScanner, searchQuery]);
+
+    const getCustomerName = (customerId: string | undefined) => {
+        if (!customerId) return undefined;
+        const allCustomers = [...props.allActiveCustomer, ...props.allArchivedCustomer];
+        return allCustomers.find(customer => customer.id === customerId)?.name;
+    };
+
+    const getServicePartnerName = (servicePartnerId: string | undefined) => {
+        if (!servicePartnerId) return undefined;
+        const allServicePartners = [...props.allActiveServicePartner, ...props.allArchivedServicePartner];
+        return allServicePartners.find(sp => sp.id === servicePartnerId)?.name;
+    };
 
     return(
         <>
@@ -103,13 +114,12 @@ export default function Scanners(props: Readonly<ScannerProps>) {
                     <ScannerCard
                         key={s.id}
                         scanner={s}
-                        allCustomer={props.allCustomer}
-                        allServicePartner={props.allServicePartner}
+                        customerName={getCustomerName(s.customerId)}
+                        servicePartnerName={getServicePartnerName(s.servicePartnerId)}
                         language={props.language}
                     />
                 ))}
             </div>
-
         </>
     )
 }

@@ -2,33 +2,22 @@ import type {ScannerModel} from "./model/ScannerModel.ts";
 import {useNavigate} from "react-router-dom";
 import "./styles/ScannerCard.css"
 import {translatedInfo} from "./utils/TranslatedInfo.ts";
-import type {CustomerModel} from "./model/CustomerModel.ts";
-import type {ServicePartnerModel} from "./model/ServicePartnerModel.ts";
 
 type ScannerCardProps = {
-    scanner: ScannerModel
-    allActiveCustomer: CustomerModel[]
-    allActiveServicePartner: ServicePartnerModel[];
-
-    allArchivedCustomer?: CustomerModel[];
-    allArchivedServicePartner?: ServicePartnerModel[];
-    language: string
+    scanner: ScannerModel;
+    customerName?: string;
+    servicePartnerName?: string;
+    language: string;
 }
 
 export default function ScannerCard(props: Readonly<ScannerCardProps>) {
     const navigate = useNavigate();
-
     const handleCardClick = () => {
         navigate(`/scanners/${props.scanner.id}`);
     }
 
-    const customerName = props.allCustomer.find(
-        customer => customer.id === props.scanner.customerId
-    )?.name || "—";
-
-    const servicePartnerName = props.allServicePartner.find(
-        sp => sp.id === props.scanner.servicePartnerId
-    )?.name || "—";
+    const customerName = props.customerName || "—";
+    const servicePartnerName = props.servicePartnerName || "—";
 
     return(
         <div className="scanner-card" onClick={handleCardClick}>

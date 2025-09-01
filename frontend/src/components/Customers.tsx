@@ -3,18 +3,10 @@ import type {CustomerModel} from "./model/CustomerModel.ts";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import CustomerCard from "./CustomerCard.tsx";
-import type {ScannerModel} from "./model/ScannerModel.ts";
-import type {ServicePartnerModel} from "./model/ServicePartnerModel.ts";
 
 type CustomerProps = {
     language: string;
-    allActiveScanner: ScannerModel [];
     allActiveCustomer: CustomerModel[];
-    allActiveServicePartner: ServicePartnerModel[];
-
-    allArchivedScanner: ScannerModel[];
-    allArchivedCustomer: CustomerModel[];
-    allArchivedServicePartner: ServicePartnerModel[];
 }
 
 export default function Customers(props: Readonly<CustomerProps>) {
@@ -54,8 +46,8 @@ export default function Customers(props: Readonly<CustomerProps>) {
     }
 
     useEffect(() => {
-        setFilteredCustomers(filterCustomers(props.allCustomer, searchQuery));
-    }, [props.allCustomer, searchQuery]);
+        setFilteredCustomers(filterCustomers(props.allActiveCustomer, searchQuery));
+    }, [props.allActiveCustomer, searchQuery]);
 
     return (
         <>

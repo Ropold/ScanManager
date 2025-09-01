@@ -51,6 +51,12 @@ export default function CustomerDetails(props: Readonly<CustomerDetailsProps>) {
             .catch((error) => console.error("Error updating archive status", error));
     }
 
+    const getServicePartnerName = (servicePartnerId: string | undefined) => {
+        if (!servicePartnerId) return undefined;
+        const allServicePartners = [...props.allActiveServicePartner, ...props.allArchivedServicePartner];
+        return allServicePartners.find(sp => sp.id === servicePartnerId)?.name;
+    };
+
     return (
         <div>
             <h2>Customer Details</h2>
@@ -89,10 +95,8 @@ export default function CustomerDetails(props: Readonly<CustomerDetailsProps>) {
                             <ScannerCard
                                 key={s.id}
                                 scanner={s}
-                                allActiveCustomer={props.allActiveCustomer}
-                                allActiveServicePartner={props.allActiveServicePartner}
-                                allArchivedCustomer={props.allArchivedCustomer}
-                                allArchivedServicePartner={props.allArchivedServicePartner}
+                                customerName={customer.name}
+                                servicePartnerName={getServicePartnerName(s.servicePartnerId)}
                                 language={props.language}
                             />
                         ))}

@@ -3,9 +3,16 @@ import {DefaultScanner, type ScannerModel} from "./model/ScannerModel.ts";
 import {useParams} from "react-router-dom";
 import axios from "axios";
 import {translatedInfo} from "./utils/TranslatedInfo.ts";
+import type {CustomerModel} from "./model/CustomerModel.ts";
+import type {ServicePartnerModel} from "./model/ServicePartnerModel.ts";
 
 type ScannerDetailsProps = {
     language: string;
+    allActiveCustomer: CustomerModel[];
+    allActiveServicePartner: ServicePartnerModel[];
+
+    allArchivedCustomer: CustomerModel[];
+    allArchivedServicePartner: ServicePartnerModel[];
 }
 
 export default function ScannerDetails(props: Readonly<ScannerDetailsProps>) {

@@ -3,10 +3,18 @@ import {useLocation, useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import SearchBar from "./SearchBar.tsx";
 import ServicePartnerCard from "./ServicePartnerCard.tsx";
+import type {ScannerModel} from "./model/ScannerModel.ts";
+import type {CustomerModel} from "./model/CustomerModel.ts";
 
 type ServicePartnerProps = {
     language: string;
-    allServicePartner: ServicePartnerModel[];
+    allActiveScanner: ScannerModel [];
+    allActiveCustomer: CustomerModel[];
+    allActiveServicePartner: ServicePartnerModel[];
+
+    allArchivedScanner: ScannerModel[];
+    allArchivedCustomer: CustomerModel[];
+    allArchivedServicePartner: ServicePartnerModel[];
 }
 
 export default function ServicePartners(props: Readonly<ServicePartnerProps>) {

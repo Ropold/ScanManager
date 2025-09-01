@@ -10,13 +10,10 @@ import type {ServicePartnerModel} from "./model/ServicePartnerModel.ts";
 
 type CustomerDetailsProps = {
     language: string;
-
     allActiveScanner: ScannerModel [];
-    allActiveCustomer: CustomerModel[];
     allActiveServicePartner: ServicePartnerModel[];
 
     allArchivedScanner: ScannerModel[];
-    allArchivedCustomer: CustomerModel[];
     allArchivedServicePartner: ServicePartnerModel[];
 }
 

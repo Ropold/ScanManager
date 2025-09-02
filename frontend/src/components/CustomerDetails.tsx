@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {type CustomerModel, DefaultCustomer} from "./model/CustomerModel.ts";
 import axios from "axios";
 import {translatedInfo} from "./utils/TranslatedInfo.ts";
@@ -15,12 +15,14 @@ type CustomerDetailsProps = {
 
     allArchivedScanner: ScannerModel[];
     allArchivedServicePartner: ServicePartnerModel[];
+    handleCustomerDelete: (id: string) => void;
 }
 
 export default function CustomerDetails(props: Readonly<CustomerDetailsProps>) {
     const [customer, setCustomer] = useState<CustomerModel>(DefaultCustomer);
     const [filteredCustomerScanners, setFilteredCustomerScanners] = useState<ScannerModel[]>([]);
-
+    const [showPopup, setShowPopup] = useState(false);
+    const navigate = useNavigate();
     const {id} = useParams<{id: string}>();
 
     useEffect(() => {
@@ -57,6 +59,28 @@ export default function CustomerDetails(props: Readonly<CustomerDetailsProps>) {
         return allServicePartners.find(sp => sp.id === servicePartnerId)?.name;
     };
 
+    function handleConfirmDelete(){
+        if(!customer?.id) return;
+
+        axios
+            .delete(`/api/customers/${customer.id}`)
+            .then(() => {
+                console.log("Customer deleted successfully");
+                props.handleCustomerDelete(customer.id); // Liste aktualisieren
+            })
+            .catch((error) => {
+                console.error("Error deleting customer:", error);
+                alert("An unexpected error occurred. Please try again.");
+            })
+            .finally(() => {
+                setShowPopup(false);
+                navigate("/customers/");
+            });
+    }
+    function handleCancel(){
+        setShowPopup(false);
+    }
+
     return (
         <div>
             <h2>Customer Details</h2>
@@ -87,7 +111,7 @@ export default function CustomerDetails(props: Readonly<CustomerDetailsProps>) {
                     <div className="details-buttons">
                         <button className="button-blue">Edit</button>
                         <button className="button-grey" onClick={toggleArchiveStatus}>{customer.isArchived ? "Unarchive" : "Archive"}</button>
-                        <button className="button-delete">Delete</button>
+                        <button className="button-delete" onClick={() => setShowPopup(true)} >Delete</button>
                     </div>
 
                     <div className="scanner-card-container">
@@ -101,6 +125,19 @@ export default function CustomerDetails(props: Readonly<CustomerDetailsProps>) {
                             />
                         ))}
                     </div>
+
+                    {showPopup && (
+                        <div className="popup-overlay">
+                            <div className="popup-content">
+                                <h3>Confirm Deletion</h3>
+                                <p>Are you sure you want to delete this Customer?</p>
+                                <div className="popup-actions">
+                                    <button onClick={handleConfirmDelete} className="popup-confirm">Yes, Delete</button>
+                                    <button onClick={handleCancel} className="popup-cancel">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
             ) : (
                 <p>{translatedInfo["Loading"][props.language]}...</p>

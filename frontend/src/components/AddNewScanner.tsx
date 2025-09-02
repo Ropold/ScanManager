@@ -105,11 +105,9 @@ export default function AddNewScanner(props: Readonly<AddNewScannerProps>) {
 
     return (
         <div>
-            <h2>Add New Scanner Component - To be implemented</h2>
-
+            <h2>Add New Scanner</h2>
             <form onSubmit={handleSubmit}>
                 <div className="edit-form">
-
                     {/* Customer Dropdown */}
                     <label>
                         {translatedInfo["customerName"][props.language]}:
@@ -146,7 +144,7 @@ export default function AddNewScanner(props: Readonly<AddNewScannerProps>) {
                     </label>
 
                     <label>
-                        {translatedInfo["modelName"][props.language]}
+                        {translatedInfo["modelName"][props.language]}:
                         <input
                             className="input-small"
                             type="text"
@@ -339,32 +337,39 @@ export default function AddNewScanner(props: Readonly<AddNewScannerProps>) {
                         />
                     </label>
 
-                    <div className="image-upload-container">
-                        <label>
-                            Image:
-                            <input type="file" onChange={handleFileChange} />
-                        </label>
+                    {/* Image Upload */}
+                    <label>
+                        Image:
+                        <input type="file" onChange={handleFileChange} />
+                    </label>
+
+                    {/* Image Preview */}
+                    <div>
                         {image && (
-                            <>
-                                <img
-                                    src={URL.createObjectURL(image)}
-                                    alt="image-preview"
-                                    className="image-preview"
-                                />
-                                <button
-                                    type="button"
-                                    onClick={handleImageCancel}
-                                    className="button-blue"
-                                >
-                                    Remove Image
-                                </button>
-                            </>
+                            <img
+                                src={URL.createObjectURL(image)}
+                                alt="image-preview"
+                                className="image-preview"
+                            />
                         )}
                     </div>
 
+                    {/* Remove Image Button */}
+                    <div>
+                        {image && (
+                            <button
+                                type="button"
+                                onClick={handleImageCancel}
+                                className="button-blue button-remove-image"
+                            >
+                                {translatedInfo["Remove Image"][props.language]}
+                            </button>
+                        )}
+                    </div>
                 </div>
                 <button type="submit" className="button-blue margin-top-50">{translatedInfo["Add New Scanner"][props.language]}</button>
             </form>
         </div>
     )
+
 }

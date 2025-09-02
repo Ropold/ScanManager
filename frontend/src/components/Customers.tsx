@@ -6,15 +6,16 @@ import CustomerCard from "./CustomerCard.tsx";
 
 type CustomerProps = {
     language: string;
-    allCustomer: CustomerModel[];
+    allActiveCustomer: CustomerModel[];
+    allArchivedCustomer: CustomerModel[];
 }
 
 export default function Customers(props: Readonly<CustomerProps>) {
     const [searchQuery, setSearchQuery] = useState<string>("");
     const [filteredCustomers, setFilteredCustomers] = useState<CustomerModel[]>([]);
+    const [showArchived, setShowArchived] = useState<boolean>(false);
 
     const location = useLocation();
-
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -45,15 +46,19 @@ export default function Customers(props: Readonly<CustomerProps>) {
         });
     }
 
+    const currentCustomers = showArchived ? props.allArchivedCustomer : props.allActiveCustomer;
+
     useEffect(() => {
-        setFilteredCustomers(filterCustomers(props.allCustomer, searchQuery));
-    }, [props.allCustomer, searchQuery]);
+        const results = filterCustomers(currentCustomers, searchQuery);
+        setFilteredCustomers(results);
+    }, [searchQuery, currentCustomers]);
 
     return (
         <>
             <div className="add-new-button">
                 <button className="button-blue" onClick={()=> navigate("add")}>add new Customer</button>
-                <button className="button-gey" onClick={()=> navigate("archive")}>Archive Customers</button>
+                <button className={showArchived ? "button-blue" : "button-grey"} onClick={() => setShowArchived(!showArchived)} >
+                    {showArchived ? "Show Active Customers" : "Show Archived Customers"} </button>
             </div>
         <SearchBar
            searchQuery={searchQuery}

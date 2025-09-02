@@ -84,6 +84,60 @@ class CustomerServiceTest {
     }
 
     @Test
+    void testToggleArchiveStatus_shouldToggleFromActiveToArchived() {
+        // Given - Active customer
+        CustomerModel activeCustomer = activeCustomers.getFirst(); // Max Mustermann (isArchived = false)
+        CustomerModel toggledCustomer = new CustomerModel(
+                activeCustomer.getId(),
+                activeCustomer.getDebitorNrNavision(),
+                activeCustomer.getName(),
+                activeCustomer.getContactPerson(),
+                activeCustomer.getContactDetails(),
+                activeCustomer.getNotes(),
+                activeCustomer.getImageUrl(),
+                true // Toggled to archived
+        );
+
+        when(customerRepository.findById(activeCustomer.getId())).thenReturn(java.util.Optional.of(activeCustomer));
+        when(customerRepository.save(any(CustomerModel.class))).thenReturn(toggledCustomer);
+
+        // When
+        CustomerModel result = customerService.toggleArchiveStatus(activeCustomer.getId());
+
+        // Then
+        assertEquals(true, result.getIsArchived());
+        verify(customerRepository).findById(activeCustomer.getId());
+        verify(customerRepository).save(argThat(customer -> customer.getIsArchived() == true));
+    }
+
+    @Test
+    void testToggleArchiveStatus_shouldToggleFromArchivedToActive() {
+        // Given - Archived customer
+        CustomerModel archivedCustomer = archivedCustomers.getFirst(); // Hans Beispiel (isArchived = true)
+        CustomerModel toggledCustomer = new CustomerModel(
+                archivedCustomer.getId(),
+                archivedCustomer.getDebitorNrNavision(),
+                archivedCustomer.getName(),
+                archivedCustomer.getContactPerson(),
+                archivedCustomer.getContactDetails(),
+                archivedCustomer.getNotes(),
+                archivedCustomer.getImageUrl(),
+                false // Toggled to active
+        );
+
+        when(customerRepository.findById(archivedCustomer.getId())).thenReturn(java.util.Optional.of(archivedCustomer));
+        when(customerRepository.save(any(CustomerModel.class))).thenReturn(toggledCustomer);
+
+        // When
+        CustomerModel result = customerService.toggleArchiveStatus(archivedCustomer.getId());
+
+        // Then
+        assertEquals(false, result.getIsArchived());
+        verify(customerRepository).findById(archivedCustomer.getId());
+        verify(customerRepository).save(argThat(customer -> customer.getIsArchived() == false));
+    }
+
+    @Test
     void testAddCustomer() {
 
         CustomerModel customerModel3 = new CustomerModel(

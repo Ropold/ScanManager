@@ -5,17 +5,23 @@ import SearchBar from "./SearchBar.tsx";
 import ScannerCard from "./ScannerCard.tsx";
 import type {CustomerModel} from "./model/CustomerModel.ts";
 import type {ServicePartnerModel} from "./model/ServicePartnerModel.ts";
+import {getCustomerName, getServicePartnerName} from "./utils/ComponentsFunctions.ts";
 
 type ScannerProps = {
     language: string;
-    allScanner: ScannerModel[]
-    allCustomer: CustomerModel[];
-    allServicePartner: ServicePartnerModel[];
+    allActiveScanner: ScannerModel[]
+    allActiveCustomer: CustomerModel[];
+    allActiveServicePartner: ServicePartnerModel[];
+
+    allArchivedScanner: ScannerModel[];
+    allArchivedCustomer: CustomerModel[];
+    allArchivedServicePartner: ServicePartnerModel[];
 }
 
 export default function Scanners(props: Readonly<ScannerProps>) {
     const [searchQuery, setSearchQuery] = useState<string>("");
     const [filteredScanners, setFilteredScanners] = useState<ScannerModel[]>([]);
+    const [showArchived, setShowArchived] = useState<boolean>(false);
 
     const location = useLocation();
     const navigate = useNavigate();
@@ -79,33 +85,35 @@ export default function Scanners(props: Readonly<ScannerProps>) {
         });
     }
 
+    const currentScanners = showArchived ? props.allArchivedScanner : props.allActiveScanner;
+
     useEffect(() => {
-        setFilteredScanners(filterScanners(props.allScanner, searchQuery));
-    }, [props.allScanner, searchQuery]);
+        setFilteredScanners(filterScanners(currentScanners, searchQuery));
+    }, [currentScanners, searchQuery]);
+
 
     return(
         <>
-
             <div className="add-new-button">
-                <button className="button-blue" onClick={()=> navigate("add")}>add new Scanner</button>
-                <button className="button-gey" onClick={()=> navigate("archive")}>Archive Scanners</button>
+                <button className="button-blue" onClick={() => navigate("add")}>add new Scanner</button>
+                <button className={showArchived ? "button-blue" : "button-grey"} onClick={() => setShowArchived(!showArchived)}>
+                    {showArchived ? "Show Active Scanners" : "Show Archived Scanners"}
+                </button>
             </div>
-            <SearchBar
-                searchQuery={searchQuery}
-                setSearchQuery={setSearchQuery}
-            />
+
+            <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+
             <div className="scanner-card-container">
                 {filteredScanners.map((s: ScannerModel) => (
                     <ScannerCard
                         key={s.id}
                         scanner={s}
-                        allCustomer={props.allCustomer}
-                        allServicePartner={props.allServicePartner}
+                        customerName={getCustomerName(s.customerId, props.allActiveCustomer, props.allArchivedCustomer)}
+                        servicePartnerName={getServicePartnerName(s.servicePartnerId, props.allActiveServicePartner, props.allArchivedServicePartner)}
                         language={props.language}
                     />
                 ))}
             </div>
-
         </>
     )
 }

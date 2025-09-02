@@ -45,6 +45,14 @@ public class CustomerController {
         return customer;
     }
 
+    @PutMapping("/{id}/archive")
+    public CustomerModel toggleArchiveStatus(@PathVariable UUID id, @AuthenticationPrincipal OAuth2User authentication) {
+        if (authentication == null) {
+            throw new AccessDeniedException("User not authenticated");
+        }
+        return customerService.toggleArchiveStatus(id);
+    }
+
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public CustomerModel addCustomer(

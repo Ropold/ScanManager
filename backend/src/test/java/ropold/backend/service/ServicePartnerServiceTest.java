@@ -80,6 +80,61 @@ class ServicePartnerServiceTest {
     }
 
     @Test
+    void testToggleArchiveStatus_shouldToggleFromActiveToArchived() {
+        // Given - Active service partner
+        ServicePartnerModel activeServicePartner = activeServicePartners.getFirst(); // Canon Deutschland GmbH (isArchived = false)
+        ServicePartnerModel toggledServicePartner = new ServicePartnerModel(
+                activeServicePartner.getId(),
+                activeServicePartner.getCreditorNrNavision(),
+                activeServicePartner.getName(),
+                activeServicePartner.getContactPerson(),
+                activeServicePartner.getContactDetails(),
+                activeServicePartner.getNotes(),
+                activeServicePartner.getImageUrl(),
+                true // Toggled to archived
+        );
+
+        when(servicePartnerRepository.findById(activeServicePartner.getId())).thenReturn(java.util.Optional.of(activeServicePartner));
+        when(servicePartnerRepository.save(any(ServicePartnerModel.class))).thenReturn(toggledServicePartner);
+
+        // When
+        ServicePartnerModel result = servicePartnerService.toggleArchiveStatus(activeServicePartner.getId());
+
+        // Then
+        assertEquals(true, result.getIsArchived());
+        verify(servicePartnerRepository).findById(activeServicePartner.getId());
+        verify(servicePartnerRepository).save(argThat(servicePartner -> servicePartner.getIsArchived() == true));
+    }
+
+    @Test
+    void testToggleArchiveStatus_shouldToggleFromArchivedToActive() {
+        // Given - Archived service partner
+        ServicePartnerModel archivedServicePartner = archivedServicePartners.getFirst(); // Ricoh Deutschland GmbH (isArchived = true)
+        ServicePartnerModel toggledServicePartner = new ServicePartnerModel(
+                archivedServicePartner.getId(),
+                archivedServicePartner.getCreditorNrNavision(),
+                archivedServicePartner.getName(),
+                archivedServicePartner.getContactPerson(),
+                archivedServicePartner.getContactDetails(),
+                archivedServicePartner.getNotes(),
+                archivedServicePartner.getImageUrl(),
+                false // Toggled to active
+        );
+
+        when(servicePartnerRepository.findById(archivedServicePartner.getId())).thenReturn(java.util.Optional.of(archivedServicePartner));
+        when(servicePartnerRepository.save(any(ServicePartnerModel.class))).thenReturn(toggledServicePartner);
+
+        // When
+        ServicePartnerModel result = servicePartnerService.toggleArchiveStatus(archivedServicePartner.getId());
+
+        // Then
+        assertEquals(false, result.getIsArchived());
+        verify(servicePartnerRepository).findById(archivedServicePartner.getId());
+        verify(servicePartnerRepository).save(argThat(servicePartner -> servicePartner.getIsArchived() == false));
+    }
+
+
+    @Test
     void testAddServicePartner() {
         ServicePartnerModel newPartner = new ServicePartnerModel(
                 java.util.UUID.fromString("00000000-0000-0000-0000-000000000003"),

@@ -20,7 +20,7 @@ import {
     fetchUserDetails,
     fetchAllScanner,
     fetchAllCustomer,
-    fetchAllServicePartner
+    fetchAllServicePartner, fetchAllArchivedScanner, fetchAllArchivedCustomer, fetchAllArchivedServicePartner
 } from "./App-Functions.ts";
 import CustomerDetails from "./components/CustomerDetails.tsx";
 import ScannerDetails from "./components/ScannerDetails.tsx";
@@ -28,9 +28,6 @@ import ServicePartnerDetails from "./components/ServicePartnerDetails.tsx";
 import AddNewScanner from "./components/AddNewScanner.tsx";
 import AddNewCustomer from "./components/AddNewCustomer.tsx";
 import AddNewServicePartner from "./components/AddNewServicePartner.tsx";
-import ArchiveScanners from "./components/ArchiveScanners.tsx";
-import ArchiveCustomers from "./components/ArchiveCustomers.tsx";
-import ArchiveServicePartners from "./components/ArchiveServicePartners.tsx";
 
 
 export default function App() {
@@ -38,20 +35,13 @@ export default function App() {
     const [userDetails, setUserDetails] = useState<UserModel | null>(DefaultUser);
     const [language, setLanguage] = useState<string>("de");
 
-    const [allScanner, setAllScanner] = useState<ScannerModel[]>([]);
-    const [allCustomer, setAllCustomer]= useState<CustomerModel[]>([]);
-    const [allServicePartner, setAllServicePartner] = useState<ServicePartnerModel[]>([]);
+    const [allActiveScanner, setAllActiveScanner] = useState<ScannerModel[]>([]);
+    const [allActiveCustomer, setAllActiveCustomer]= useState<CustomerModel[]>([]);
+    const [allActiveServicePartner, setAllActiveServicePartner] = useState<ServicePartnerModel[]>([]);
 
-    function getAllCustomer() {
-        fetchAllCustomer(setAllCustomer);
-    }
-
-    function getAllServicePartner() {
-        fetchAllServicePartner(setAllServicePartner);
-    }
-    function getAllScanner() {
-        fetchAllScanner(setAllScanner);
-    }
+    const [allArchivedScanner, setAllArchivedScanner] = useState<ScannerModel[]>([]);
+    const [allArchivedCustomer, setAllArchivedCustomer]= useState<CustomerModel[]>([]);
+    const [allArchivedServicePartner, setAllArchivedServicePartner] = useState<ServicePartnerModel[]>([]);
 
     function getUser() {
         fetchUser(setUser);
@@ -61,6 +51,89 @@ export default function App() {
         fetchUserDetails(setUserDetails);
     }
 
+    function getAllActiveScanner() {
+        fetchAllScanner(setAllActiveScanner);
+    }
+    function getAllActiveCustomer() {
+        fetchAllCustomer(setAllActiveCustomer);
+    }
+    function getAllActiveServicePartner() {
+        fetchAllServicePartner(setAllActiveServicePartner);
+    }
+
+    function getAllArchivedScanner() {
+        fetchAllArchivedScanner(setAllArchivedScanner);
+    }
+    function getAllArchivedCustomer() {
+        fetchAllArchivedCustomer(setAllArchivedCustomer);
+    }
+    function getAllArchivedServicePartner() {
+        fetchAllArchivedServicePartner(setAllArchivedServicePartner);
+    }
+
+    function handleNewScannerSubmit(newScanner: ScannerModel) {
+        setAllActiveScanner(prevScanners => [...prevScanners, newScanner]);
+    }
+    function handleNewCustomerSubmit(newCustomer: CustomerModel) {
+        setAllActiveCustomer(prevCustomers => [...prevCustomers, newCustomer]);
+    }
+    function handleNewServicePartnerSubmit(newServicePartner: ServicePartnerModel) {
+        setAllActiveServicePartner(prevServicePartners => [...prevServicePartners, newServicePartner]);
+    }
+
+    function handleScannerDelete(deletedScannerId: string) {
+        setAllActiveScanner(prevScanners =>
+            prevScanners.filter(scanner => scanner.id !== deletedScannerId)
+        );
+        setAllArchivedScanner(prevScanners =>
+            prevScanners.filter(scanner => scanner.id !== deletedScannerId)
+        );
+    }
+    function handleCustomerDelete(deletedCustomerId: string) {
+        setAllActiveCustomer(prevCustomers =>
+            prevCustomers.filter(customer => customer.id !== deletedCustomerId)
+        );
+        setAllArchivedCustomer(prevCustomers =>
+            prevCustomers.filter(customer => customer.id !== deletedCustomerId)
+        );
+    }
+    function handleServicePartnerDelete(deletedServicePartnerId: string) {
+        setAllActiveServicePartner(prevServicePartners =>
+            prevServicePartners.filter(sp => sp.id !== deletedServicePartnerId)
+        );
+        setAllArchivedServicePartner(prevServicePartners =>
+            prevServicePartners.filter(sp => sp.id !== deletedServicePartnerId)
+        );
+    }
+
+    function handleScannerArchiveToggle(updatedScanner: ScannerModel) {
+        if (updatedScanner.isArchived) {
+            setAllActiveScanner(prev => prev.filter(s => s.id !== updatedScanner.id));
+            setAllArchivedScanner(prev => [...prev, updatedScanner]);
+        } else {
+            setAllArchivedScanner(prev => prev.filter(s => s.id !== updatedScanner.id));
+            setAllActiveScanner(prev => [...prev, updatedScanner]);
+        }
+    }
+    function handleCustomerArchiveToggle(updatedCustomer: CustomerModel) {
+        if (updatedCustomer.isArchived) {
+            setAllActiveCustomer(prev => prev.filter(c => c.id !== updatedCustomer.id));
+            setAllArchivedCustomer(prev => [...prev, updatedCustomer]);
+        } else {
+            setAllArchivedCustomer(prev => prev.filter(c => c.id !== updatedCustomer.id));
+            setAllActiveCustomer(prev => [...prev, updatedCustomer]);
+        }
+    }
+    function handleServicePartnerArchiveToggle(updatedServicePartner: ServicePartnerModel) {
+        if (updatedServicePartner.isArchived) {
+            setAllActiveServicePartner(prev => prev.filter(sp => sp.id !== updatedServicePartner.id));
+            setAllArchivedServicePartner(prev => [...prev, updatedServicePartner]);
+        } else {
+            setAllArchivedServicePartner(prev => prev.filter(sp => sp.id !== updatedServicePartner.id));
+            setAllActiveServicePartner(prev => [...prev, updatedServicePartner]);
+        }
+    }
+
     useEffect(() => {
         getUser();
     }, []);
@@ -68,9 +141,12 @@ export default function App() {
     useEffect(() => {
         if(user !== "anonymousUser"){
             getUserDetails();
-            getAllScanner();
-            getAllCustomer();
-            getAllServicePartner();
+            getAllActiveScanner();
+            getAllActiveCustomer();
+            getAllActiveServicePartner();
+            getAllArchivedScanner();
+            getAllArchivedCustomer();
+            getAllArchivedServicePartner();
         }
     }, [user]);
 
@@ -85,19 +161,16 @@ export default function App() {
             <Route path="*" element={<NotFound />} />
             <Route path="/" element={<Welcome language={language}/>}/>
             <Route element={<ProtectedRoute user={user}/>}>
-                <Route path="/scanners" element={<Scanners language={language} allScanner={allScanner} allCustomer={allCustomer} allServicePartner={allServicePartner} />} />
-                <Route path="/scanners/:id" element={<ScannerDetails language={language} />} />
-                <Route path="/scanners/add" element={<AddNewScanner />} />
-                <Route path="/scanners/archive" element={<ArchiveScanners />} />
-                <Route path="/customers" element={<Customers language={language} allCustomer={allCustomer}/>} />
-                <Route path="/customers/:id" element={<CustomerDetails language={language} />} />
-                <Route path="/customers/add" element={<AddNewCustomer />} />
-                <Route path="/customers/archive" element={<ArchiveCustomers />} />
-                <Route path="/service-partners" element={<ServicePartners language={language} allServicePartner={allServicePartner}/>} />
-                <Route path="/service-partners/:id" element={<ServicePartnerDetails language={language} />} />
-                <Route path="/service-partners/add" element={<AddNewServicePartner/>} />
-                <Route path="/service-partners/archive" element={<ArchiveServicePartners/>} />
-                <Route path="/profile/*" element={<Profile user={user} userDetails={userDetails} language={language} setLanguage={setLanguage}/>} />
+                <Route path="/scanners" element={<Scanners language={language} allActiveScanner={allActiveScanner} allActiveCustomer={allActiveCustomer} allActiveServicePartner={allActiveServicePartner} allArchivedScanner={allArchivedScanner} allArchivedCustomer={allArchivedCustomer} allArchivedServicePartner={allArchivedServicePartner}/>} />
+                <Route path="/scanners/add" element={<AddNewScanner language={language} handleNewScannerSubmit={handleNewScannerSubmit} allActiveCustomer={allActiveCustomer} allActiveServicePartner={allActiveServicePartner} />} />
+                <Route path="/scanners/:id" element={<ScannerDetails language={language} allActiveCustomer={allActiveCustomer} allActiveServicePartner={allActiveServicePartner} allArchivedCustomer={allArchivedCustomer} allArchivedServicePartner={allArchivedServicePartner} handleScannerDelete={handleScannerDelete} handleScannerArchiveToggle={handleScannerArchiveToggle}/>} />
+                <Route path="/customers" element={<Customers language={language} allActiveCustomer={allActiveCustomer} allArchivedCustomer={allArchivedCustomer} />} />
+                <Route path="/customers/add" element={<AddNewCustomer language={language} handleNewCustomerSubmit={handleNewCustomerSubmit}/>} />
+                <Route path="/customers/:id" element={<CustomerDetails language={language} allActiveScanner={allActiveScanner} allActiveServicePartner={allActiveServicePartner} allArchivedScanner={allArchivedScanner} allArchivedServicePartner={allArchivedServicePartner} handleCustomerDelete={handleCustomerDelete} handleCustomerArchiveToggle={handleCustomerArchiveToggle} />} />
+                <Route path="/service-partners" element={<ServicePartners language={language} allActiveServicePartner={allActiveServicePartner} allArchivedServicePartner={allArchivedServicePartner} />} />
+                <Route path="/service-partners/add" element={<AddNewServicePartner language={language} handleNewServicePartnerSubmit={handleNewServicePartnerSubmit} />} />
+                <Route path="/service-partners/:id" element={<ServicePartnerDetails language={language} handleServicePartnerDelete={handleServicePartnerDelete} handleServicePartnerArchiveToggle={handleServicePartnerArchiveToggle} />} />
+                <Route path="/profile/*" element={<Profile language={language} user={user} userDetails={userDetails} setLanguage={setLanguage}/>} />
             </Route>
         </Routes>
         <Footer language={language}/>

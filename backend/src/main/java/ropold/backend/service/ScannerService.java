@@ -31,6 +31,12 @@ public class ScannerService {
 
     }
 
+    public ScannerModel toggleArchiveStatus(UUID id) {
+        ScannerModel scanner = getScannerById(id);
+        scanner.setIsArchived(!scanner.getIsArchived());
+        return scannerRepository.save(scanner);
+    }
+
     public ScannerModel addScanner(ScannerModel scannerModel) {
         return scannerRepository.save(scannerModel);
     }

@@ -6,7 +6,7 @@ export type ServicePartnerModel = {
     contactDetails?: string;
     notes?: string;
     imageUrl?: string;
-    isArchived?: boolean;
+    isArchived: boolean;
 }
 
 export const DefaultServicePartner: ServicePartnerModel = {

@@ -27,6 +27,26 @@ export default function ScannerDetails(props: Readonly<ScannerDetailsProps>) {
             .catch((error) => console.error("Error fetching customer details", error));
     }, [id]);
 
+    const getCustomerName = (customerId: string | undefined) => {
+        if (!customerId) return undefined;
+        const allCustomers = [...props.allActiveCustomer, ...props.allArchivedCustomer];
+        return allCustomers.find(customer => customer.id === customerId)?.name;
+    };
+
+    const getServicePartnerName = (servicePartnerId: string | undefined) => {
+        if (!servicePartnerId) return undefined;
+        const allServicePartners = [...props.allActiveServicePartner, ...props.allArchivedServicePartner];
+        return allServicePartners.find(sp => sp.id === servicePartnerId)?.name;
+    };
+
+    function toggleArchiveStatus() {
+        if (!scanner) return;
+
+        axios
+            .put(`/api/scanners/${scanner.id}/archive`)
+            .then((response) => setScanner(response.data))
+            .catch((error) => console.error("Error updating archive status", error));
+    }
 
     return(
         <div>
@@ -52,8 +72,10 @@ export default function ScannerDetails(props: Readonly<ScannerDetailsProps>) {
                     <p><strong>{translatedInfo["purchasePrice"][props.language]}:</strong> {scanner.purchasePrice ? `€${scanner.purchasePrice}` : "—"}</p>
                     <p><strong>{translatedInfo["salePrice"][props.language]}:</strong> {scanner.salePrice ? `€${scanner.salePrice}` : "—"}</p>
                     <p><strong>{translatedInfo["depreciation"][props.language]}:</strong> {scanner.depreciation ? `€${scanner.depreciation}` : "—"}</p>
-                    <p><strong>{translatedInfo["customerID"][props.language]}:</strong> {scanner.customerId || "—"}</p>
-                    <p><strong>{translatedInfo["servicePartnerId"][props.language]}:</strong> {scanner.servicePartnerId || "—"}</p>
+
+                    <p><strong>{translatedInfo["customerName"][props.language]}:</strong> {getCustomerName(scanner.customerId) || scanner.customerId || "—"}</p>
+                    <p><strong>{translatedInfo["servicePartnerName"][props.language]}:</strong> {getServicePartnerName(scanner.servicePartnerId) || scanner.servicePartnerId || "—"}</p>
+
                     <p><strong>{translatedInfo["notes"][props.language]}:</strong> {scanner.notes || "—"}</p>
                     <p><strong>{translatedInfo["isArchived"][props.language]}:</strong> {scanner.isArchived ? translatedInfo["Yes"][props.language] : translatedInfo["No"][props.language]}</p>
                     {scanner.imageUrl && (
@@ -66,6 +88,12 @@ export default function ScannerDetails(props: Readonly<ScannerDetailsProps>) {
                             />
                         </div>
                     )}
+
+                    <div className="details-buttons">
+                        <button className="button-blue">Edit</button>
+                        <button className="button-grey" onClick={toggleArchiveStatus}>{scanner.isArchived ? "Unarchive" : "Archive"}</button>
+                        <button className="button-delete">Delete</button>
+                    </div>
                 </div>
             ) : (
                 <p>{translatedInfo["Loading"][props.language]}...</p>

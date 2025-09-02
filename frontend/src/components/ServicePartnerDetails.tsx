@@ -29,6 +29,14 @@ export default function ServicePartnerDetails(props: Readonly<ServicePartnerDeta
             });
     }, [id]);
 
+    function toggleArchiveStatus() {
+        if (!servicePartner) return;
+
+        axios
+            .put(`/api/service-partners/${servicePartner.id}/archive`)
+            .then((response) => setServicePartner(response.data))
+            .catch((error) => console.error("Error updating archive status", error));
+    }
 
     return(
         <div>
@@ -51,12 +59,18 @@ export default function ServicePartnerDetails(props: Readonly<ServicePartnerDeta
                             />
                         </div>
                     )}
-                    <p><strong>{translatedInfo["isArchived"][props.language]}:</strong>
+                    <p><strong>{translatedInfo["isArchived"][props.language]}: </strong>
                         {servicePartner.isArchived
                             ? translatedInfo["Yes"][props.language]
                             : translatedInfo["No"][props.language]
                         }
                     </p>
+
+                    <div className="details-buttons">
+                        <button className="button-blue">Edit</button>
+                        <button className="button-grey" onClick={toggleArchiveStatus}>{servicePartner.isArchived ? "Unarchive" : "Archive"}</button>
+                        <button className="button-delete">Delete</button>
+                    </div>
                 </div>
             ) : (
                 <p>{translatedInfo["Loading"][props.language]}...</p>

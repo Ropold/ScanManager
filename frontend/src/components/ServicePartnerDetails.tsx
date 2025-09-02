@@ -15,6 +15,7 @@ type ServicePartnerDetailsProps = {
     allArchivedCustomer: CustomerModel[];
 
     handleServicePartnerDelete: (id: string) => void;
+    handleServicePartnerArchiveToggle: (servicePartner: ServicePartnerModel) => void;
 }
 
 export default function ServicePartnerDetails(props: Readonly<ServicePartnerDetailsProps>) {
@@ -38,7 +39,10 @@ export default function ServicePartnerDetails(props: Readonly<ServicePartnerDeta
 
         axios
             .put(`/api/service-partners/${servicePartner.id}/archive`)
-            .then((response) => setServicePartner(response.data))
+            .then((response) => {
+                setServicePartner(response.data)
+                props.handleServicePartnerArchiveToggle(response.data);
+            })
             .catch((error) => console.error("Error updating archive status", error));
     }
 
@@ -64,8 +68,6 @@ export default function ServicePartnerDetails(props: Readonly<ServicePartnerDeta
                 navigate("/service-partners");
             });
     }
-
-
 
 
     return(

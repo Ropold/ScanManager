@@ -16,6 +16,7 @@ type CustomerDetailsProps = {
     allArchivedScanner: ScannerModel[];
     allArchivedServicePartner: ServicePartnerModel[];
     handleCustomerDelete: (id: string) => void;
+    handleCustomerArchiveToggle: (customer: CustomerModel) => void;
 }
 
 export default function CustomerDetails(props: Readonly<CustomerDetailsProps>) {
@@ -49,7 +50,10 @@ export default function CustomerDetails(props: Readonly<CustomerDetailsProps>) {
 
         axios
             .put(`/api/customers/${customer.id}/archive`)
-            .then((response) => setCustomer(response.data))
+            .then((response) => {
+                setCustomer(response.data)
+                props.handleCustomerArchiveToggle(response.data);
+            })
             .catch((error) => console.error("Error updating archive status", error));
     }
 

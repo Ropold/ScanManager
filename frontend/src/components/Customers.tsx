@@ -16,7 +16,6 @@ export default function Customers(props: Readonly<CustomerProps>) {
     const [showArchived, setShowArchived] = useState<boolean>(false);
 
     const location = useLocation();
-
     const navigate = useNavigate();
 
     useEffect(() => {

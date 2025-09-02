@@ -14,6 +14,7 @@ type ScannerDetailsProps = {
     allArchivedCustomer: CustomerModel[];
     allArchivedServicePartner: ServicePartnerModel[];
     handleScannerDelete: (id: string) => void;
+    handleScannerArchiveToggle: (scanner: ScannerModel) => void;
 }
 
 export default function ScannerDetails(props: Readonly<ScannerDetailsProps>) {
@@ -44,10 +45,12 @@ export default function ScannerDetails(props: Readonly<ScannerDetailsProps>) {
 
     function toggleArchiveStatus() {
         if (!scanner) return;
-
         axios
             .put(`/api/scanners/${scanner.id}/archive`)
-            .then((response) => setScanner(response.data))
+            .then((response) => {
+                setScanner(response.data);
+                props.handleScannerArchiveToggle(response.data);
+            })
             .catch((error) => console.error("Error updating archive status", error));
     }
 
@@ -58,7 +61,7 @@ export default function ScannerDetails(props: Readonly<ScannerDetailsProps>) {
             .delete(`/api/scanners/${scanner.id}`)
             .then(() => {
                 console.log("Scanner deleted successfully");
-                props.handleScannerDelete(scanner.id); // Liste aktualisieren
+                props.handleScannerDelete(scanner.id);
             })
             .catch((error) => {
                 console.error("Error deleting Scanner:", error);

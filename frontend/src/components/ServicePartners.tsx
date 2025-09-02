@@ -7,11 +7,13 @@ import ServicePartnerCard from "./ServicePartnerCard.tsx";
 type ServicePartnerProps = {
     language: string;
     allActiveServicePartner: ServicePartnerModel[];
+    allArchivedServicePartner: ServicePartnerModel[];
 }
 
 export default function ServicePartners(props: Readonly<ServicePartnerProps>) {
     const [searchQuery, setSearchQuery] = useState<string>("");
     const [filteredServicePartners, setFilteredServicePartners] = useState<ServicePartnerModel[]>([]);
+    const [showArchived, setShowArchived] = useState<boolean>(false);
 
     const location = useLocation();
     const navigate = useNavigate();
@@ -42,9 +44,12 @@ export default function ServicePartners(props: Readonly<ServicePartnerProps>) {
         });
     }
 
+    const currentServicePartners = showArchived ? props.allArchivedServicePartner : props.allActiveServicePartner;
+
     useEffect(() => {
-        setFilteredServicePartners(filterServicePartners(props.allActiveServicePartner, searchQuery));
-    }, [props.allActiveServicePartner, searchQuery]);
+        const results = filterServicePartners(currentServicePartners, searchQuery);
+        setFilteredServicePartners(results);
+    }, [searchQuery, currentServicePartners]);
 
     return(
         <>
@@ -52,6 +57,8 @@ export default function ServicePartners(props: Readonly<ServicePartnerProps>) {
             <div className="add-new-button">
                 <button className="button-blue" onClick={()=> navigate("add")}>add new SP</button>
                 <button className="button-grey" onClick={()=> navigate("archive")}>Archive SP</button>
+                <button className="button-grey" onClick={() => setShowArchived(!showArchived)} >
+                    {showArchived ? "Show Active SP" : "Show Archived SP"} </button>
             </div>
             <SearchBar
                 searchQuery={searchQuery}

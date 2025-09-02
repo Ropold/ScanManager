@@ -3,17 +3,9 @@ import {DefaultServicePartner, type ServicePartnerModel} from "./model/ServicePa
 import {useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 import {translatedInfo} from "./utils/TranslatedInfo.ts";
-import type {ScannerModel} from "./model/ScannerModel.ts";
-import type {CustomerModel} from "./model/CustomerModel.ts";
 
 type ServicePartnerDetailsProps = {
     language: string;
-    allActiveScanner: ScannerModel [];
-    allActiveCustomer: CustomerModel[];
-
-    allArchivedScanner: ScannerModel[];
-    allArchivedCustomer: CustomerModel[];
-
     handleServicePartnerDelete: (id: string) => void;
     handleServicePartnerArchiveToggle: (servicePartner: ServicePartnerModel) => void;
 }

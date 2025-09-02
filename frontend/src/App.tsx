@@ -169,7 +169,7 @@ export default function App() {
                 <Route path="/customers/:id" element={<CustomerDetails language={language} allActiveScanner={allActiveScanner} allActiveServicePartner={allActiveServicePartner} allArchivedScanner={allArchivedScanner} allArchivedServicePartner={allArchivedServicePartner} handleCustomerDelete={handleCustomerDelete} handleCustomerArchiveToggle={handleCustomerArchiveToggle} />} />
                 <Route path="/service-partners" element={<ServicePartners language={language} allActiveServicePartner={allActiveServicePartner} allArchivedServicePartner={allArchivedServicePartner} />} />
                 <Route path="/service-partners/add" element={<AddNewServicePartner language={language} handleNewServicePartnerSubmit={handleNewServicePartnerSubmit} />} />
-                <Route path="/service-partners/:id" element={<ServicePartnerDetails language={language} allActiveScanner={allActiveScanner} allActiveCustomer={allActiveCustomer} allArchivedScanner={allArchivedScanner} allArchivedCustomer={allArchivedCustomer} handleServicePartnerDelete={handleServicePartnerDelete} handleServicePartnerArchiveToggle={handleServicePartnerArchiveToggle} />} />
+                <Route path="/service-partners/:id" element={<ServicePartnerDetails language={language} handleServicePartnerDelete={handleServicePartnerDelete} handleServicePartnerArchiveToggle={handleServicePartnerArchiveToggle} />} />
                 <Route path="/profile/*" element={<Profile language={language} user={user} userDetails={userDetails} setLanguage={setLanguage}/>} />
             </Route>
         </Routes>

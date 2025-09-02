@@ -767,5 +767,21 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "ru": "Добавить новый сканер",
         "tr": "Yeni Tarayıcı Ekle",
         "ir": "افزودن اسکنر جدید"
+    },
+    "Remove Image": {
+        "de": "Bild entfernen",
+        "en": "Remove Image",
+        "pl": "Usuń obraz",
+        "es": "Eliminar imagen",
+        "fr": "Supprimer l'image",
+        "it": "Rimuovi immagine",
+        "cz": "Odstranit obrázek",
+        "pt": "Remover imagem",
+        "hu": "Kép eltávolítása",
+        "nl": "Afbeelding verwijderen",
+        "gr": "Αφαίρεση εικόνας",
+        "ru": "Удалить изображение",
+        "tr": "Resmi Kaldır",
+        "ir": "حذف تصویر"
     }
 }

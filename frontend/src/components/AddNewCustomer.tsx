@@ -74,70 +74,77 @@ export default function AddNewCustomer(props: Readonly<AddNewCustomerProps>) {
             <h2>Add New Customer Page</h2>
             <form onSubmit={handleSubmit}>
                 <div className="edit-form">
-                   <label>
-                       {translatedInfo["debitorNrNavision"][props.language]}:
-                       <input
+                    <label>
+                        {translatedInfo["debitorNrNavision"][props.language]}:
+                        <input
                             className="input-small"
                             type="text"
                             value={debitorNrNavision}
                             onChange={(e)=> setDebitorNrNavision(e.target.value)}
-                       />
-                   </label>
-                   <label>
-                       {translatedInfo["customerName"][props.language]}:
-                          <input
+                        />
+                    </label>
+                    <label>
+                        {translatedInfo["customerName"][props.language]}:
+                        <input
                             className="input-small"
                             type="text"
                             value={name}
                             onChange={(e)=> setName(e.target.value)}
                             required
-                          />
-                     </label>
-                     <label>
-                          {translatedInfo["contactPerson"][props.language]}:
-                          <textarea
+                        />
+                    </label>
+                    <label>
+                        {translatedInfo["contactPerson"][props.language]}:
+                        <textarea
                             className="textarea-large"
                             value={contactPerson}
                             onChange={(e)=> setContactPerson(e.target.value)}
-                          />
-                     </label>
-                     <label>
-                          {translatedInfo["contactDetails"][props.language]}:
-                          <textarea
+                        />
+                    </label>
+                    <label>
+                        {translatedInfo["contactDetails"][props.language]}:
+                        <textarea
                             className="textarea-large"
                             value={contactDetails}
                             onChange={(e)=> setContactDetails(e.target.value)}
-                          />
-                     </label>
-                     <label>
-                          {translatedInfo["notes"][props.language]}:
-                          <textarea
+                        />
+                    </label>
+                    <label>
+                        {translatedInfo["notes"][props.language]}:
+                        <textarea
                             className="textarea-large"
                             value={notes}
                             onChange={(e)=> setNotes(e.target.value)}
-                          />
-                     </label>
+                        />
+                    </label>
 
-                    <div className="image-upload-container">
-                        <label>
-                            Image:
-                            <input type="file" onChange={handleFileChange} />
-                        </label>
+                    {/* Position 6 - Image Upload */}
+                    <label>
+                        Image:
+                        <input type="file" onChange={handleFileChange} />
+                    </label>
+
+                    {/* Position 7 - Image */}
+                    <div>
                         {image && (
-                            <>
-                                <img
-                                    src={URL.createObjectURL(image)}
-                                    alt="image-preview"
-                                    className="image-preview"
-                                />
-                                <button
-                                    type="button"
-                                    onClick={handleImageCancel}
-                                    className="button-blue"
-                                >
-                                    Remove Image
-                                </button>
-                            </>
+                            <img
+                                src={URL.createObjectURL(image)}
+                                alt="image-preview"
+                                className="image-preview"
+                            />
+                        )}
+                    </div>
+
+                    {/* Position 8 - Button */}
+                    <div>
+                        {image && (
+                            <button
+                                type="button"
+                                onClick={handleImageCancel}
+                                className="button-blue button-remove-image"
+                            >
+                                {translatedInfo["Remove Image"][props.language]}
+                            </button>
                         )}
                     </div>
                 </div>

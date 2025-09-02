@@ -85,6 +85,31 @@ export default function App() {
         setAllActiveServicePartner(prevServicePartners => [...prevServicePartners, newServicePartner]);
     }
 
+    function handleScannerDelete(deletedScannerId: string) {
+        setAllActiveScanner(prevScanners =>
+            prevScanners.filter(scanner => scanner.id !== deletedScannerId)
+        );
+        setAllArchivedScanner(prevScanners =>
+            prevScanners.filter(scanner => scanner.id !== deletedScannerId)
+        );
+    }
+    function handleCustomerDelete(deletedCustomerId: string) {
+        setAllActiveCustomer(prevCustomers =>
+            prevCustomers.filter(customer => customer.id !== deletedCustomerId)
+        );
+        setAllArchivedCustomer(prevCustomers =>
+            prevCustomers.filter(customer => customer.id !== deletedCustomerId)
+        );
+    }
+    function handleServicePartnerDelete(deletedServicePartnerId: string) {
+        setAllActiveServicePartner(prevServicePartners =>
+            prevServicePartners.filter(sp => sp.id !== deletedServicePartnerId)
+        );
+        setAllArchivedServicePartner(prevServicePartners =>
+            prevServicePartners.filter(sp => sp.id !== deletedServicePartnerId)
+        );
+    }
+
     useEffect(() => {
         getUser();
     }, []);
@@ -123,7 +148,7 @@ export default function App() {
                 <Route path="/service-partners" element={<ServicePartners language={language} allActiveServicePartner={allActiveServicePartner}/>} />
                 <Route path="/service-partners/archive" element={<ArchiveServicePartners language={language} allActiveScanner={allActiveScanner} allActiveCustomer={allActiveCustomer} allArchivedScanner={allArchivedScanner} allArchivedCustomer={allArchivedCustomer} allArchivedServicePartner={allArchivedServicePartner}/>} />
                 <Route path="/service-partners/add" element={<AddNewServicePartner language={language} handleNewServicePartnerSubmit={handleNewServicePartnerSubmit} />} />
-                <Route path="/service-partners/:id" element={<ServicePartnerDetails language={language} allActiveScanner={allActiveScanner} allActiveCustomer={allActiveCustomer} allArchivedScanner={allArchivedScanner} allArchivedCustomer={allArchivedCustomer} />} />
+                <Route path="/service-partners/:id" element={<ServicePartnerDetails language={language} allActiveScanner={allActiveScanner} allActiveCustomer={allActiveCustomer} allArchivedScanner={allArchivedScanner} allArchivedCustomer={allArchivedCustomer} handleServicePartnerDelete={handleServicePartnerDelete} />} />
                 <Route path="/profile/*" element={<Profile language={language} user={user} userDetails={userDetails} setLanguage={setLanguage}/>} />
             </Route>
         </Routes>

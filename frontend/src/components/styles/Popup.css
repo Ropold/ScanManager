@@ -88,3 +88,18 @@
     object-fit: cover;
 }
 
+/* Dark Mode für Popup */
+@media (prefers-color-scheme: dark) {
+    .popup-content {
+        background: #2d2d2d; /* Dunkler Hintergrund */
+        color: #ffffff; /* Weißer Text */
+    }
+
+    .popup-content h3 {
+        color: #ffffff;
+    }
+
+    .popup-content p {
+        color: #ffffff;
+    }
+}

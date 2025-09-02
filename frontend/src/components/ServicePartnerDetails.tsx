@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {DefaultServicePartner, type ServicePartnerModel} from "./model/ServicePartnerModel.ts";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 import {translatedInfo} from "./utils/TranslatedInfo.ts";
 import type {ScannerModel} from "./model/ScannerModel.ts";
@@ -13,11 +13,15 @@ type ServicePartnerDetailsProps = {
 
     allArchivedScanner: ScannerModel[];
     allArchivedCustomer: CustomerModel[];
+
+    handleServicePartnerDelete: (id: string) => void;
 }
 
 export default function ServicePartnerDetails(props: Readonly<ServicePartnerDetailsProps>) {
     const [servicePartner, setServicePartner] = useState<ServicePartnerModel>(DefaultServicePartner);
     const {id} = useParams<{id: string}>();
+    const [showPopup, setShowPopup] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if(!id) return;
@@ -37,6 +41,32 @@ export default function ServicePartnerDetails(props: Readonly<ServicePartnerDeta
             .then((response) => setServicePartner(response.data))
             .catch((error) => console.error("Error updating archive status", error));
     }
+
+    function handleCancel(){
+        setShowPopup(false);
+    }
+
+    function handleConfirmDelete(){
+        if(!servicePartner?.id) return;
+
+        axios
+            .delete(`/api/service-partners/${servicePartner.id}`)
+            .then(() => {
+                console.log("Service Partner deleted successfully");
+                props.handleServicePartnerDelete(servicePartner.id);
+            })
+            .catch((error) => {
+                console.error("Error deleting service partner:", error);
+                alert("An unexpected error occurred. Please try again.");
+            })
+            .finally(() => {
+                setShowPopup(false);
+                navigate("/service-partners");
+            });
+    }
+
+
+
 
     return(
         <div>
@@ -69,8 +99,22 @@ export default function ServicePartnerDetails(props: Readonly<ServicePartnerDeta
                     <div className="details-buttons">
                         <button className="button-blue">Edit</button>
                         <button className="button-grey" onClick={toggleArchiveStatus}>{servicePartner.isArchived ? "Unarchive" : "Archive"}</button>
-                        <button className="button-delete">Delete</button>
+                        <button className="button-delete" onClick={() => setShowPopup(true)} >Delete</button>
                     </div>
+
+                    {showPopup && (
+                        <div className="popup-overlay">
+                            <div className="popup-content">
+                                <h3>Confirm Deletion</h3>
+                                <p>Are you sure you want to delete this service partner?</p>
+                                <div className="popup-actions">
+                                    <button onClick={handleConfirmDelete} className="popup-confirm">Yes, Delete</button>
+                                    <button onClick={handleCancel} className="popup-cancel">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
                 </div>
             ) : (
                 <p>{translatedInfo["Loading"][props.language]}...</p>

@@ -149,6 +149,7 @@ export default function AddNewCustomer(props: Readonly<AddNewCustomerProps>) {
                     </div>
                 </div>
                 <button type="submit" className="button-blue margin-top-50">{translatedInfo["Add Customer"][props.language]}</button>
+                <button className="button-blue margin-left-20" onClick={()=> navigate("/customers")} >back</button>
             </form>
         </div>
     )

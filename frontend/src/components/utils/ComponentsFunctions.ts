@@ -1,3 +1,6 @@
+import type {ServicePartnerModel} from "../model/ServicePartnerModel.ts";
+import type {CustomerModel} from "../model/CustomerModel.ts";
+
 export function onFileChange(
     e: React.ChangeEvent<HTMLInputElement>,
     setImage: (file: File | null) => void
@@ -14,4 +17,24 @@ export function onImageCancel(setImage: (file: File | null) => void) {
     if (fileInput) {
         fileInput.value = '';
     }
+}
+
+export function getCustomerName(
+    customerId: string | undefined,
+    allActiveCustomer: CustomerModel[],
+    allArchivedCustomer: CustomerModel[]
+) {
+    if (!customerId) return undefined;
+    const allCustomers = [...allActiveCustomer, ...allArchivedCustomer];
+    return allCustomers.find(customer => customer.id === customerId)?.name;
+}
+
+export function getServicePartnerName(
+    servicePartnerId: string | undefined,
+    allActiveServicePartner: ServicePartnerModel[],
+    allArchivedServicePartner: ServicePartnerModel[]
+) {
+    if (!servicePartnerId) return undefined;
+    const allServicePartners = [...allActiveServicePartner, ...allArchivedServicePartner];
+    return allServicePartners.find(sp => sp.id === servicePartnerId)?.name;
 }

@@ -368,6 +368,7 @@ export default function AddNewScanner(props: Readonly<AddNewScannerProps>) {
                     </div>
                 </div>
                 <button type="submit" className="button-blue margin-top-50">{translatedInfo["Add New Scanner"][props.language]}</button>
+                <button className="button-blue margin-left-20" onClick={()=> navigate("/scanners")} >back</button>
             </form>
         </div>
     )

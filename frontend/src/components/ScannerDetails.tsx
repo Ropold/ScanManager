@@ -5,6 +5,7 @@ import axios from "axios";
 import {translatedInfo} from "./utils/TranslatedInfo.ts";
 import type {CustomerModel} from "./model/CustomerModel.ts";
 import type {ServicePartnerModel} from "./model/ServicePartnerModel.ts";
+import {getCustomerName, getServicePartnerName} from "./utils/ComponentsFunctions.ts";
 
 type ScannerDetailsProps = {
     language: string;
@@ -31,17 +32,8 @@ export default function ScannerDetails(props: Readonly<ScannerDetailsProps>) {
             .catch((error) => console.error("Error fetching customer details", error));
     }, [id]);
 
-    const getCustomerName = (customerId: string | undefined) => {
-        if (!customerId) return undefined;
-        const allCustomers = [...props.allActiveCustomer, ...props.allArchivedCustomer];
-        return allCustomers.find(customer => customer.id === customerId)?.name;
-    };
-
-    const getServicePartnerName = (servicePartnerId: string | undefined) => {
-        if (!servicePartnerId) return undefined;
-        const allServicePartners = [...props.allActiveServicePartner, ...props.allArchivedServicePartner];
-        return allServicePartners.find(sp => sp.id === servicePartnerId)?.name;
-    };
+    const customerName = getCustomerName(scanner.customerId, props.allActiveCustomer, props.allArchivedCustomer);
+    const servicePartnerName = getServicePartnerName(scanner.servicePartnerId, props.allActiveServicePartner, props.allArchivedServicePartner);
 
     function toggleArchiveStatus() {
         if (!scanner) return;
@@ -101,8 +93,8 @@ export default function ScannerDetails(props: Readonly<ScannerDetailsProps>) {
                     <p><strong>{translatedInfo["salePrice"][props.language]}:</strong> {scanner.salePrice ? `€${scanner.salePrice}` : "—"}</p>
                     <p><strong>{translatedInfo["depreciation"][props.language]}:</strong> {scanner.depreciation ? `€${scanner.depreciation}` : "—"}</p>
 
-                    <p><strong>{translatedInfo["customerName"][props.language]}:</strong> {getCustomerName(scanner.customerId) || scanner.customerId || "—"}</p>
-                    <p><strong>{translatedInfo["servicePartnerName"][props.language]}:</strong> {getServicePartnerName(scanner.servicePartnerId) || scanner.servicePartnerId || "—"}</p>
+                    <p><strong>{translatedInfo["customerName"][props.language]}:</strong> {customerName || scanner.customerId || "—"}</p>
+                    <p><strong>{translatedInfo["servicePartnerName"][props.language]}:</strong> {servicePartnerName || scanner.servicePartnerId || "—"}</p>
 
                     <p><strong>{translatedInfo["notes"][props.language]}:</strong> {scanner.notes || "—"}</p>
                     <p><strong>{translatedInfo["isArchived"][props.language]}:</strong> {scanner.isArchived ? translatedInfo["Yes"][props.language] : translatedInfo["No"][props.language]}</p>

@@ -77,7 +77,7 @@ export default function ScannerDetails(props: Readonly<ScannerDetailsProps>) {
         <div>
             <h2>Scanner Details</h2>
             {scanner ? (
-                <div className="scanner-details">
+                <div className="details-container">
                     <p><strong>{translatedInfo["sql-id"][props.language]}:</strong> {scanner.id}</p>
                     <p><strong>{translatedInfo["modelName"][props.language]}:</strong> {scanner.modelName || "—"}</p>
                     <p><strong>{translatedInfo["manufacturerCode"][props.language]}:</strong> {scanner.manufacturerCode || "—"}</p>

@@ -12,6 +12,7 @@ type ScannerProps = {
     allActiveCustomer: CustomerModel[];
     allActiveServicePartner: ServicePartnerModel[];
 
+    allArchivedScanner: ScannerModel[];
     allArchivedCustomer: CustomerModel[];
     allArchivedServicePartner: ServicePartnerModel[];
 }
@@ -19,6 +20,7 @@ type ScannerProps = {
 export default function Scanners(props: Readonly<ScannerProps>) {
     const [searchQuery, setSearchQuery] = useState<string>("");
     const [filteredScanners, setFilteredScanners] = useState<ScannerModel[]>([]);
+    const [showArchived, setShowArchived] = useState<boolean>(false);
 
     const location = useLocation();
     const navigate = useNavigate();
@@ -82,9 +84,11 @@ export default function Scanners(props: Readonly<ScannerProps>) {
         });
     }
 
+    const currentScanners = showArchived ? props.allArchivedScanner : props.allActiveScanner;
+
     useEffect(() => {
-        setFilteredScanners(filterScanners(props.allActiveScanner, searchQuery));
-    }, [props.allActiveScanner, searchQuery]);
+        setFilteredScanners(filterScanners(currentScanners, searchQuery));
+    }, [currentScanners, searchQuery]);
 
     const getCustomerName = (customerId: string | undefined) => {
         if (!customerId) return undefined;
@@ -104,6 +108,8 @@ export default function Scanners(props: Readonly<ScannerProps>) {
             <div className="add-new-button">
                 <button className="button-blue" onClick={()=> navigate("add")}>add new Scanner</button>
                 <button className="button-grey" onClick={()=> navigate("archive")}>Archive Scanners</button>
+                <button className={showArchived ? "button-blue" : "button-grey"} onClick={() => setShowArchived(!showArchived)} >
+                    {showArchived ? "Show Active Scanners" : "Show Archived Scanners"} </button>
             </div>
             <SearchBar
                 searchQuery={searchQuery}

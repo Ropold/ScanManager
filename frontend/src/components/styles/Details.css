@@ -2,10 +2,6 @@
     background-color: transparent;
 }
 
-.details-container.archived {
-    background-color: #e9ecef;
-}
-
 .details-image{
     max-width: 300px;
     max-height: 200px;

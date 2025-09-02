@@ -85,7 +85,7 @@ export default function CustomerDetails(props: Readonly<CustomerDetailsProps>) {
         <div>
             <h2>Customer Details</h2>
             {customer ? (
-                <div className={`details-container ${customer.isArchived ? 'archived' : ''}`}>
+                <div className="details-container">
                     <p><strong>{translatedInfo["sql-id"][props.language]}:</strong> {customer.id}</p>
                     <p><strong>{translatedInfo["debitorNrNavision"][props.language]}:</strong> {customer.debitorNrNavision}</p>
                     <p><strong>{translatedInfo["customerName"][props.language]}:</strong> {customer.name}</p>

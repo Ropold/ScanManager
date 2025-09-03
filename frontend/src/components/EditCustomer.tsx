@@ -13,22 +13,94 @@ export default function EditCustomer(props: Readonly<EditCustomerProps>) {
     const {id} = useParams<{id: string}>();
     const navigate = useNavigate();
 
+    const [debitorNrNavision, setDebitorNrNavision] = useState<string>("");
+    const [name, setName] = useState<string>("");
+    const [contactPerson, setContactPerson] = useState<string>("");
+    const [contactDetails, setContactDetails] = useState<string>("");
+    const [notes, setNotes] = useState<string>("");
+    const [isArchived, setIsArchived] = useState<boolean>(false);
+
+    const [image, setImage] = useState<File | null>(null);
+    const [imageChanged, setImageChanged] = useState(false);
+    const [imageDeleted, setImageDeleted] = useState(false);
+
     useEffect(() => {
         if(!id) return;
         axios
             .get(`/api/customers/${id}`)
-            .then((response) => setCustomer(response.data))
+            .then((response) => {
+                const customer = response.data;
+                setCustomer(customer);
+                setDebitorNrNavision(customer.debitorNrNavision || "");
+                setName(customer.name || "");
+                setContactPerson(customer.contactPerson || "");
+                setContactDetails(customer.contactDetails || "");
+                setNotes(customer.notes || "");
+                setIsArchived(customer.isArchived || false);
+            })
             .catch((error) => console.error("Error fetching customer details", error));
     }, [id]);
 
 
-    function handleSubmit(){
+    function handleSaveEdit(e: React.FormEvent<HTMLFormElement>){
+        e.preventDefault();
 
+        if(!customer || customer === DefaultCustomer) return;
+
+        // Image-URL Logik
+        let updatedImageUrl = customer.imageUrl;
+        if (imageChanged) {
+            if (image) {
+                updatedImageUrl = "temp-image"; // Backend ersetzt das mit echter URL
+            } else if (imageDeleted) {
+                updatedImageUrl = ""; // Image wurde gelöscht
+            }
+        }
+
+        const updatedCustomerData = {
+            debitorNrNavision,
+            name,
+            contactPerson,
+            contactDetails,
+            notes,
+            imageUrl: updatedImageUrl,
+            isArchived
+        };
+
+        const data = new FormData();
+        if (imageChanged && image) {
+            data.append("image", image);
+        }
+        data.append("customerModel", new Blob([JSON.stringify(updatedCustomerData)], { type: "application/json" }));
+
+        axios
+            .put(`/api/customers/${customer.id}`, data, {
+                headers: { "Content-Type": "multipart/form-data" },
+            })
+            .then((response) => {
+                props.handleCustomerUpdate(response.data);
+                navigate(`/customers/${customer.id}`);
+            })
+            .catch((error) => {
+                console.error("Error updating customer:", error);
+                alert("An unexpected error occurred. Please try again.");
+            });
+    }
+
+    function cancelAndGoBack() {
+        navigate("/customers");
+        setDebitorNrNavision("");
+        setName("");
+        setContactPerson("");
+        setContactDetails("");
+        setNotes("");
+        setImage(null)
     }
 
     return(
         <>
-        <div>EditServicePartner</div>
+        <h2>EditServicePartner</h2>
+
         </>
     )
 }

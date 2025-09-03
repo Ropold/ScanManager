@@ -103,6 +103,32 @@ export default function AddNewScanner(props: Readonly<AddNewScannerProps>) {
         onImageCancel(setImage);
     };
 
+    function cancelAndGoBack(){
+        navigate("/scanners");
+        setCustomerId("");
+        setServicePartnerId("");
+        setModelName("");
+        setManufacturerCode("");
+        setSerialNumber("");
+        setScannerNrNavision("");
+        setContractNumber("");
+        setStartDate("");
+        setEndDate("");
+        setSlaMaintenance("");
+        setLocationAddress("");
+        setContactPersonDetails("");
+        setAcquisitionDate("");
+        setPurchasedBy("");
+        setDeviceType("SCANNER");
+        setContractType("AUTORENEWAL");
+        setStatus("ACTIVE");
+        setPurchasePrice("");
+        setSalePrice("");
+        setDepreciation("");
+        setNotes("");
+        setImage(null)
+    }
+
     return (
         <div>
             <h2>Add New Scanner</h2>
@@ -368,7 +394,7 @@ export default function AddNewScanner(props: Readonly<AddNewScannerProps>) {
                     </div>
                 </div>
                 <button type="submit" className="button-blue margin-top-50">{translatedInfo["Add New Scanner"][props.language]}</button>
-                <button className="button-blue margin-left-20" onClick={()=> navigate("/scanners")} >back</button>
+                <button className="button-blue margin-left-20" onClick={cancelAndGoBack} >back</button>
             </form>
         </div>
     )

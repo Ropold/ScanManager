@@ -69,6 +69,16 @@ export default function AddNewCustomer(props: Readonly<AddNewCustomerProps>) {
         onImageCancel(setImage);
     };
 
+    function cancelAndGoBack() {
+        navigate("/customers");
+        setDebitorNrNavision("");
+        setName("");
+        setContactPerson("");
+        setContactDetails("");
+        setNotes("");
+        setImage(null)
+    }
+
     return (
         <div>
             <h2>Add New Customer Page</h2>
@@ -149,7 +159,7 @@ export default function AddNewCustomer(props: Readonly<AddNewCustomerProps>) {
                     </div>
                 </div>
                 <button type="submit" className="button-blue margin-top-50">{translatedInfo["Add Customer"][props.language]}</button>
-                <button className="button-blue margin-left-20" onClick={()=> navigate("/customers")} >back</button>
+                <button className="button-blue margin-left-20" onClick={cancelAndGoBack}>back</button>
             </form>
         </div>
     )

@@ -110,7 +110,7 @@ export default function ScannerDetails(props: Readonly<ScannerDetailsProps>) {
                     )}
 
                     <div className="details-buttons">
-                        <button className="button-blue">Edit</button>
+                        <button className="button-blue" onClick={() => navigate(`/scanners/${scanner.id}/edit`)}>Edit</button>
                         <button className="button-grey" onClick={toggleArchiveStatus}>{scanner.isArchived ? "Unarchive" : "Archive"}</button>
                         <button className="button-delete" onClick={() => setShowPopup(true)}>Delete</button>
                     </div>

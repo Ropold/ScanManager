@@ -68,6 +68,16 @@ export default function AddNewServicePartner(props: Readonly<AddNewServicePartne
         onImageCancel(setImage);
     };
 
+    function cancelAndGoBack(){
+        navigate("/api/scanners/");
+        setCreditorNrNavision("");
+        setName("");
+        setContactPerson("");
+        setContactDetails("");
+        setNotes("");
+        setImage(null);
+    }
+
     return (
         <div>
             <h2>Add New Service Partner</h2>
@@ -152,7 +162,7 @@ export default function AddNewServicePartner(props: Readonly<AddNewServicePartne
                 <button type="submit" className="button-blue margin-top-50">
                     {translatedInfo["Add Customer"][props.language]}
                 </button>
-                <button className="button-blue margin-left-20" onClick={()=> navigate("/service-partners")} >back</button>
+                <button className="button-blue margin-left-20" onClick={cancelAndGoBack} >back</button>
             </form>
         </div>
     )

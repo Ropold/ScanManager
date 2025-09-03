@@ -113,7 +113,7 @@ export default function CustomerDetails(props: Readonly<CustomerDetailsProps>) {
                         </div>
                     )}
                     <div className="details-buttons">
-                        <button className="button-blue">Edit</button>
+                        <button className="button-blue" onClick={() => navigate(`/customers/${customer.id}/edit`)}>Edit</button>
                         <button className="button-grey" onClick={toggleArchiveStatus}>{customer.isArchived ? "Unarchive" : "Archive"}</button>
                         <button className="button-delete" onClick={() => setShowPopup(true)} >Delete</button>
                     </div>

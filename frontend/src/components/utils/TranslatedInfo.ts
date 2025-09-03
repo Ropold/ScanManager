@@ -783,5 +783,53 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "ru": "Удалить изображение",
         "tr": "Resmi Kaldır",
         "ir": "حذف تصویر"
+    },
+    "Active": {
+        "de": "Aktiv",
+        "en": "Active",
+        "pl": "Aktywny",
+        "es": "Activo",
+        "fr": "Actif",
+        "it": "Attivo",
+        "cz": "Aktivní",
+        "pt": "Ativo",
+        "hu": "Aktív",
+        "nl": "Actief",
+        "gr": "Ενεργός",
+        "ru": "Активный",
+        "tr": "Aktif",
+        "ir": "فعال"
+    },
+    "Inactive": {
+        "de": "Inaktiv",
+        "en": "Inactive",
+        "pl": "Nieaktywny",
+        "es": "Inactivo",
+        "fr": "Inactif",
+        "it": "Inattivo",
+        "cz": "Neaktivní",
+        "pt": "Inativo",
+        "hu": "Inaktív",
+        "nl": "Inactief",
+        "gr": "Ανενεργός",
+        "ru": "Неактивный",
+        "tr": "Pasif",
+        "ir": "غیرفعال"
+    },
+    "Archived": {
+        "de": "Archiviert",
+        "en": "Archived",
+        "pl": "Zarchiwizowane",
+        "es": "Archivado",
+        "fr": "Archivé",
+        "it": "Archiviato",
+        "cz": "Archivováno",
+        "pt": "Arquivado",
+        "hu": "Archivált",
+        "nl": "Gearchiveerd",
+        "gr": "Αρχειοθετημένο",
+        "ru": "Архивировано",
+        "tr": "Arşivlendi",
+        "ir": "بایگانی شده"
     }
 }

@@ -2,6 +2,8 @@ import {type CustomerModel, DefaultCustomer} from "./model/CustomerModel.ts";
 import {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
+import CustomerForm from "./CustomerForm.tsx";
+import {onFileChange, onImageCancel} from "./utils/ComponentsFunctions.ts";
 
 type EditCustomerProps = {
     language: string;
@@ -87,20 +89,43 @@ export default function EditCustomer(props: Readonly<EditCustomerProps>) {
             });
     }
 
-    function cancelAndGoBack() {
-        navigate("/customers");
-        setDebitorNrNavision("");
-        setName("");
-        setContactPerson("");
-        setContactDetails("");
-        setNotes("");
-        setImage(null)
-    }
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        onFileChange(e, setImage);
+        setImageChanged(true);
+    };
+
+    const handleImageCancel = () => {
+        onImageCancel(setImage);
+        setImageChanged(true);
+        setImageDeleted(true);
+    };
 
     return(
         <>
-        <h2>EditServicePartner</h2>
-
+            <h2>Edit Customer</h2>
+            <CustomerForm
+                language={props.language}
+                debitorNrNavision={debitorNrNavision}
+                setDebitorNrNavision={setDebitorNrNavision}
+                name={name}
+                setName={setName}
+                contactPerson={contactPerson}
+                setContactPerson={setContactPerson}
+                contactDetails={contactDetails}
+                setContactDetails={setContactDetails}
+                notes={notes}
+                setNotes={setNotes}
+                image={image}
+                handleFileChange={handleFileChange}
+                handleImageCancel={handleImageCancel}
+                handleSubmit={handleSaveEdit}
+                isArchived={isArchived}
+                setIsArchived={setIsArchived}
+                imageChanged={imageChanged}
+                setImageChanged={setImageChanged}
+                imageDeleted={imageDeleted}
+                setImageDeleted={setImageDeleted}
+            />
         </>
-    )
+    );
 }

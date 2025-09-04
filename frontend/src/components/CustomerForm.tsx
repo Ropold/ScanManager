@@ -3,6 +3,7 @@ import {useNavigate} from "react-router-dom";
 
 type CustomerFormProps = {
     language: string;
+    backNavigationPath: string;
     debitorNrNavision: string;
     setDebitorNrNavision: React.Dispatch<React.SetStateAction<string>>
     name: string;
@@ -142,7 +143,7 @@ export default function CustomerForm(props: Readonly<CustomerFormProps>) {
                     </div>
                 </div>
                 <button type="submit" className="button-blue margin-top-50">{translatedInfo["Add Customer"][props.language]}</button>
-                <button className="button-blue margin-left-20" onClick={()=>navigate("/customers")}>back</button>
+                <button type="button" className="button-blue margin-left-20" onClick={() => navigate(props.backNavigationPath)}>back</button>
             </form>
         </div>
     )

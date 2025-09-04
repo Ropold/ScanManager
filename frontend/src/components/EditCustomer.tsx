@@ -100,11 +100,16 @@ export default function EditCustomer(props: Readonly<EditCustomerProps>) {
         setImageDeleted(true);
     };
 
+    const backNavigationPath = customer?.id
+        ? `/customers/${customer.id}`
+        : "/customers";
+
     return(
         <>
             <h2>Edit Customer</h2>
             <CustomerForm
                 language={props.language}
+                backNavigationPath={backNavigationPath}
                 debitorNrNavision={debitorNrNavision}
                 setDebitorNrNavision={setDebitorNrNavision}
                 name={name}

@@ -69,11 +69,14 @@ export default function AddNewCustomer(props: Readonly<AddNewCustomerProps>) {
         onImageCancel(setImage);
     };
 
+    const backNavigationPath = "/customers";
+
     return (
         <div>
             <h2>Add New Customer Page</h2>
             <CustomerForm
                 language={props.language}
+                backNavigationPath={backNavigationPath}
                 debitorNrNavision={debitorNrNavision}
                 setDebitorNrNavision={setDebitorNrNavision}
                 name={name}

@@ -8,9 +8,9 @@ import ProtectedRoute from "./components/ProtectedRoute.tsx";
 import Profile from "./components/Profile.tsx";
 import NavBar from "./components/NavBar.tsx";
 import {DefaultUser, type UserModel} from "./components/model/UserModel.ts";
-import Scanners from "./components/Scanners.tsx";
-import Customers from "./components/Customers.tsx";
-import ServicePartners from "./components/ServicePartners.tsx";
+import Scanners from "./components/scanner/Scanners.tsx";
+import Customers from "./components/customer/Customers.tsx";
+import ServicePartners from "./components/servicepartner/ServicePartners.tsx";
 import type {CustomerModel} from "./components/model/CustomerModel.ts";
 import type {ServicePartnerModel} from "./components/model/ServicePartnerModel.ts";
 import type {ScannerModel} from "./components/model/ScannerModel.ts";
@@ -22,15 +22,15 @@ import {
     fetchAllCustomer,
     fetchAllServicePartner, fetchAllArchivedScanner, fetchAllArchivedCustomer, fetchAllArchivedServicePartner
 } from "./App-Functions.ts";
-import CustomerDetails from "./components/CustomerDetails.tsx";
-import ScannerDetails from "./components/ScannerDetails.tsx";
-import ServicePartnerDetails from "./components/ServicePartnerDetails.tsx";
-import AddNewScanner from "./components/AddNewScanner.tsx";
-import AddNewCustomer from "./components/AddNewCustomer.tsx";
-import AddNewServicePartner from "./components/AddNewServicePartner.tsx";
-import EditScanner from "./components/EditScanner.tsx";
-import EditCustomer from "./components/EditCustomer.tsx";
-import EditServicePartner from "./components/EditServicePartner.tsx";
+import CustomerDetails from "./components/customer/CustomerDetails.tsx";
+import ScannerDetails from "./components/scanner/ScannerDetails.tsx";
+import ServicePartnerDetails from "./components/servicepartner/ServicePartnerDetails.tsx";
+import AddNewScanner from "./components/scanner/AddNewScanner.tsx";
+import AddNewCustomer from "./components/customer/AddNewCustomer.tsx";
+import AddNewServicePartner from "./components/servicepartner/AddNewServicePartner.tsx";
+import EditScanner from "./components/scanner/EditScanner.tsx";
+import EditCustomer from "./components/customer/EditCustomer.tsx";
+import EditServicePartner from "./components/servicepartner/EditServicePartner.tsx";
 
 
 export default function App() {

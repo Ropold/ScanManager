@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
-import {DefaultServicePartner, type ServicePartnerModel} from "./model/ServicePartnerModel.ts";
+import {DefaultServicePartner, type ServicePartnerModel} from "../model/ServicePartnerModel.ts";
 import axios from "axios";
 
 type EditServicePartnerProps = {

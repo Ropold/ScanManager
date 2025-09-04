@@ -1,12 +1,12 @@
 import {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
-import {type CustomerModel, DefaultCustomer} from "./model/CustomerModel.ts";
+import {type CustomerModel, DefaultCustomer} from "../model/CustomerModel.ts";
 import axios from "axios";
-import {translatedInfo} from "./utils/TranslatedInfo.ts";
-import "./styles/Details.css"
-import type {ScannerModel} from "./model/ScannerModel.ts";
-import ScannerCard from "./ScannerCard.tsx";
-import type {ServicePartnerModel} from "./model/ServicePartnerModel.ts";
+import {translatedInfo} from "../utils/TranslatedInfo.ts";
+import "../styles/Details.css"
+import type {ScannerModel} from "../model/ScannerModel.ts";
+import ScannerCard from "../scanner/ScannerCard.tsx";
+import type {ServicePartnerModel} from "../model/ServicePartnerModel.ts";
 
 type CustomerDetailsProps = {
     language: string;

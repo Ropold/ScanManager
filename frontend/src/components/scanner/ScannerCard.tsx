@@ -1,7 +1,7 @@
-import type {ScannerModel} from "./model/ScannerModel.ts";
+import type {ScannerModel} from "../model/ScannerModel.ts";
 import {useNavigate} from "react-router-dom";
-import "./styles/ScannerCard.css"
-import {translatedInfo} from "./utils/TranslatedInfo.ts";
+import "../styles/ScannerCard.css"
+import {translatedInfo} from "../utils/TranslatedInfo.ts";
 
 type ScannerCardProps = {
     scanner: ScannerModel;

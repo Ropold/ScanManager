@@ -1,4 +1,4 @@
-import type {ServicePartnerModel} from "./model/ServicePartnerModel.ts";
+import type {ServicePartnerModel} from "../model/ServicePartnerModel.ts";
 import {useNavigate} from "react-router-dom";
 
 type ServicePartnerCardProps = {

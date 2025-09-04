@@ -1,11 +1,11 @@
-import type {ContractType, DeviceType, ScannerModel, ScannerStatus} from "./model/ScannerModel.ts";
+import type {ContractType, DeviceType, ScannerModel, ScannerStatus} from "../model/ScannerModel.ts";
 import {useState} from "react";
-import type {ServicePartnerModel} from "./model/ServicePartnerModel.ts";
-import type {CustomerModel} from "./model/CustomerModel.ts";
+import type {ServicePartnerModel} from "../model/ServicePartnerModel.ts";
+import type {CustomerModel} from "../model/CustomerModel.ts";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
-import {translatedInfo} from "./utils/TranslatedInfo.ts";
-import {onFileChange, onImageCancel} from "./utils/ComponentsFunctions.ts";
+import {translatedInfo} from "../utils/TranslatedInfo.ts";
+import {onFileChange, onImageCancel} from "../utils/ComponentsFunctions.ts";
 
 type AddNewScannerProps = {
     language: string;

@@ -1,4 +1,4 @@
-import {translatedInfo} from "./utils/TranslatedInfo.ts";
+import {translatedInfo} from "../utils/TranslatedInfo.ts";
 import {useNavigate} from "react-router-dom";
 
 type CustomerFormProps = {

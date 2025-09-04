@@ -1,9 +1,9 @@
-import {type CustomerModel, DefaultCustomer} from "./model/CustomerModel.ts";
+import {type CustomerModel, DefaultCustomer} from "../model/CustomerModel.ts";
 import {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 import CustomerForm from "./CustomerForm.tsx";
-import {onFileChange, onImageCancel} from "./utils/ComponentsFunctions.ts";
+import {onFileChange, onImageCancel} from "../utils/ComponentsFunctions.ts";
 
 type EditCustomerProps = {
     language: string;

@@ -1,8 +1,8 @@
 import {useEffect, useState} from "react";
-import {DefaultServicePartner, type ServicePartnerModel} from "./model/ServicePartnerModel.ts";
+import {DefaultServicePartner, type ServicePartnerModel} from "../model/ServicePartnerModel.ts";
 import {useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
-import {translatedInfo} from "./utils/TranslatedInfo.ts";
+import {translatedInfo} from "../utils/TranslatedInfo.ts";
 
 type ServicePartnerDetailsProps = {
     language: string;

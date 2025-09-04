@@ -1,9 +1,9 @@
-import type {ServicePartnerModel} from "./model/ServicePartnerModel.ts";
+import type {ServicePartnerModel} from "../model/ServicePartnerModel.ts";
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
-import {onFileChange, onImageCancel} from "./utils/ComponentsFunctions.ts";
-import {translatedInfo} from "./utils/TranslatedInfo.ts";
+import {onFileChange, onImageCancel} from "../utils/ComponentsFunctions.ts";
+import {translatedInfo} from "../utils/TranslatedInfo.ts";
 
 type AddNewServicePartnerProps = {
     language: string;

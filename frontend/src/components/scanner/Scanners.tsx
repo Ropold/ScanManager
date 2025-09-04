@@ -1,11 +1,11 @@
-import type {ScannerModel} from "./model/ScannerModel.ts";
+import type {ScannerModel} from "../model/ScannerModel.ts";
 import {useEffect, useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
-import SearchBar from "./SearchBar.tsx";
+import SearchBar from "../SearchBar.tsx";
 import ScannerCard from "./ScannerCard.tsx";
-import type {CustomerModel} from "./model/CustomerModel.ts";
-import type {ServicePartnerModel} from "./model/ServicePartnerModel.ts";
-import {getCustomerName, getServicePartnerName} from "./utils/ComponentsFunctions.ts";
+import type {CustomerModel} from "../model/CustomerModel.ts";
+import type {ServicePartnerModel} from "../model/ServicePartnerModel.ts";
+import {getCustomerName, getServicePartnerName} from "../utils/ComponentsFunctions.ts";
 
 type ScannerProps = {
     language: string;

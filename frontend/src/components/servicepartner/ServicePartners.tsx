@@ -1,7 +1,7 @@
-import type {ServicePartnerModel} from "./model/ServicePartnerModel.ts";
+import type {ServicePartnerModel} from "../model/ServicePartnerModel.ts";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
-import SearchBar from "./SearchBar.tsx";
+import SearchBar from "../SearchBar.tsx";
 import ServicePartnerCard from "./ServicePartnerCard.tsx";
 
 type ServicePartnerProps = {

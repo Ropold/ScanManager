@@ -1,9 +1,9 @@
-import type {CustomerModel} from "./model/CustomerModel.ts";
+import type {CustomerModel} from "../model/CustomerModel.ts";
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
-import "./styles/AddNewDbRecord.css"
-import {onFileChange, onImageCancel} from "./utils/ComponentsFunctions.ts";
+import "../styles/AddNewDbRecord.css"
+import {onFileChange, onImageCancel} from "../utils/ComponentsFunctions.ts";
 import CustomerForm from "./CustomerForm.tsx";
 
 type AddNewCustomerProps = {

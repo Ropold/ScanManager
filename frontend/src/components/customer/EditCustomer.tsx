@@ -130,6 +130,7 @@ export default function EditCustomer(props: Readonly<EditCustomerProps>) {
                 setImageChanged={setImageChanged}
                 imageDeleted={imageDeleted}
                 setImageDeleted={setImageDeleted}
+                existingImageUrl={customer.imageUrl}
             />
         </>
     );

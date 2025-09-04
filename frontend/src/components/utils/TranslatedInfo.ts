@@ -831,5 +831,21 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "ru": "Архивировано",
         "tr": "Arşivlendi",
         "ir": "بایگانی شده"
-    }
+    },
+    "Update Customer":{
+        "de": "Kunden aktualisieren",
+        "en": "Update Customer",
+        "pl": "Aktualizuj klienta",
+        "es": "Actualizar cliente",
+        "fr": "Mettre à jour le client",
+        "it": "Aggiorna cliente",
+        "cz": "Aktualizovat zákazníka",
+        "pt": "Atualizar cliente",
+        "hu": "Ügyfél frissítése",
+        "nl": "Klant bijwerken",
+        "gr": "Ενημέρωση πελάτη",
+        "ru": "Обновить клиента",
+        "tr": "Müşteriyi Güncelle",
+        "ir": "به‌روزرسانی مشتری"
+    },
 }

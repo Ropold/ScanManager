@@ -24,6 +24,7 @@ type CustomerFormProps = {
     setImageChanged?: React.Dispatch<React.SetStateAction<boolean>>;
     imageDeleted?: boolean;
     setImageDeleted?: React.Dispatch<React.SetStateAction<boolean>>;
+    existingImageUrl?: string;
 }
 
 export default function CustomerForm(props: Readonly<CustomerFormProps>) {
@@ -42,10 +43,24 @@ export default function CustomerForm(props: Readonly<CustomerFormProps>) {
         image,
         handleFileChange,
         handleImageCancel,
-        handleSubmit
+        handleSubmit,
+        existingImageUrl,
+        imageDeleted
     } = props;
 
     const navigate = useNavigate();
+
+    const isEditMode = props.backNavigationPath.includes('/customers/') && props.backNavigationPath !== '/customers';
+
+    function renderImagePreview() {
+        if (image) {
+            return (<img src={URL.createObjectURL(image)} alt="image-preview" className="image-preview" />);
+        }
+        if (existingImageUrl && !imageDeleted) {
+            return (<img src={props.existingImageUrl} alt="existing-image" className="image-preview" />);
+        }
+        return null;
+    }
 
     return(
         <div>
@@ -99,24 +114,18 @@ export default function CustomerForm(props: Readonly<CustomerFormProps>) {
 
                     {/* Position 6 - Image Upload */}
                     <label>
-                        Image:
+                        <span>Image:</span>
                         <input type="file" onChange={handleFileChange} />
                     </label>
 
                     {/* Position 7 - Image */}
                     <div>
-                        {image && (
-                            <img
-                                src={URL.createObjectURL(image)}
-                                alt="image-preview"
-                                className="image-preview"
-                            />
-                        )}
+                        {renderImagePreview()}
                     </div>
 
                     {/* Position 8 - Button */}
                     <div>
-                        {image && (
+                        {(image || (existingImageUrl && !props.imageDeleted)) && (
                             <button
                                 type="button"
                                 onClick={handleImageCancel}
@@ -126,6 +135,8 @@ export default function CustomerForm(props: Readonly<CustomerFormProps>) {
                             </button>
                         )}
                     </div>
+
+
                     <div>
                         {props.isArchived !== undefined && (
                             <label>
@@ -142,8 +153,16 @@ export default function CustomerForm(props: Readonly<CustomerFormProps>) {
                         )}
                     </div>
                 </div>
-                <button type="submit" className="button-blue margin-top-50">{translatedInfo["Add Customer"][props.language]}</button>
-                <button type="button" className="button-blue margin-left-20" onClick={() => navigate(props.backNavigationPath)}>back</button>
+
+                <button type="submit" className="button-blue margin-top-50">
+                    {isEditMode
+                        ? translatedInfo["Update Customer"][props.language]
+                        : translatedInfo["Add Customer"][props.language]
+                    }
+                </button>
+                <button type="button" className="button-blue margin-left-20" onClick={() => navigate(props.backNavigationPath)}>
+                    back
+                </button>
             </form>
         </div>
     )

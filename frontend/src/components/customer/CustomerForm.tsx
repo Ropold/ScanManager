@@ -139,7 +139,6 @@ export default function CustomerForm(props: Readonly<CustomerFormProps>) {
                         )}
                     </div>
 
-
                     <div>
                         {isArchived !== undefined && (
                             <label>

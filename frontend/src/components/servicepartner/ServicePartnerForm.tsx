@@ -118,24 +118,18 @@ export default function ServicePartnerForm(props: Readonly<ServicePartnerProps>)
 
                     {/* Position 6 - Image Upload */}
                     <label>
-                        Image:
+                        <span>Image:</span>
                         <input type="file" onChange={handleFileChange} />
                     </label>
 
                     {/* Position 7 - Image */}
                     <div>
-                        {image && (
-                            <img
-                                src={URL.createObjectURL(image)}
-                                alt="image-preview"
-                                className="image-preview"
-                            />
-                        )}
+                        {renderImagePreview()}
                     </div>
 
                     {/* Position 8 - Button */}
                     <div>
-                        {image && (
+                        {(image || (existingImageUrl && !imageDeleted)) && (
                             <button
                                 type="button"
                                 onClick={handleImageCancel}
@@ -145,6 +139,23 @@ export default function ServicePartnerForm(props: Readonly<ServicePartnerProps>)
                             </button>
                         )}
                     </div>
+
+                    <div>
+                        {isArchived !== undefined && (
+                            <label>
+                                {translatedInfo["isArchived"][props.language]}:
+                                <select
+                                    className="input-small"
+                                    value={isArchived ? "true" : "false"}
+                                    onChange={(e) => setIsArchived?.(e.target.value === "true")}
+                                >
+                                    <option value="false">{translatedInfo["Active"][props.language]}</option>
+                                    <option value="true">{translatedInfo["Archived"][props.language]}</option>
+                                </select>
+                            </label>
+                        )}
+                    </div>
+
                 </div>
 
                 <button type="submit" className="button-blue margin-top-50">

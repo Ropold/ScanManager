@@ -33,9 +33,9 @@ export default function AddNewScanner(props: Readonly<AddNewScannerProps>) {
     const [deviceType, setDeviceType] = useState<DeviceType>("SCANNER");
     const [contractType, setContractType] = useState<ContractType>("AUTORENEWAL");
     const [status, setStatus] = useState<ScannerStatus>("ACTIVE");
-    const [purchasePrice, setPurchasePrice] = useState<string>("");
-    const [salePrice, setSalePrice] = useState<string>("");
-    const [depreciation, setDepreciation] = useState<string>("");
+    const [purchasePrice, setPurchasePrice] = useState<number | undefined>(undefined);
+    const [salePrice, setSalePrice] = useState<number | undefined>(undefined);
+    const [depreciation, setDepreciation] = useState<number | undefined>(undefined);
     const [notes, setNotes] = useState<string>("");
 
     const [image, setImage] = useState<File | null>(null);
@@ -105,28 +105,6 @@ export default function AddNewScanner(props: Readonly<AddNewScannerProps>) {
 
     function cancelAndGoBack(){
         navigate("/scanners");
-        setCustomerId("");
-        setServicePartnerId("");
-        setModelName("");
-        setManufacturerCode("");
-        setSerialNumber("");
-        setScannerNrNavision("");
-        setContractNumber("");
-        setStartDate("");
-        setEndDate("");
-        setSlaMaintenance("");
-        setLocationAddress("");
-        setContactPersonDetails("");
-        setAcquisitionDate("");
-        setPurchasedBy("");
-        setDeviceType("SCANNER");
-        setContractType("AUTORENEWAL");
-        setStatus("ACTIVE");
-        setPurchasePrice("");
-        setSalePrice("");
-        setDepreciation("");
-        setNotes("");
-        setImage(null)
     }
 
     return (
@@ -328,9 +306,9 @@ export default function AddNewScanner(props: Readonly<AddNewScannerProps>) {
                         {translatedInfo["purchasePrice"][props.language]}:
                         <input
                             className="input-small"
-                            type="text"
-                            value={purchasePrice}
-                            onChange={(e) => setPurchasePrice(e.target.value)}
+                            type="number"
+                            value={purchasePrice || ""}
+                            onChange={(e) => setPurchasePrice(e.target.value ? parseFloat(e.target.value) : undefined)}
                         />
                     </label>
 
@@ -338,9 +316,9 @@ export default function AddNewScanner(props: Readonly<AddNewScannerProps>) {
                         {translatedInfo["salePrice"][props.language]}:
                         <input
                             className="input-small"
-                            type="text"
-                            value={salePrice}
-                            onChange={(e) => setSalePrice(e.target.value)}
+                            type="number"
+                            value={salePrice || ""}
+                            onChange={(e) => setSalePrice(e.target.value ? parseFloat(e.target.value) : undefined)}
                         />
                     </label>
 
@@ -348,9 +326,9 @@ export default function AddNewScanner(props: Readonly<AddNewScannerProps>) {
                         {translatedInfo["depreciation"][props.language]}:
                         <input
                             className="input-small"
-                            type="text"
-                            value={depreciation}
-                            onChange={(e) => setDepreciation(e.target.value)}
+                            type="number"
+                            value={depreciation || ""}
+                            onChange={(e) => setDepreciation(e.target.value ? parseFloat(e.target.value) : undefined)}
                         />
                     </label>
 

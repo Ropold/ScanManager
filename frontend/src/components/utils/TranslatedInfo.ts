@@ -848,4 +848,36 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "tr": "Müşteriyi Güncelle",
         "ir": "به‌روزرسانی مشتری"
     },
+    "Update Scanner":{
+        "de": "Scanner aktualisieren",
+        "en": "Update Scanner",
+        "pl": "Aktualizuj skaner",
+        "es": "Actualizar escáner",
+        "fr": "Mettre à jour le scanner",
+        "it": "Aggiorna scanner",
+        "cz": "Aktualizovat skener",
+        "pt": "Atualizar scanner",
+        "hu": "Szkenner frissítése",
+        "nl": "Scanner bijwerken",
+        "gr": "Ενημέρωση σαρωτή",
+        "ru": "Обновить сканер",
+        "tr": "Tarayıcıyı Güncelle",
+        "ir": "به‌روزرسانی اسکنر"
+    },
+    "Add Scanner":{
+        "de": "Scanner hinzufügen",
+        "en": "Add Scanner",
+        "pl": "Dodaj skaner",
+        "es": "Agregar escáner",
+        "fr": "Ajouter un scanner",
+        "it": "Aggiungi scanner",
+        "cz": "Přidat skener",
+        "pt": "Adicionar scanner",
+        "hu": "Szkenner hozzáadása",
+        "nl": "Scanner toevoegen",
+        "gr": "Προσθήκη σαρωτή",
+        "ru": "Добавить сканер",
+        "tr": "Tarayıcı Ekle",
+        "ir": "افزودن اسکنر"
+    }
 }

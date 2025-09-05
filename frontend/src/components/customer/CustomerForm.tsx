@@ -30,6 +30,7 @@ type CustomerFormProps = {
 export default function CustomerForm(props: Readonly<CustomerFormProps>) {
 
     const {
+        backNavigationPath,
         debitorNrNavision,
         setDebitorNrNavision,
         name,
@@ -41,23 +42,25 @@ export default function CustomerForm(props: Readonly<CustomerFormProps>) {
         notes,
         setNotes,
         image,
+        imageDeleted,
+        existingImageUrl,
+        isArchived,
+        setIsArchived,
         handleFileChange,
         handleImageCancel,
-        handleSubmit,
-        existingImageUrl,
-        imageDeleted
+        handleSubmit
     } = props;
 
     const navigate = useNavigate();
 
-    const isEditMode = props.backNavigationPath.includes('/customers/') && props.backNavigationPath !== '/customers';
+    const isEditMode = backNavigationPath.includes('/customers/') && backNavigationPath !== '/customers';
 
     function renderImagePreview() {
         if (image) {
             return (<img src={URL.createObjectURL(image)} alt="image-preview" className="image-preview" />);
         }
         if (existingImageUrl && !imageDeleted) {
-            return (<img src={props.existingImageUrl} alt="existing-image" className="image-preview" />);
+            return (<img src={existingImageUrl} alt="existing-image" className="image-preview" />);
         }
         return null;
     }
@@ -125,7 +128,7 @@ export default function CustomerForm(props: Readonly<CustomerFormProps>) {
 
                     {/* Position 8 - Button */}
                     <div>
-                        {(image || (existingImageUrl && !props.imageDeleted)) && (
+                        {(image || (existingImageUrl && !imageDeleted)) && (
                             <button
                                 type="button"
                                 onClick={handleImageCancel}
@@ -138,13 +141,13 @@ export default function CustomerForm(props: Readonly<CustomerFormProps>) {
 
 
                     <div>
-                        {props.isArchived !== undefined && (
+                        {isArchived !== undefined && (
                             <label>
                                 {translatedInfo["isArchived"][props.language]}:
                                 <select
                                     className="input-small"
-                                    value={props.isArchived ? "true" : "false"}
-                                    onChange={(e) => props.setIsArchived?.(e.target.value === "true")}
+                                    value={isArchived ? "true" : "false"}
+                                    onChange={(e) => setIsArchived?.(e.target.value === "true")}
                                 >
                                     <option value="false">{translatedInfo["Active"][props.language]}</option>
                                     <option value="true">{translatedInfo["Archived"][props.language]}</option>
@@ -160,7 +163,7 @@ export default function CustomerForm(props: Readonly<CustomerFormProps>) {
                         : translatedInfo["Add Customer"][props.language]
                     }
                 </button>
-                <button type="button" className="button-blue margin-left-20" onClick={() => navigate(props.backNavigationPath)}>
+                <button type="button" className="button-blue margin-left-20" onClick={() => navigate(backNavigationPath)}>
                     back
                 </button>
             </form>

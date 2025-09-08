@@ -109,65 +109,36 @@ export default function App() {
         );
     }
 
-    function handleScannerArchiveToggle(updatedScanner: ScannerModel) {
+    function handleScannerUpdate(updatedScanner: ScannerModel) {
+        setAllActiveScanner(prev => prev.filter(s => s.id !== updatedScanner.id));
+        setAllArchivedScanner(prev => prev.filter(s => s.id !== updatedScanner.id));
+
         if (updatedScanner.isArchived) {
-            setAllActiveScanner(prev => prev.filter(s => s.id !== updatedScanner.id));
             setAllArchivedScanner(prev => [...prev, updatedScanner]);
         } else {
-            setAllArchivedScanner(prev => prev.filter(s => s.id !== updatedScanner.id));
             setAllActiveScanner(prev => [...prev, updatedScanner]);
         }
     }
-    function handleCustomerArchiveToggle(updatedCustomer: CustomerModel) {
+
+    function handleCustomerUpdate(updatedCustomer: CustomerModel) {
+        setAllActiveCustomer(prev => prev.filter(c => c.id !== updatedCustomer.id));
+        setAllArchivedCustomer(prev => prev.filter(c => c.id !== updatedCustomer.id));
+
         if (updatedCustomer.isArchived) {
-            setAllActiveCustomer(prev => prev.filter(c => c.id !== updatedCustomer.id));
             setAllArchivedCustomer(prev => [...prev, updatedCustomer]);
         } else {
-            setAllArchivedCustomer(prev => prev.filter(c => c.id !== updatedCustomer.id));
             setAllActiveCustomer(prev => [...prev, updatedCustomer]);
         }
     }
-    function handleServicePartnerArchiveToggle(updatedServicePartner: ServicePartnerModel) {
+
+    function handleServicePartnerUpdate(updatedServicePartner: ServicePartnerModel) {
+        setAllActiveServicePartner(prev => prev.filter(sp => sp.id !== updatedServicePartner.id));
+        setAllArchivedServicePartner(prev => prev.filter(sp => sp.id !== updatedServicePartner.id));
+
         if (updatedServicePartner.isArchived) {
-            setAllActiveServicePartner(prev => prev.filter(sp => sp.id !== updatedServicePartner.id));
             setAllArchivedServicePartner(prev => [...prev, updatedServicePartner]);
         } else {
-            setAllArchivedServicePartner(prev => prev.filter(sp => sp.id !== updatedServicePartner.id));
             setAllActiveServicePartner(prev => [...prev, updatedServicePartner]);
-        }
-    }
-
-    function handleScannerUpdate(updatedScanner: ScannerModel) {
-        if (updatedScanner.isArchived) {
-            setAllArchivedScanner(prev =>
-                prev.map(s => s.id === updatedScanner.id ? updatedScanner : s)
-            );
-        } else {
-            setAllActiveScanner(prev =>
-                prev.map(s => s.id === updatedScanner.id ? updatedScanner : s)
-            );
-        }
-    }
-    function handleCustomerUpdate(updatedCustomer: CustomerModel) {
-        if (updatedCustomer.isArchived) {
-            setAllArchivedCustomer(prev =>
-                prev.map(c => c.id === updatedCustomer.id ? updatedCustomer : c)
-            );
-        } else {
-            setAllActiveCustomer(prev =>
-                prev.map(c => c.id === updatedCustomer.id ? updatedCustomer : c)
-            );
-        }
-    }
-    function handleServicePartnerUpdate(updatedServicePartner: ServicePartnerModel) {
-        if (updatedServicePartner.isArchived) {
-            setAllArchivedServicePartner(prev =>
-                prev.map(sp => sp.id === updatedServicePartner.id ? updatedServicePartner : sp)
-            );
-        } else {
-            setAllActiveServicePartner(prev =>
-                prev.map(sp => sp.id === updatedServicePartner.id ? updatedServicePartner : sp)
-            );
         }
     }
 
@@ -200,15 +171,15 @@ export default function App() {
             <Route element={<ProtectedRoute user={user}/>}>
                 <Route path="/scanners" element={<Scanners language={language} allActiveScanner={allActiveScanner} allActiveCustomer={allActiveCustomer} allActiveServicePartner={allActiveServicePartner} allArchivedScanner={allArchivedScanner} allArchivedCustomer={allArchivedCustomer} allArchivedServicePartner={allArchivedServicePartner}/>} />
                 <Route path="/scanners/add" element={<AddNewScanner language={language} handleNewScannerSubmit={handleNewScannerSubmit} allActiveCustomer={allActiveCustomer} allActiveServicePartner={allActiveServicePartner} />} />
-                <Route path="/scanners/:id" element={<ScannerDetails language={language} allActiveCustomer={allActiveCustomer} allActiveServicePartner={allActiveServicePartner} allArchivedCustomer={allArchivedCustomer} allArchivedServicePartner={allArchivedServicePartner} handleScannerDelete={handleScannerDelete} handleScannerArchiveToggle={handleScannerArchiveToggle}/>} />
+                <Route path="/scanners/:id" element={<ScannerDetails language={language} allActiveCustomer={allActiveCustomer} allActiveServicePartner={allActiveServicePartner} allArchivedCustomer={allArchivedCustomer} allArchivedServicePartner={allArchivedServicePartner} handleScannerDelete={handleScannerDelete} handleScannerUpdate={handleScannerUpdate}/>} />
                 <Route path="/scanners/:id/edit" element={<EditScanner language={language} allActiveCustomer={allActiveCustomer} allActiveServicePartner={allActiveServicePartner} handleScannerUpdate={handleScannerUpdate}/>} />
                 <Route path="/customers" element={<Customers language={language} allActiveCustomer={allActiveCustomer} allArchivedCustomer={allArchivedCustomer} />} />
                 <Route path="/customers/add" element={<AddNewCustomer language={language} handleNewCustomerSubmit={handleNewCustomerSubmit}/>} />
-                <Route path="/customers/:id" element={<CustomerDetails language={language} allActiveScanner={allActiveScanner} allActiveServicePartner={allActiveServicePartner} allArchivedScanner={allArchivedScanner} allArchivedServicePartner={allArchivedServicePartner} handleCustomerDelete={handleCustomerDelete} handleCustomerArchiveToggle={handleCustomerArchiveToggle} />} />
+                <Route path="/customers/:id" element={<CustomerDetails language={language} allActiveScanner={allActiveScanner} allActiveServicePartner={allActiveServicePartner} allArchivedScanner={allArchivedScanner} allArchivedServicePartner={allArchivedServicePartner} handleCustomerDelete={handleCustomerDelete} handleCustomerUpdate={handleCustomerUpdate} />} />
                 <Route path="/customers/:id/edit" element={<EditCustomer language={language} handleCustomerUpdate={handleCustomerUpdate} />} />
                 <Route path="/service-partners" element={<ServicePartners language={language} allActiveServicePartner={allActiveServicePartner} allArchivedServicePartner={allArchivedServicePartner} />} />
                 <Route path="/service-partners/add" element={<AddNewServicePartner language={language} handleNewServicePartnerSubmit={handleNewServicePartnerSubmit} />} />
-                <Route path="/service-partners/:id" element={<ServicePartnerDetails language={language} handleServicePartnerDelete={handleServicePartnerDelete} handleServicePartnerArchiveToggle={handleServicePartnerArchiveToggle} />} />
+                <Route path="/service-partners/:id" element={<ServicePartnerDetails language={language} handleServicePartnerUpdate={handleServicePartnerUpdate} handleServicePartnerDelete={handleServicePartnerDelete} />} />
                 <Route path="/service-partners/:id/edit" element={<EditServicePartner language={language} handleServicePartnerUpdate={handleServicePartnerUpdate} />} />
                 <Route path="/profile/*" element={<Profile language={language} user={user} userDetails={userDetails} setLanguage={setLanguage}/>} />
             </Route>

@@ -135,7 +135,7 @@ public class ScannerController {
                 scannerModel.getDepreciation(),
                 scannerModel.getNotes(),
                 newImageUrl,
-                existingScanner.getIsArchived()
+                scannerModel.getIsArchived()
         );
 
         return scannerService.updateScanner(updatedScanner);

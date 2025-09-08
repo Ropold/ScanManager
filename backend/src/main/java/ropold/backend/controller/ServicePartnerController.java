@@ -105,7 +105,7 @@ public class ServicePartnerController {
                 servicePartnerModel.getContactDetails(),
                 servicePartnerModel.getNotes(),
                 newImageUrl,
-                existingServicePartner.getIsArchived()
+                servicePartnerModel.getIsArchived()
         );
 
         return servicePartnerService.updateServicePartner(updatedServicePartner);

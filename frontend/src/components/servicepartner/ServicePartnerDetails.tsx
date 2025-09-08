@@ -7,7 +7,7 @@ import {translatedInfo} from "../utils/TranslatedInfo.ts";
 type ServicePartnerDetailsProps = {
     language: string;
     handleServicePartnerDelete: (id: string) => void;
-    handleServicePartnerArchiveToggle: (servicePartner: ServicePartnerModel) => void;
+    handleServicePartnerUpdate: (updatedServicePartner: ServicePartnerModel) => void;
 }
 
 export default function ServicePartnerDetails(props: Readonly<ServicePartnerDetailsProps>) {
@@ -33,7 +33,7 @@ export default function ServicePartnerDetails(props: Readonly<ServicePartnerDeta
             .put(`/api/service-partners/${servicePartner.id}/archive`)
             .then((response) => {
                 setServicePartner(response.data)
-                props.handleServicePartnerArchiveToggle(response.data);
+                props.handleServicePartnerUpdate(response.data);
             })
             .catch((error) => console.error("Error updating archive status", error));
     }

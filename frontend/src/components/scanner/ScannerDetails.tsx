@@ -15,7 +15,7 @@ type ScannerDetailsProps = {
     allArchivedCustomer: CustomerModel[];
     allArchivedServicePartner: ServicePartnerModel[];
     handleScannerDelete: (id: string) => void;
-    handleScannerArchiveToggle: (scanner: ScannerModel) => void;
+    handleScannerUpdate: (updatedScanner: ScannerModel) => void;
 }
 
 export default function ScannerDetails(props: Readonly<ScannerDetailsProps>) {
@@ -41,7 +41,7 @@ export default function ScannerDetails(props: Readonly<ScannerDetailsProps>) {
             .put(`/api/scanners/${scanner.id}/archive`)
             .then((response) => {
                 setScanner(response.data);
-                props.handleScannerArchiveToggle(response.data);
+                props.handleScannerUpdate(response.data);
             })
             .catch((error) => console.error("Error updating archive status", error));
     }

@@ -81,7 +81,7 @@ export default function EditScanner(props: Readonly<EditScannerProps>) {
                 setSalePrice(scanner.salePrice);
                 setDepreciation(scanner.depreciation);
                 setNotes(scanner.notes || "");
-                setIsArchived(scanner.isArchived || false);
+                setIsArchived(scanner.isArchived);
             })
             .catch((error) => console.error("Error fetching scanner details", error));
     }, [id]);

@@ -136,7 +136,6 @@ export default function ScannerForm(props: Readonly<ScannerFormProps>) {
 
     return (
         <div>
-            <h2>Add New Scanner</h2>
             <form onSubmit={handleSubmit}>
                 <div className="edit-form">
                     {/* Customer Dropdown */}

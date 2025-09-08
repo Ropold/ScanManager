@@ -3,18 +3,29 @@ import {DefaultServicePartner, type ServicePartnerModel} from "../model/ServiceP
 import {useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 import {translatedInfo} from "../utils/TranslatedInfo.ts";
+import {useAutoScrollToTop} from "../utils/ComponentsFunctions.ts";
+import type {CustomerModel} from "../model/CustomerModel.ts";
+import CustomerCard from "../customer/CustomerCard.tsx";
+import type {ScannerModel} from "../model/ScannerModel.ts";
 
 type ServicePartnerDetailsProps = {
     language: string;
+    allActiveScanner: ScannerModel[];
+    allActiveCustomer: CustomerModel [];
+    allArchivedScanner: ScannerModel[];
+    allArchivedCustomer: CustomerModel [];
     handleServicePartnerDelete: (id: string) => void;
-    handleServicePartnerArchiveToggle: (servicePartner: ServicePartnerModel) => void;
+    handleServicePartnerUpdate: (updatedServicePartner: ServicePartnerModel) => void;
 }
 
 export default function ServicePartnerDetails(props: Readonly<ServicePartnerDetailsProps>) {
+    useAutoScrollToTop();
     const [servicePartner, setServicePartner] = useState<ServicePartnerModel>(DefaultServicePartner);
+    const [filteredSpCustomers, setFilteredSpCustomers] = useState<CustomerModel[]>([]);
     const {id} = useParams<{id: string}>();
     const [showPopup, setShowPopup] = useState(false);
     const navigate = useNavigate();
+
 
     useEffect(() => {
         if(!id) return;
@@ -26,6 +37,29 @@ export default function ServicePartnerDetails(props: Readonly<ServicePartnerDeta
             });
     }, [id]);
 
+    useEffect(() => {
+        if (!servicePartner?.id) return;
+
+        // 1. Alle Scanner finden, die zu diesem ServicePartner gehören
+        const allScanners = [...props.allActiveScanner, ...props.allArchivedScanner];
+        const servicePartnerScanners = allScanners.filter(scanner =>
+            scanner.servicePartnerId === servicePartner.id
+        );
+
+        // 2. Alle Customer IDs aus diesen Scannern sammeln
+        const customerIds = servicePartnerScanners
+            .map(scanner => scanner.customerId)
+            .filter((id, index, arr) => id && arr.indexOf(id) === index); // Unique IDs
+
+        // 3. Customer-Objekte basierend auf IDs finden
+        const allCustomers = [...props.allActiveCustomer, ...props.allArchivedCustomer];
+        const spCustomers = customerIds
+            .map(customerId => allCustomers.find(customer => customer.id === customerId))
+            .filter(customer => customer !== undefined);
+
+        setFilteredSpCustomers(spCustomers);
+    }, [servicePartner, props.allActiveScanner, props.allArchivedScanner, props.allActiveCustomer, props.allArchivedCustomer]);
+
     function toggleArchiveStatus() {
         if (!servicePartner) return;
 
@@ -33,7 +67,7 @@ export default function ServicePartnerDetails(props: Readonly<ServicePartnerDeta
             .put(`/api/service-partners/${servicePartner.id}/archive`)
             .then((response) => {
                 setServicePartner(response.data)
-                props.handleServicePartnerArchiveToggle(response.data);
+                props.handleServicePartnerUpdate(response.data);
             })
             .catch((error) => console.error("Error updating archive status", error));
     }
@@ -94,6 +128,18 @@ export default function ServicePartnerDetails(props: Readonly<ServicePartnerDeta
                         <button className="button-blue" onClick={() => navigate(`/service-partners/${servicePartner.id}/edit`)}>Edit</button>
                         <button className="button-grey" onClick={toggleArchiveStatus}>{servicePartner.isArchived ? "Unarchive" : "Archive"}</button>
                         <button className="button-delete" onClick={() => setShowPopup(true)} >Delete</button>
+                    </div>
+
+                    <div className="customer-card-container">
+                        <h1>Betreute Kunden</h1>
+                        {filteredSpCustomers.map((c: CustomerModel) => (
+
+                            <CustomerCard
+                                key={c.id}
+                                customer={c}
+                                language={props.language}
+                            />
+                        ))}
                     </div>
 
                     {showPopup && (

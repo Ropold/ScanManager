@@ -7,6 +7,7 @@ import "../styles/Details.css"
 import type {ScannerModel} from "../model/ScannerModel.ts";
 import ScannerCard from "../scanner/ScannerCard.tsx";
 import type {ServicePartnerModel} from "../model/ServicePartnerModel.ts";
+import {useAutoScrollToTop} from "../utils/ComponentsFunctions.ts";
 
 type CustomerDetailsProps = {
     language: string;
@@ -16,10 +17,11 @@ type CustomerDetailsProps = {
     allArchivedScanner: ScannerModel[];
     allArchivedServicePartner: ServicePartnerModel[];
     handleCustomerDelete: (id: string) => void;
-    handleCustomerArchiveToggle: (customer: CustomerModel) => void;
+    handleCustomerUpdate: (updatedCustomer: CustomerModel) => void;
 }
 
 export default function CustomerDetails(props: Readonly<CustomerDetailsProps>) {
+    useAutoScrollToTop();
     const [customer, setCustomer] = useState<CustomerModel>(DefaultCustomer);
     const [filteredCustomerScanners, setFilteredCustomerScanners] = useState<ScannerModel[]>([]);
     const [showPopup, setShowPopup] = useState(false);
@@ -52,7 +54,7 @@ export default function CustomerDetails(props: Readonly<CustomerDetailsProps>) {
             .put(`/api/customers/${customer.id}/archive`)
             .then((response) => {
                 setCustomer(response.data)
-                props.handleCustomerArchiveToggle(response.data);
+                props.handleCustomerUpdate(response.data);
             })
             .catch((error) => console.error("Error updating archive status", error));
     }
@@ -119,6 +121,7 @@ export default function CustomerDetails(props: Readonly<CustomerDetailsProps>) {
                     </div>
 
                     <div className="scanner-card-container">
+                        <h1>Scanner des Kunden</h1>
                         {filteredCustomerScanners.map((s: ScannerModel) => (
                             <ScannerCard
                                 key={s.id}

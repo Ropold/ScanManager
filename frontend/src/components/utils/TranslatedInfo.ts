@@ -879,5 +879,37 @@ export const translatedInfo: Record<string, Record<string, string>> = {
         "ru": "Добавить сканер",
         "tr": "Tarayıcı Ekle",
         "ir": "افزودن اسکنر"
+    },
+    "hidePrices": {
+        "de": "Preise ausblenden",
+        "en": "Hide Prices",
+        "pl": "Ukryj ceny",
+        "es": "Ocultar precios",
+        "fr": "Masquer les prix",
+        "it": "Nascondi i prezzi",
+        "cz": "Skrýt ceny",
+        "pt": "Ocultar preços",
+        "hu": "Árak elrejtése",
+        "nl": "Prijzen verbergen",
+        "gr": "Απόκρυψη τιμών",
+        "ru": "Скрыть цены",
+        "tr": "Fiyatları Gizle",
+        "ir": "مخفی کردن قیمت‌ها"
+    },
+    "showPrices": {
+        "de": "Preise anzeigen",
+        "en": "Show Prices",
+        "pl": "Pokaż ceny",
+        "es": "Mostrar precios",
+        "fr": "Afficher les prix",
+        "it": "Mostra i prezzi",
+        "cz": "Zobrazit ceny",
+        "pt": "Mostrar preços",
+        "hu": "Árak megjelenítése",
+        "nl": "Prijzen weergeven",
+        "gr": "Εμφάνιση τιμών",
+        "ru": "Показать цены",
+        "tr": "Fiyatları Göster",
+        "ir": "نمایش قیمت‌ها"
     }
 }

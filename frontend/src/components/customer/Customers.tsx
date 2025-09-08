@@ -3,6 +3,7 @@ import type {CustomerModel} from "../model/CustomerModel.ts";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import CustomerCard from "./CustomerCard.tsx";
+import {useAutoScrollToTop} from "../utils/ComponentsFunctions.ts";
 
 type CustomerProps = {
     language: string;
@@ -11,6 +12,7 @@ type CustomerProps = {
 }
 
 export default function Customers(props: Readonly<CustomerProps>) {
+    useAutoScrollToTop();
     const [searchQuery, setSearchQuery] = useState<string>("");
     const [filteredCustomers, setFilteredCustomers] = useState<CustomerModel[]>([]);
     const [showArchived, setShowArchived] = useState<boolean>(false);
@@ -74,7 +76,6 @@ export default function Customers(props: Readonly<CustomerProps>) {
                 language={props.language}
                 />
             ))}
-
         </div>
         </>
     )

@@ -1,5 +1,7 @@
 import type {ServicePartnerModel} from "../model/ServicePartnerModel.ts";
 import type {CustomerModel} from "../model/CustomerModel.ts";
+import {useEffect} from "react";
+import {useLocation} from "react-router-dom";
 
 export function onFileChange(
     e: React.ChangeEvent<HTMLInputElement>,
@@ -38,3 +40,13 @@ export function getServicePartnerName(
     const allServicePartners = [...allActiveServicePartner, ...allArchivedServicePartner];
     return allServicePartners.find(sp => sp.id === servicePartnerId)?.name;
 }
+
+export function formatDate(dateString: string | undefined): string {
+    if (!dateString) return "—";
+    return new Date(dateString).toLocaleDateString('de-DE');
+}
+
+export const useAutoScrollToTop = () => {
+    const location = useLocation();
+    useEffect(() => window.scroll(0, 0), [location]);
+};

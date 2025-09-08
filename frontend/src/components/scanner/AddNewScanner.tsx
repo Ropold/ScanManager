@@ -4,8 +4,8 @@ import type {ServicePartnerModel} from "../model/ServicePartnerModel.ts";
 import type {CustomerModel} from "../model/CustomerModel.ts";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
-import {translatedInfo} from "../utils/TranslatedInfo.ts";
 import {onFileChange, onImageCancel} from "../utils/ComponentsFunctions.ts";
+import ScannerForm from "./ScannerForm.tsx";
 
 type AddNewScannerProps = {
     language: string;
@@ -16,8 +16,8 @@ type AddNewScannerProps = {
 
 export default function AddNewScanner(props: Readonly<AddNewScannerProps>) {
 
-    const [customerId, setCustomerId] = useState<string>("");
-    const [servicePartnerId, setServicePartnerId] = useState<string>("");
+    const [customerId, setCustomerId] = useState<string | undefined>("");
+    const [servicePartnerId, setServicePartnerId] = useState<string | undefined>("");
     const [modelName, setModelName] = useState<string>("");
     const [manufacturerCode, setManufacturerCode] = useState<string>("");
     const [serialNumber, setSerialNumber] = useState<string>("");
@@ -41,7 +41,7 @@ export default function AddNewScanner(props: Readonly<AddNewScannerProps>) {
     const [image, setImage] = useState<File | null>(null);
     const navigate = useNavigate();
 
-    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    function handleNewAddSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
         const scannerData = {
@@ -103,277 +103,63 @@ export default function AddNewScanner(props: Readonly<AddNewScannerProps>) {
         onImageCancel(setImage);
     };
 
-    function cancelAndGoBack(){
-        navigate("/scanners");
-    }
+    const backNavigationPath = "/scanners";
 
     return (
         <div>
             <h2>Add New Scanner</h2>
-            <form onSubmit={handleSubmit}>
-                <div className="edit-form">
-                    {/* Customer Dropdown */}
-                    <label>
-                        {translatedInfo["customerName"][props.language]}:
-                        <select
-                            className="input-small"
-                            value={customerId}
-                            onChange={(e) => setCustomerId(e.target.value)}
-                            required
-                        >
-                            <option value="">-- Select Customer --</option>
-                            {props.allActiveCustomer.map(customer => (
-                                <option key={customer.id} value={customer.id}>
-                                    {customer.name}
-                                </option>
-                            ))}
-                        </select>
-                    </label>
-
-                    {/* Service Partner Dropdown */}
-                    <label>
-                        {translatedInfo["servicePartnerName"][props.language]}:
-                        <select
-                            className="input-small"
-                            value={servicePartnerId}
-                            onChange={(e) => setServicePartnerId(e.target.value)}
-                        >
-                            <option value="">-- Select Service Partner --</option>
-                            {props.allActiveServicePartner.map(sp => (
-                                <option key={sp.id} value={sp.id}>
-                                    {sp.name}
-                                </option>
-                            ))}
-                        </select>
-                    </label>
-
-                    <label>
-                        {translatedInfo["modelName"][props.language]}:
-                        <input
-                            className="input-small"
-                            type="text"
-                            value={modelName}
-                            onChange={(e) => setModelName(e.target.value)}
-                            required
-                        />
-                    </label>
-
-                    <label>
-                        {translatedInfo["manufacturerCode"][props.language]}:
-                        <input
-                            className="input-small"
-                            type="text"
-                            value={manufacturerCode}
-                            onChange={(e) => setManufacturerCode(e.target.value)}
-                        />
-                    </label>
-
-                    <label>
-                        {translatedInfo["serialNumber"][props.language]}:
-                        <input
-                            className="input-small"
-                            type="text"
-                            value={serialNumber}
-                            onChange={(e) => setSerialNumber(e.target.value)}
-                        />
-                    </label>
-
-                    <label>
-                        {translatedInfo["scannerNrNavision"][props.language]}:
-                        <input
-                            className="input-small"
-                            type="text"
-                            value={scannerNrNavision}
-                            onChange={(e) => setScannerNrNavision(e.target.value)}
-                        />
-                    </label>
-
-                    <label>
-                        {translatedInfo["contractNumber"][props.language]}:
-                        <input
-                            className="input-small"
-                            type="text"
-                            value={contractNumber}
-                            onChange={(e) => setContractNumber(e.target.value)}
-                        />
-                    </label>
-
-                    <label>
-                        {translatedInfo["slaMaintenance"][props.language]}:
-                        <input
-                            className="input-small"
-                            type="text"
-                            value={slaMaintenance}
-                            onChange={(e) => setSlaMaintenance(e.target.value)}
-                        />
-                    </label>
-
-                    <label>
-                        {translatedInfo["startDate"][props.language]}:
-                        <input
-                            className="input-small"
-                            type="date"
-                            value={startDate}
-                            onChange={(e) => setStartDate(e.target.value)}
-                        />
-                    </label>
-
-                    <label>
-                        {translatedInfo["endDate"][props.language]}:
-                        <input
-                            className="input-small"
-                            type="date"
-                            value={endDate}
-                            onChange={(e) => setEndDate(e.target.value)}
-                        />
-                    </label>
-
-                    <label>
-                        {translatedInfo["locationAddress"][props.language]}:
-                        <textarea
-                            className="textarea-large"
-                            value={locationAddress}
-                            onChange={(e) => setLocationAddress(e.target.value)}
-                        />
-                    </label>
-
-                    <label>
-                        {translatedInfo["contactPersonDetails"][props.language]}:
-                        <textarea
-                            className="textarea-large"
-                            value={contactPersonDetails}
-                            onChange={(e) => setContactPersonDetails(e.target.value)}
-                        />
-                    </label>
-
-                    <label>
-                        {translatedInfo["acquisitionDate"][props.language]}:
-                        <input
-                            className="input-small"
-                            type="date"
-                            value={acquisitionDate}
-                            onChange={(e) => setAcquisitionDate(e.target.value)}
-                        />
-                    </label>
-
-                    <label>
-                        {translatedInfo["purchasedBy"][props.language]}:
-                        <input
-                            className="input-small"
-                            type="text"
-                            value={purchasedBy}
-                            onChange={(e) => setPurchasedBy(e.target.value)}
-                        />
-                    </label>
-
-                    <label>
-                        {translatedInfo["deviceType"][props.language]}:
-                        <select
-                            className="input-small"
-                            value={deviceType}
-                            onChange={(e) => setDeviceType(e.target.value as DeviceType)}
-                        >
-                            <option value="SCANNER">Scanner</option>
-                            <option value="FLATBED_UNIT">Flatbed Unit</option>
-                        </select>
-                    </label>
-
-                    <label>
-                        {translatedInfo["contractType"][props.language]}:
-                        <select
-                            className="input-small"
-                            value={contractType}
-                            onChange={(e) => setContractType(e.target.value as ContractType)}
-                        >
-                            <option value="AUTORENEWAL">Auto Renewal</option>
-                            <option value="FIXED_END">Fixed End</option>
-                        </select>
-                    </label>
-
-                    <label>
-                        {translatedInfo["status"][props.language]}:
-                        <select
-                            className="input-small"
-                            value={status}
-                            onChange={(e) => setStatus(e.target.value as ScannerStatus)}
-                        >
-                            <option value="ACTIVE">Active</option>
-                            <option value="EXPIRED">Expired</option>
-                        </select>
-                    </label>
-
-                    <label>
-                        {translatedInfo["purchasePrice"][props.language]}:
-                        <input
-                            className="input-small"
-                            type="number"
-                            value={purchasePrice || ""}
-                            onChange={(e) => setPurchasePrice(e.target.value ? parseFloat(e.target.value) : undefined)}
-                        />
-                    </label>
-
-                    <label>
-                        {translatedInfo["salePrice"][props.language]}:
-                        <input
-                            className="input-small"
-                            type="number"
-                            value={salePrice || ""}
-                            onChange={(e) => setSalePrice(e.target.value ? parseFloat(e.target.value) : undefined)}
-                        />
-                    </label>
-
-                    <label>
-                        {translatedInfo["depreciation"][props.language]}:
-                        <input
-                            className="input-small"
-                            type="number"
-                            value={depreciation || ""}
-                            onChange={(e) => setDepreciation(e.target.value ? parseFloat(e.target.value) : undefined)}
-                        />
-                    </label>
-
-                    <label>
-                        {translatedInfo["notes"][props.language]}:
-                        <textarea
-                            className="textarea-large"
-                            value={notes}
-                            onChange={(e) => setNotes(e.target.value)}
-                        />
-                    </label>
-
-                    {/* Image Upload */}
-                    <label>
-                        Image:
-                        <input type="file" onChange={handleFileChange} />
-                    </label>
-
-                    {/* Image Preview */}
-                    <div>
-                        {image && (
-                            <img
-                                src={URL.createObjectURL(image)}
-                                alt="image-preview"
-                                className="image-preview"
-                            />
-                        )}
-                    </div>
-
-                    {/* Remove Image Button */}
-                    <div>
-                        {image && (
-                            <button
-                                type="button"
-                                onClick={handleImageCancel}
-                                className="button-blue button-remove-image"
-                            >
-                                {translatedInfo["Remove Image"][props.language]}
-                            </button>
-                        )}
-                    </div>
-                </div>
-                <button type="submit" className="button-blue margin-top-50">{translatedInfo["Add New Scanner"][props.language]}</button>
-                <button className="button-blue margin-left-20" onClick={cancelAndGoBack} >back</button>
-            </form>
+            <ScannerForm
+                language={props.language}
+                backNavigationPath={backNavigationPath}
+                allActiveCustomer={props.allActiveCustomer}
+                allActiveServicePartner={props.allActiveServicePartner}
+                customerId={customerId}
+                setCustomerId={setCustomerId}
+                servicePartnerId={servicePartnerId}
+                setServicePartnerId={setServicePartnerId}
+                modelName={modelName}
+                setModelName={setModelName}
+                manufacturerCode={manufacturerCode}
+                setManufacturerCode={setManufacturerCode}
+                serialNumber={serialNumber}
+                setSerialNumber={setSerialNumber}
+                scannerNrNavision={scannerNrNavision}
+                setScannerNrNavision={setScannerNrNavision}
+                contractNumber={contractNumber}
+                setContractNumber={setContractNumber}
+                startDate={startDate}
+                setStartDate={setStartDate}
+                endDate={endDate}
+                setEndDate={setEndDate}
+                slaMaintenance={slaMaintenance}
+                setSlaMaintenance={setSlaMaintenance}
+                locationAddress={locationAddress}
+                setLocationAddress={setLocationAddress}
+                contactPersonDetails={contactPersonDetails}
+                setContactPersonDetails={setContactPersonDetails}
+                acquisitionDate={acquisitionDate}
+                setAcquisitionDate={setAcquisitionDate}
+                purchasedBy={purchasedBy}
+                setPurchasedBy={setPurchasedBy}
+                deviceType={deviceType}
+                setDeviceType={setDeviceType}
+                contractType={contractType}
+                setContractType={setContractType}
+                status={status}
+                setStatus={setStatus}
+                purchasePrice={purchasePrice}
+                setPurchasePrice={setPurchasePrice}
+                salePrice={salePrice}
+                setSalePrice={setSalePrice}
+                depreciation={depreciation}
+                setDepreciation={setDepreciation}
+                notes={notes}
+                setNotes={setNotes}
+                image={image}
+                handleFileChange={handleFileChange}
+                handleImageCancel={handleImageCancel}
+                handleSubmit={handleNewAddSubmit}
+            />
         </div>
     )
 

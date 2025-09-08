@@ -1,11 +1,11 @@
 import type {ScannerModel} from "../model/ScannerModel.ts";
 import {useEffect, useState} from "react";
-import {useLocation, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import SearchBar from "../SearchBar.tsx";
 import ScannerCard from "./ScannerCard.tsx";
 import type {CustomerModel} from "../model/CustomerModel.ts";
 import type {ServicePartnerModel} from "../model/ServicePartnerModel.ts";
-import {getCustomerName, getServicePartnerName} from "../utils/ComponentsFunctions.ts";
+import {getCustomerName, getServicePartnerName, useAutoScrollToTop} from "../utils/ComponentsFunctions.ts";
 
 type ScannerProps = {
     language: string;
@@ -19,15 +19,12 @@ type ScannerProps = {
 }
 
 export default function Scanners(props: Readonly<ScannerProps>) {
+    useAutoScrollToTop();
     const [searchQuery, setSearchQuery] = useState<string>("");
     const [filteredScanners, setFilteredScanners] = useState<ScannerModel[]>([]);
     const [showArchived, setShowArchived] = useState<boolean>(false);
 
-    const location = useLocation();
     const navigate = useNavigate();
-    useEffect(() => {
-        window.scroll(0, 0);
-    }, [location]);
 
     function filterScanners(scanners: ScannerModel[], query: string): ScannerModel[] {
         const searchQuery = query.toLowerCase();

@@ -5,7 +5,7 @@ import axios from "axios";
 import {translatedInfo} from "../utils/TranslatedInfo.ts";
 import type {CustomerModel} from "../model/CustomerModel.ts";
 import type {ServicePartnerModel} from "../model/ServicePartnerModel.ts";
-import {formatDate, getCustomerName, getServicePartnerName} from "../utils/ComponentsFunctions.ts";
+import {formatDate, getCustomerName, getServicePartnerName, useAutoScrollToTop} from "../utils/ComponentsFunctions.ts";
 
 type ScannerDetailsProps = {
     language: string;
@@ -19,6 +19,7 @@ type ScannerDetailsProps = {
 }
 
 export default function ScannerDetails(props: Readonly<ScannerDetailsProps>) {
+    useAutoScrollToTop();
     const [scanner, setScanner]= useState<ScannerModel>(DefaultScanner)
     const {id} = useParams<{id: string}>();
     const [showPopup, setShowPopup] = useState(false);
@@ -69,6 +70,16 @@ export default function ScannerDetails(props: Readonly<ScannerDetailsProps>) {
         setShowPopup(false);
     }
 
+    function handleServicePartnerClick(){
+        if(!scanner?.servicePartnerId) return;
+        navigate(`/service-partners/${scanner.servicePartnerId}`);
+    }
+
+    function handleCustomerClick(){
+        if(!scanner?.customerId) return;
+        navigate(`/customers/${scanner.customerId}`);
+    }
+
     return(
         <div>
             <h2>Scanner Details</h2>
@@ -103,8 +114,8 @@ export default function ScannerDetails(props: Readonly<ScannerDetailsProps>) {
                         )}  {/* Diese Klammer fehlte */}
                     </div>
 
-                    <p><strong>{translatedInfo["customerName"][props.language]}:</strong> {customerName || scanner.customerId || "—"}</p>
-                    <p><strong>{translatedInfo["servicePartnerName"][props.language]}:</strong> {servicePartnerName || scanner.servicePartnerId || "—"}</p>
+                    <p className="scanner-details-link" onClick={handleCustomerClick}><strong>{translatedInfo["customerName"][props.language]}:</strong> {customerName || scanner.customerId || "—"}</p>
+                    <p className="scanner-details-link" onClick={handleServicePartnerClick}><strong>{translatedInfo["servicePartnerName"][props.language]}:</strong> {servicePartnerName || scanner.servicePartnerId || "—"}</p>
 
                     <p><strong>{translatedInfo["notes"][props.language]}:</strong> {scanner.notes || "—"}</p>
                     <p><strong>{translatedInfo["isArchived"][props.language]}:</strong> {scanner.isArchived ? translatedInfo["Yes"][props.language] : translatedInfo["No"][props.language]}</p>

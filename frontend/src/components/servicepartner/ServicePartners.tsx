@@ -3,6 +3,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import SearchBar from "../SearchBar.tsx";
 import ServicePartnerCard from "./ServicePartnerCard.tsx";
+import {useAutoScrollToTop} from "../utils/ComponentsFunctions.ts";
 
 type ServicePartnerProps = {
     language: string;
@@ -11,6 +12,7 @@ type ServicePartnerProps = {
 }
 
 export default function ServicePartners(props: Readonly<ServicePartnerProps>) {
+    useAutoScrollToTop();
     const [searchQuery, setSearchQuery] = useState<string>("");
     const [filteredServicePartners, setFilteredServicePartners] = useState<ServicePartnerModel[]>([]);
     const [showArchived, setShowArchived] = useState<boolean>(false);

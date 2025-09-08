@@ -5,7 +5,7 @@ import axios from "axios";
 import {translatedInfo} from "../utils/TranslatedInfo.ts";
 import type {CustomerModel} from "../model/CustomerModel.ts";
 import type {ServicePartnerModel} from "../model/ServicePartnerModel.ts";
-import {getCustomerName, getServicePartnerName} from "../utils/ComponentsFunctions.ts";
+import {formatDate, getCustomerName, getServicePartnerName} from "../utils/ComponentsFunctions.ts";
 
 type ScannerDetailsProps = {
     language: string;
@@ -23,6 +23,7 @@ export default function ScannerDetails(props: Readonly<ScannerDetailsProps>) {
     const {id} = useParams<{id: string}>();
     const [showPopup, setShowPopup] = useState(false);
     const navigate = useNavigate();
+    const [showPrices, setShowPrices] = useState(false);
 
     useEffect(() => {
         if(!id) return;
@@ -82,16 +83,25 @@ export default function ScannerDetails(props: Readonly<ScannerDetailsProps>) {
                     <p><strong>{translatedInfo["deviceType"][props.language]}:</strong> {scanner.deviceType}</p>
                     <p><strong>{translatedInfo["contractType"][props.language]}:</strong> {scanner.contractType}</p>
                     <p><strong>{translatedInfo["status"][props.language]}:</strong> {scanner.status}</p>
-                    <p><strong>{translatedInfo["startDate"][props.language]}:</strong> {scanner.startDate || "—"}</p>
-                    <p><strong>{translatedInfo["endDate"][props.language]}:</strong> {scanner.endDate || "—"}</p>
+                    <p><strong>{translatedInfo["startDate"][props.language]}:</strong> {formatDate(scanner.startDate)}</p>
+                    <p><strong>{translatedInfo["endDate"][props.language]}:</strong> {formatDate(scanner.endDate)}</p>
                     <p><strong>{translatedInfo["slaMaintenance"][props.language]}:</strong> {scanner.slaMaintenance || "—"}</p>
                     <p><strong>{translatedInfo["locationAddress"][props.language]}:</strong> {scanner.locationAddress || "—"}</p>
                     <p><strong>{translatedInfo["contactPersonDetails"][props.language]}:</strong> {scanner.contactPersonDetails || "—"}</p>
-                    <p><strong>{translatedInfo["acquisitionDate"][props.language]}:</strong> {scanner.acquisitionDate || "—"}</p>
+                    <p><strong>{translatedInfo["acquisitionDate"][props.language]}:</strong> {formatDate(scanner.acquisitionDate)}</p>
                     <p><strong>{translatedInfo["purchasedBy"][props.language]}:</strong> {scanner.purchasedBy || "—"}</p>
-                    <p><strong>{translatedInfo["purchasePrice"][props.language]}:</strong> {scanner.purchasePrice ? `€${scanner.purchasePrice}` : "—"}</p>
-                    <p><strong>{translatedInfo["salePrice"][props.language]}:</strong> {scanner.salePrice ? `€${scanner.salePrice}` : "—"}</p>
-                    <p><strong>{translatedInfo["depreciation"][props.language]}:</strong> {scanner.depreciation ? `€${scanner.depreciation}` : "—"}</p>
+                    <div>
+                        <button className="button-grey" onClick={() => setShowPrices(!showPrices)}>
+                            {showPrices ? translatedInfo["hidePrices"][props.language] : translatedInfo["showPrices"][props.language]}
+                        </button>
+                        {showPrices && (
+                            <div>
+                                <p><strong>{translatedInfo["purchasePrice"][props.language]}:</strong> {scanner.purchasePrice ? `€${scanner.purchasePrice}` : "—"}</p>
+                                <p><strong>{translatedInfo["salePrice"][props.language]}:</strong> {scanner.salePrice ? `€${scanner.salePrice}` : "—"}</p>
+                                <p><strong>{translatedInfo["depreciation"][props.language]}:</strong> {scanner.depreciation ? `€${scanner.depreciation}` : "—"}</p>
+                            </div>
+                        )}  {/* Diese Klammer fehlte */}
+                    </div>
 
                     <p><strong>{translatedInfo["customerName"][props.language]}:</strong> {customerName || scanner.customerId || "—"}</p>
                     <p><strong>{translatedInfo["servicePartnerName"][props.language]}:</strong> {servicePartnerName || scanner.servicePartnerId || "—"}</p>

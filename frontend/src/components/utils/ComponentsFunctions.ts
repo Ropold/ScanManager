@@ -38,3 +38,8 @@ export function getServicePartnerName(
     const allServicePartners = [...allActiveServicePartner, ...allArchivedServicePartner];
     return allServicePartners.find(sp => sp.id === servicePartnerId)?.name;
 }
+
+export function formatDate(dateString: string | undefined): string {
+    if (!dateString) return "—";
+    return new Date(dateString).toLocaleDateString('de-DE');
+}

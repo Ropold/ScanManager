@@ -1,5 +1,6 @@
 import {useNavigate} from "react-router-dom";
 import type {CustomerModel} from "../model/CustomerModel.ts";
+import "../styles/CustomerCard.css"
 
 type CustomerCardProps = {
     customer: CustomerModel;

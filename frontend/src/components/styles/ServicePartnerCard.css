@@ -1,0 +1,19 @@
+.service-partner-card{
+    /*display: flex;*/
+    /*flex-direction: row;*/
+    /*align-items: center;*/
+    /*justify-content: center;*/
+    gap: 20px;
+    border: 2px solid #23A96A;
+    border-radius: 12px;
+    margin: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-partner-card:hover{
+    border-color: #075033;
+    transform: scale(1.03);
+    box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.8);
+    cursor: pointer;
+}

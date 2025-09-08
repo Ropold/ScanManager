@@ -1,107 +1,138 @@
-import type {ContractType, DeviceType, ScannerModel, ScannerStatus} from "./model/ScannerModel.ts";
-import {useState} from "react";
-import type {ServicePartnerModel} from "./model/ServicePartnerModel.ts";
-import type {CustomerModel} from "./model/CustomerModel.ts";
+import type {ContractType, DeviceType, ScannerStatus} from "../model/ScannerModel.ts";
 import {useNavigate} from "react-router-dom";
-import axios from "axios";
-import {translatedInfo} from "./utils/TranslatedInfo.ts";
-import {onFileChange, onImageCancel} from "./utils/ComponentsFunctions.ts";
+import {translatedInfo} from "../utils/TranslatedInfo.ts";
+import type {CustomerModel} from "../model/CustomerModel.ts";
+import type {ServicePartnerModel} from "../model/ServicePartnerModel.ts";
 
-type AddNewScannerProps = {
+type ScannerFormProps = {
     language: string;
-    handleNewScannerSubmit: (newScanner: ScannerModel) => void;
+    backNavigationPath: string;
     allActiveCustomer: CustomerModel[];
     allActiveServicePartner: ServicePartnerModel[];
+    customerId?: string;
+    setCustomerId?: React.Dispatch<React.SetStateAction<string | undefined>>;
+    servicePartnerId?: string;
+    setServicePartnerId?: React.Dispatch<React.SetStateAction<string | undefined>>;
+    modelName: string;
+    setModelName: React.Dispatch<React.SetStateAction<string>>;
+    manufacturerCode: string;
+    setManufacturerCode: React.Dispatch<React.SetStateAction<string>>;
+    serialNumber: string;
+    setSerialNumber: React.Dispatch<React.SetStateAction<string>>;
+    scannerNrNavision: string;
+    setScannerNrNavision: React.Dispatch<React.SetStateAction<string>>;
+    contractNumber: string;
+    setContractNumber: React.Dispatch<React.SetStateAction<string>>;
+    startDate: string;
+    setStartDate: React.Dispatch<React.SetStateAction<string>>;
+    endDate: string;
+    setEndDate: React.Dispatch<React.SetStateAction<string>>;
+    slaMaintenance: string;
+    setSlaMaintenance: React.Dispatch<React.SetStateAction<string>>;
+    locationAddress: string;
+    setLocationAddress: React.Dispatch<React.SetStateAction<string>>;
+    contactPersonDetails: string;
+    setContactPersonDetails: React.Dispatch<React.SetStateAction<string>>;
+    acquisitionDate: string;
+    setAcquisitionDate: React.Dispatch<React.SetStateAction<string>>;
+    purchasedBy: string;
+    setPurchasedBy: React.Dispatch<React.SetStateAction<string>>;
+    deviceType: DeviceType;
+    setDeviceType: React.Dispatch<React.SetStateAction<DeviceType>>;
+    contractType: ContractType;
+    setContractType: React.Dispatch<React.SetStateAction<ContractType>>;
+    status: ScannerStatus;
+    setStatus: React.Dispatch<React.SetStateAction<ScannerStatus>>;
+    purchasePrice?: number;
+    setPurchasePrice?: React.Dispatch<React.SetStateAction<number | undefined>>;
+    salePrice?: number;
+    setSalePrice?: React.Dispatch<React.SetStateAction<number | undefined>>;
+    depreciation?: number;
+    setDepreciation?: React.Dispatch<React.SetStateAction<number | undefined>>;
+    notes: string;
+    setNotes: React.Dispatch<React.SetStateAction<string>>;
+    image: File | null;
+    handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    handleImageCancel: () => void;
+    handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+    isArchived?: boolean;
+    setIsArchived?: React.Dispatch<React.SetStateAction<boolean>>;
+    imageChanged?: boolean;
+    setImageChanged?: React.Dispatch<React.SetStateAction<boolean>>;
+    imageDeleted?: boolean;
+    setImageDeleted?: React.Dispatch<React.SetStateAction<boolean>>;
+    existingImageUrl?: string;
 }
 
-export default function AddNewScanner(props: Readonly<AddNewScannerProps>) {
+export default function ScannerForm(props: Readonly<ScannerFormProps>) {
 
-    const [customerId, setCustomerId] = useState<string>("");
-    const [servicePartnerId, setServicePartnerId] = useState<string>("");
-    const [modelName, setModelName] = useState<string>("");
-    const [manufacturerCode, setManufacturerCode] = useState<string>("");
-    const [serialNumber, setSerialNumber] = useState<string>("");
-    const [scannerNrNavision, setScannerNrNavision] = useState<string>("");
-    const [contractNumber, setContractNumber] = useState<string>("");
-    const [startDate, setStartDate] = useState<string>("");
-    const [endDate, setEndDate] = useState<string>("");
-    const [slaMaintenance, setSlaMaintenance] = useState<string>("");
-    const [locationAddress, setLocationAddress] = useState<string>("");
-    const [contactPersonDetails, setContactPersonDetails] = useState<string>("");
-    const [acquisitionDate, setAcquisitionDate] = useState<string>("");
-    const [purchasedBy, setPurchasedBy] = useState<string>("");
-    const [deviceType, setDeviceType] = useState<DeviceType>("SCANNER");
-    const [contractType, setContractType] = useState<ContractType>("AUTORENEWAL");
-    const [status, setStatus] = useState<ScannerStatus>("ACTIVE");
-    const [purchasePrice, setPurchasePrice] = useState<string>("");
-    const [salePrice, setSalePrice] = useState<string>("");
-    const [depreciation, setDepreciation] = useState<string>("");
-    const [notes, setNotes] = useState<string>("");
+    const {
+        backNavigationPath,
+        customerId,
+        setCustomerId,
+        servicePartnerId,
+        setServicePartnerId,
+        modelName,
+        setModelName,
+        manufacturerCode,
+        setManufacturerCode,
+        serialNumber,
+        setSerialNumber,
+        scannerNrNavision,
+        setScannerNrNavision,
+        contractNumber,
+        setContractNumber,
+        startDate,
+        setStartDate,
+        endDate,
+        setEndDate,
+        slaMaintenance,
+        setSlaMaintenance,
+        locationAddress,
+        setLocationAddress,
+        contactPersonDetails,
+        setContactPersonDetails,
+        acquisitionDate,
+        setAcquisitionDate,
+        purchasedBy,
+        setPurchasedBy,
+        deviceType,
+        setDeviceType,
+        contractType,
+        setContractType,
+        status,
+        setStatus,
+        purchasePrice,
+        setPurchasePrice,
+        salePrice,
+        setSalePrice,
+        depreciation,
+        setDepreciation,
+        notes,
+        setNotes,
+        image,
+        imageDeleted,
+        existingImageUrl,
+        isArchived,
+        setIsArchived,
+        handleFileChange,
+        handleImageCancel,
+        handleSubmit
+    }=props;
 
-    const [image, setImage] = useState<File | null>(null);
     const navigate = useNavigate();
 
-    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-        e.preventDefault();
+    const isEditMode = backNavigationPath.includes('/scanners/') && backNavigationPath !== '/scanners';
 
-        const scannerData = {
-            customerId,
-            servicePartnerId,
-            modelName,
-            manufacturerCode,
-            serialNumber,
-            scannerNrNavision,
-            contractNumber,
-            startDate,
-            endDate,
-            slaMaintenance,
-            locationAddress,
-            contactPersonDetails,
-            acquisitionDate,
-            purchasedBy,
-            deviceType,
-            contractType,
-            status,
-            purchasePrice,
-            salePrice,
-            depreciation,
-            notes
-        };
-
-        const data = new FormData();
-
+    function renderImagePreview() {
         if (image) {
-            data.append("image", image);
+            return (<img src={URL.createObjectURL(image)} alt="image-preview" className="image-preview" />);
         }
-
-        data.append("scannerModel", new Blob(
-            [JSON.stringify(scannerData)],
-            {type: "application/json"}
-        ));
-
-        axios
-            .post("/api/scanners", data, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                },
-            })
-            .then((response) => {
-                props.handleNewScannerSubmit(response.data);
-                navigate(`/scanners/${response.data.id}`);
-            })
-            .catch((error) => {
-                alert("An unexpected error occurred. Please try again.");
-                console.error(error);
-            });
+        if (existingImageUrl && !imageDeleted) {
+            return (<img src={existingImageUrl} alt="existing-image" className="image-preview" />);
+        }
+        return null;
     }
-
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        onFileChange(e, setImage);
-    };
-
-    const handleImageCancel = () => {
-        onImageCancel(setImage);
-    };
 
     return (
         <div>
@@ -114,7 +145,7 @@ export default function AddNewScanner(props: Readonly<AddNewScannerProps>) {
                         <select
                             className="input-small"
                             value={customerId}
-                            onChange={(e) => setCustomerId(e.target.value)}
+                            onChange={(e) => setCustomerId?.(e.target.value)}
                             required
                         >
                             <option value="">-- Select Customer --</option>
@@ -132,7 +163,7 @@ export default function AddNewScanner(props: Readonly<AddNewScannerProps>) {
                         <select
                             className="input-small"
                             value={servicePartnerId}
-                            onChange={(e) => setServicePartnerId(e.target.value)}
+                            onChange={(e) => setServicePartnerId?.(e.target.value)}
                         >
                             <option value="">-- Select Service Partner --</option>
                             {props.allActiveServicePartner.map(sp => (
@@ -302,9 +333,9 @@ export default function AddNewScanner(props: Readonly<AddNewScannerProps>) {
                         {translatedInfo["purchasePrice"][props.language]}:
                         <input
                             className="input-small"
-                            type="text"
-                            value={purchasePrice}
-                            onChange={(e) => setPurchasePrice(e.target.value)}
+                            type="number"
+                            value={purchasePrice || ""}
+                            onChange={(e) => setPurchasePrice?.(e.target.value ? parseFloat(e.target.value) : undefined)}
                         />
                     </label>
 
@@ -312,9 +343,9 @@ export default function AddNewScanner(props: Readonly<AddNewScannerProps>) {
                         {translatedInfo["salePrice"][props.language]}:
                         <input
                             className="input-small"
-                            type="text"
-                            value={salePrice}
-                            onChange={(e) => setSalePrice(e.target.value)}
+                            type="number"
+                            value={salePrice || ""}
+                            onChange={(e) => setSalePrice?.(e.target.value ? parseFloat(e.target.value) : undefined)}
                         />
                     </label>
 
@@ -322,9 +353,9 @@ export default function AddNewScanner(props: Readonly<AddNewScannerProps>) {
                         {translatedInfo["depreciation"][props.language]}:
                         <input
                             className="input-small"
-                            type="text"
-                            value={depreciation}
-                            onChange={(e) => setDepreciation(e.target.value)}
+                            type="number"
+                            value={depreciation || ""}
+                            onChange={(e) => setDepreciation?.(e.target.value ? parseFloat(e.target.value) : undefined)}
                         />
                     </label>
 
@@ -337,26 +368,20 @@ export default function AddNewScanner(props: Readonly<AddNewScannerProps>) {
                         />
                     </label>
 
-                    {/* Image Upload */}
+                    {/* Position 6 - Image Upload */}
                     <label>
-                        Image:
+                        <span>Image:</span>
                         <input type="file" onChange={handleFileChange} />
                     </label>
 
-                    {/* Image Preview */}
+                    {/* Position 7 - Image */}
                     <div>
-                        {image && (
-                            <img
-                                src={URL.createObjectURL(image)}
-                                alt="image-preview"
-                                className="image-preview"
-                            />
-                        )}
+                        {renderImagePreview()}
                     </div>
 
-                    {/* Remove Image Button */}
+                    {/* Position 8 - Button */}
                     <div>
-                        {image && (
+                        {(image || (existingImageUrl && !imageDeleted)) && (
                             <button
                                 type="button"
                                 onClick={handleImageCancel}
@@ -366,11 +391,34 @@ export default function AddNewScanner(props: Readonly<AddNewScannerProps>) {
                             </button>
                         )}
                     </div>
+
+                    <div>
+                        {isArchived !== undefined && (
+                            <label>
+                                {translatedInfo["isArchived"][props.language]}:
+                                <select
+                                    className="input-small"
+                                    value={isArchived ? "true" : "false"}
+                                    onChange={(e) => setIsArchived?.(e.target.value === "true")}
+                                >
+                                    <option value="false">{translatedInfo["Active"][props.language]}</option>
+                                    <option value="true">{translatedInfo["Archived"][props.language]}</option>
+                                </select>
+                            </label>
+                        )}
+                    </div>
+
                 </div>
-                <button type="submit" className="button-blue margin-top-50">{translatedInfo["Add New Scanner"][props.language]}</button>
-                <button className="button-blue margin-left-20" onClick={()=> navigate("/scanners")} >back</button>
+                <button type="submit" className="button-blue margin-top-50">
+                    {isEditMode
+                        ? translatedInfo["Update Scanner"][props.language]
+                        : translatedInfo["Add Scanner"][props.language]
+                    }
+                </button>
+                <button type="button" className="button-blue margin-left-20" onClick={() => navigate(backNavigationPath)}>
+                    back
+                </button>
             </form>
         </div>
-    )
-
+    );
 }

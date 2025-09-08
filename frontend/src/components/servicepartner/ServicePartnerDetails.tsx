@@ -1,8 +1,8 @@
 import {useEffect, useState} from "react";
-import {DefaultServicePartner, type ServicePartnerModel} from "./model/ServicePartnerModel.ts";
+import {DefaultServicePartner, type ServicePartnerModel} from "../model/ServicePartnerModel.ts";
 import {useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
-import {translatedInfo} from "./utils/TranslatedInfo.ts";
+import {translatedInfo} from "../utils/TranslatedInfo.ts";
 
 type ServicePartnerDetailsProps = {
     language: string;
@@ -91,7 +91,7 @@ export default function ServicePartnerDetails(props: Readonly<ServicePartnerDeta
                     </p>
 
                     <div className="details-buttons">
-                        <button className="button-blue">Edit</button>
+                        <button className="button-blue" onClick={() => navigate(`/service-partners/${servicePartner.id}/edit`)}>Edit</button>
                         <button className="button-grey" onClick={toggleArchiveStatus}>{servicePartner.isArchived ? "Unarchive" : "Archive"}</button>
                         <button className="button-delete" onClick={() => setShowPopup(true)} >Delete</button>
                     </div>

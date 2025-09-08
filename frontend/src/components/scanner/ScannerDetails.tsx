@@ -1,11 +1,11 @@
 import {useEffect, useState} from "react";
-import {DefaultScanner, type ScannerModel} from "./model/ScannerModel.ts";
+import {DefaultScanner, type ScannerModel} from "../model/ScannerModel.ts";
 import {useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
-import {translatedInfo} from "./utils/TranslatedInfo.ts";
-import type {CustomerModel} from "./model/CustomerModel.ts";
-import type {ServicePartnerModel} from "./model/ServicePartnerModel.ts";
-import {getCustomerName, getServicePartnerName} from "./utils/ComponentsFunctions.ts";
+import {translatedInfo} from "../utils/TranslatedInfo.ts";
+import type {CustomerModel} from "../model/CustomerModel.ts";
+import type {ServicePartnerModel} from "../model/ServicePartnerModel.ts";
+import {getCustomerName, getServicePartnerName} from "../utils/ComponentsFunctions.ts";
 
 type ScannerDetailsProps = {
     language: string;
@@ -110,7 +110,7 @@ export default function ScannerDetails(props: Readonly<ScannerDetailsProps>) {
                     )}
 
                     <div className="details-buttons">
-                        <button className="button-blue">Edit</button>
+                        <button className="button-blue" onClick={() => navigate(`/scanners/${scanner.id}/edit`)}>Edit</button>
                         <button className="button-grey" onClick={toggleArchiveStatus}>{scanner.isArchived ? "Unarchive" : "Archive"}</button>
                         <button className="button-delete" onClick={() => setShowPopup(true)}>Delete</button>
                     </div>

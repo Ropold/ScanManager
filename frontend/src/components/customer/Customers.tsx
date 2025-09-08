@@ -1,5 +1,5 @@
-import SearchBar from "./SearchBar.tsx";
-import type {CustomerModel} from "./model/CustomerModel.ts";
+import SearchBar from "../SearchBar.tsx";
+import type {CustomerModel} from "../model/CustomerModel.ts";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import CustomerCard from "./CustomerCard.tsx";

@@ -42,12 +42,4 @@ public class UserModel {
     @Column(name = "avatar_url", length = 500)
     private String avatarUrl;
 
-    @PrePersist
-    protected void onCreate() {
-        if (createdAt == null) {
-            createdAt = LocalDateTime.now();
-        }
-    }
-
-
 }

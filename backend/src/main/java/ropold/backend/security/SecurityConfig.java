@@ -20,7 +20,6 @@ import ropold.backend.model.UserModel;
 import ropold.backend.repository.UserRepository;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Configuration
 @EnableWebSecurity
@@ -52,13 +51,11 @@ public class SecurityConfig {
                         .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
                 .oauth2Login(o -> o
                         .successHandler((request, response, authentication) -> {
-                            //System.out.println("🚀 SUCCESS HANDLER CALLED - User: " + authentication.getName());
                             response.sendRedirect("http://localhost:5173/");
                         }));
 
         return http.build();
     }
-
 
     @Bean
     public OAuth2UserService<OAuth2UserRequest, OAuth2User> oauth2UserService() {
@@ -70,26 +67,27 @@ public class SecurityConfig {
             String microsoftId = azureUser.getAttribute("sub");
             String email = azureUser.getAttribute("email");
             String username = azureUser.getAttribute("name");
-            //String avatarUrl = azureUser.getAttribute("picture");
 
+            // Lade oder erstelle User ohne gleichzeitiges Update
             UserModel user = userRepository.findByMicrosoftId(microsoftId)
                     .orElseGet(() -> {
-                        UserModel newUser = new UserModel(
-                                UUID.randomUUID(),
-                                microsoftId,
-                                username != null ? username : email,
-                                email,
-                                "USER",
-                                "de",
-                                LocalDateTime.now(),
-                                LocalDateTime.now(),
-                                null
-                        );
+                        UserModel newUser = new UserModel();
+                        newUser.setMicrosoftId(microsoftId);
+                        newUser.setUsername(username != null ? username : email);
+                        newUser.setEmail(email);
+                        newUser.setRole("USER");
+                        newUser.setPreferredLanguage("de");
+                        newUser.setCreatedAt(LocalDateTime.now());
+                        newUser.setLastLoginAt(LocalDateTime.now());
+                        newUser.setAvatarUrl(null);
+
                         return userRepository.save(newUser);
                     });
+
+            // Optional: Update last login in separater Transaktion
+            // userService.updateLastLogin(microsoftId);
 
             return azureUser;
         };
     }
 }
-

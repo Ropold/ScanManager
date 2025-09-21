@@ -21,13 +21,11 @@ public class ScannerModel {
     @Column(columnDefinition = "UUID")
     private UUID id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id")
-    private CustomerModel customer;
+    @Column(name = "customer_id")
+    private UUID customerId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "service_partner_id")
-    private ServicePartnerModel servicePartner;
+    @Column(name = "service_partner_id")
+    private UUID servicePartnerId;
 
     @Column(name = "model_name")
     private String modelName;

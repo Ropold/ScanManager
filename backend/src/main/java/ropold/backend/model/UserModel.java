@@ -16,6 +16,8 @@ import java.util.UUID;
 public class UserModel {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(columnDefinition = "UUID")
     private UUID id;
 
     @Column(name = "microsoft_id", unique = true, nullable = false)

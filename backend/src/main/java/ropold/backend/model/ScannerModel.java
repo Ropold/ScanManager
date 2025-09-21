@@ -17,8 +17,6 @@ import java.util.UUID;
 public class ScannerModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(columnDefinition = "UUID")
     private UUID id;
 
     @Column(name = "customer_id")

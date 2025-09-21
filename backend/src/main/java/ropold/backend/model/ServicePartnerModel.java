@@ -15,8 +15,6 @@ import java.util.UUID;
 public class ServicePartnerModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(columnDefinition = "UUID")
     private UUID id;
 
     @Column(name = "creditor_nr_navision", length = 50)

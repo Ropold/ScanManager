@@ -1,9 +1,6 @@
 package ropold.backend.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +14,10 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserModel {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(columnDefinition = "UUID")
     private UUID id;
 
     @Column(name = "microsoft_id", unique = true, nullable = false)
@@ -29,13 +29,14 @@ public class UserModel {
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false, length = 50)
     private String role;
 
-    @Column(name = "preferred_language", length = 2)
-    private String preferredLanguage;
+    @Column(name = "preferred_language", length = 2, columnDefinition = "CHAR(2) DEFAULT 'de'")
+    private String preferredLanguage = "de";
 
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;
 
     @Column(name = "last_login_at")
@@ -43,4 +44,11 @@ public class UserModel {
 
     @Column(name = "avatar_url", length = 500)
     private String avatarUrl;
+
+    @PrePersist
+    protected void onCreate() {
+        if (createdAt == null) {
+            createdAt = LocalDateTime.now();
+        }
+    }
 }

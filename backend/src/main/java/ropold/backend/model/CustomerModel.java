@@ -1,9 +1,6 @@
 package ropold.backend.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,6 +15,8 @@ import java.util.UUID;
 public class CustomerModel {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(columnDefinition = "UUID")
     private UUID id;
 
     @Column(name = "debitor_nr_navision", length = 50)
@@ -29,15 +28,15 @@ public class CustomerModel {
     @Column(name = "contact_person")
     private String contactPerson;
 
-    @Column(name = "contact_details", columnDefinition = "NVARCHAR(MAX)")
+    @Column(name = "contact_details", columnDefinition = "TEXT")
     private String contactDetails;
 
-    @Column(name = "notes", columnDefinition = "NVARCHAR(MAX)")
+    @Column(name = "notes", columnDefinition = "TEXT")
     private String notes;
 
     @Column(name = "image_url", length = 500)
     private String imageUrl;
 
-    @Column(name = "is_archived", nullable = false, columnDefinition = "BIT DEFAULT 0")
+    @Column(name = "is_archived", nullable = false, columnDefinition = "BOOLEAN DEFAULT false")
     private Boolean isArchived = false;
 }

@@ -11,7 +11,7 @@ type WelcomeProps = {
 export default function Welcome(props: Readonly<WelcomeProps>) {
     return (
         <>
-            <h2>Scan Manager</h2>
+            <h2>Scan Manager PostgreSQL</h2>
             <p>{translatedInfo["Welcome"][props.language]}</p>
             <p></p>
             <div className="image-wrapper margin-top-20">

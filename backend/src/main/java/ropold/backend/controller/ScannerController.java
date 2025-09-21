@@ -67,34 +67,33 @@ public class ScannerController {
             imageUrl = imageUploadUtil.determineImageUrl(image, null, null);
         }
 
-        return scannerService.addScanner(
-                new ScannerModel(
-                        UUID.randomUUID(),
-                        scannerModel.getCustomerId(),
-                        scannerModel.getServicePartnerId(),
-                        scannerModel.getModelName(),
-                        scannerModel.getManufacturerCode(),
-                        scannerModel.getSerialNumber(),
-                        scannerModel.getScannerNrNavision(),
-                        scannerModel.getContractNumber(),
-                        scannerModel.getStartDate(),
-                        scannerModel.getEndDate(),
-                        scannerModel.getSlaMaintenance(),
-                        scannerModel.getLocationAddress(),
-                        scannerModel.getContactPersonDetails(),
-                        scannerModel.getAcquisitionDate(),
-                        scannerModel.getPurchasedBy(),
-                        scannerModel.getDeviceType(),
-                        scannerModel.getContractType(),
-                        scannerModel.getStatus(),
-                        scannerModel.getPurchasePrice(),
-                        scannerModel.getSalePrice(),
-                        scannerModel.getDepreciation(),
-                        scannerModel.getNotes(),
-                        imageUrl,
-                        false
-                )
-        );
+        // Erstelle neues Scanner-Objekt ohne manuelle ID-Setzung
+        ScannerModel newScanner = new ScannerModel();
+        newScanner.setCustomer(scannerModel.getCustomer());
+        newScanner.setServicePartner(scannerModel.getServicePartner());
+        newScanner.setModelName(scannerModel.getModelName());
+        newScanner.setManufacturerCode(scannerModel.getManufacturerCode());
+        newScanner.setSerialNumber(scannerModel.getSerialNumber());
+        newScanner.setScannerNrNavision(scannerModel.getScannerNrNavision());
+        newScanner.setContractNumber(scannerModel.getContractNumber());
+        newScanner.setStartDate(scannerModel.getStartDate());
+        newScanner.setEndDate(scannerModel.getEndDate());
+        newScanner.setSlaMaintenance(scannerModel.getSlaMaintenance());
+        newScanner.setLocationAddress(scannerModel.getLocationAddress());
+        newScanner.setContactPersonDetails(scannerModel.getContactPersonDetails());
+        newScanner.setAcquisitionDate(scannerModel.getAcquisitionDate());
+        newScanner.setPurchasedBy(scannerModel.getPurchasedBy());
+        newScanner.setDeviceType(scannerModel.getDeviceType());
+        newScanner.setContractType(scannerModel.getContractType());
+        newScanner.setStatus(scannerModel.getStatus());
+        newScanner.setPurchasePrice(scannerModel.getPurchasePrice());
+        newScanner.setSalePrice(scannerModel.getSalePrice());
+        newScanner.setDepreciation(scannerModel.getDepreciation());
+        newScanner.setNotes(scannerModel.getNotes());
+        newScanner.setImageUrl(imageUrl);
+        newScanner.setIsArchived(false);
+
+        return scannerService.addScanner(newScanner);
     }
 
     @PutMapping("/{id}")
@@ -111,34 +110,32 @@ public class ScannerController {
         ScannerModel existingScanner = scannerService.getScannerById(id);
         String newImageUrl = imageUploadUtil.determineImageUrl(image, scannerModel.getImageUrl(), existingScanner.getImageUrl());
 
-        ScannerModel updatedScanner = new ScannerModel(
-                existingScanner.getId(),
-                scannerModel.getCustomerId(),
-                scannerModel.getServicePartnerId(),
-                scannerModel.getModelName(),
-                scannerModel.getManufacturerCode(),
-                scannerModel.getSerialNumber(),
-                scannerModel.getScannerNrNavision(),
-                scannerModel.getContractNumber(),
-                scannerModel.getStartDate(),
-                scannerModel.getEndDate(),
-                scannerModel.getSlaMaintenance(),
-                scannerModel.getLocationAddress(),
-                scannerModel.getContactPersonDetails(),
-                scannerModel.getAcquisitionDate(),
-                scannerModel.getPurchasedBy(),
-                scannerModel.getDeviceType(),
-                scannerModel.getContractType(),
-                scannerModel.getStatus(),
-                scannerModel.getPurchasePrice(),
-                scannerModel.getSalePrice(),
-                scannerModel.getDepreciation(),
-                scannerModel.getNotes(),
-                newImageUrl,
-                scannerModel.getIsArchived()
-        );
+        // Update existierender Scanner
+        existingScanner.setCustomer(scannerModel.getCustomer());
+        existingScanner.setServicePartner(scannerModel.getServicePartner());
+        existingScanner.setModelName(scannerModel.getModelName());
+        existingScanner.setManufacturerCode(scannerModel.getManufacturerCode());
+        existingScanner.setSerialNumber(scannerModel.getSerialNumber());
+        existingScanner.setScannerNrNavision(scannerModel.getScannerNrNavision());
+        existingScanner.setContractNumber(scannerModel.getContractNumber());
+        existingScanner.setStartDate(scannerModel.getStartDate());
+        existingScanner.setEndDate(scannerModel.getEndDate());
+        existingScanner.setSlaMaintenance(scannerModel.getSlaMaintenance());
+        existingScanner.setLocationAddress(scannerModel.getLocationAddress());
+        existingScanner.setContactPersonDetails(scannerModel.getContactPersonDetails());
+        existingScanner.setAcquisitionDate(scannerModel.getAcquisitionDate());
+        existingScanner.setPurchasedBy(scannerModel.getPurchasedBy());
+        existingScanner.setDeviceType(scannerModel.getDeviceType());
+        existingScanner.setContractType(scannerModel.getContractType());
+        existingScanner.setStatus(scannerModel.getStatus());
+        existingScanner.setPurchasePrice(scannerModel.getPurchasePrice());
+        existingScanner.setSalePrice(scannerModel.getSalePrice());
+        existingScanner.setDepreciation(scannerModel.getDepreciation());
+        existingScanner.setNotes(scannerModel.getNotes());
+        existingScanner.setImageUrl(newImageUrl);
+        existingScanner.setIsArchived(scannerModel.getIsArchived());
 
-        return scannerService.updateScanner(updatedScanner);
+        return scannerService.updateScanner(existingScanner);
     }
 
     @DeleteMapping("/{id}")

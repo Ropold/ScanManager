@@ -29,14 +29,13 @@ public class UserModel {
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false, length = 50)
     private String role;
 
-    @Column(name = "preferred_language", length = 2, columnDefinition = "CHAR(2) DEFAULT 'de'")
+    @Column(name = "preferred_language", length = 2)
     private String preferredLanguage = "de";
 
-    @Column(name = "created_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "last_login_at")
@@ -51,4 +50,6 @@ public class UserModel {
             createdAt = LocalDateTime.now();
         }
     }
+
+
 }

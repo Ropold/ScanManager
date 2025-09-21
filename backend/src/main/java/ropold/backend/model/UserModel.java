@@ -1,9 +1,6 @@
 package ropold.backend.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +14,10 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserModel {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(columnDefinition = "UUID")
     private UUID id;
 
     @Column(name = "microsoft_id", unique = true, nullable = false)
@@ -33,7 +33,7 @@ public class UserModel {
     private String role;
 
     @Column(name = "preferred_language", length = 2)
-    private String preferredLanguage;
+    private String preferredLanguage = "de";
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
@@ -43,4 +43,5 @@ public class UserModel {
 
     @Column(name = "avatar_url", length = 500)
     private String avatarUrl;
+
 }

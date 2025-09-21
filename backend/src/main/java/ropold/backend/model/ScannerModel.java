@@ -49,10 +49,10 @@ public class ScannerModel {
     @Column(name = "sla_maintenance")
     private String slaMaintenance;
 
-    @Column(name = "location_address", columnDefinition = "NVARCHAR(MAX)")
+    @Column(name = "location_address", columnDefinition = "TEXT")
     private String locationAddress;
 
-    @Column(name = "contact_person_details", columnDefinition = "NVARCHAR(MAX)")
+    @Column(name = "contact_person_details", columnDefinition = "TEXT")
     private String contactPersonDetails;
 
     @Column(name = "acquisition_date")
@@ -82,13 +82,12 @@ public class ScannerModel {
     @Column(name = "depreciation", precision = 10, scale = 2)
     private BigDecimal depreciation;
 
-    @Column(name = "notes", columnDefinition = "NVARCHAR(MAX)")
+    @Column(name = "notes", columnDefinition = "TEXT")
     private String notes;
 
     @Column(name = "image_url", length = 500)
     private String imageUrl;
 
-    @Column(name = "is_archived", nullable = false, columnDefinition = "BIT DEFAULT 0")
+    @Column(name = "is_archived", nullable = false, columnDefinition = "BOOLEAN DEFAULT false")
     private Boolean isArchived = false;
-
 }

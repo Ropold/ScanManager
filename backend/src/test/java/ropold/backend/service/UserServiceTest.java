@@ -135,34 +135,36 @@ class UserServiceTest {
         verify(userRepository, times(1)).save(any(UserModel.class));
     }
 
-    // Tests für setPreferredLanguage
+    // Tests für setPreferredLanguage - angepasst für direkte Repository-Methode
     @Test
-    void setPreferredLanguage_ValidUser_UpdatesLanguage() {
+    void setPreferredLanguage_ValidUser_CallsRepositoryUpdate() {
         String microsoftId = "microsoftId";
         String newLanguage = "en";
-        when(userRepository.findByMicrosoftId(microsoftId)).thenReturn(Optional.of(testUser));
-        when(userRepository.save(any(UserModel.class))).thenReturn(testUser);
 
+        // Arrange - Mock Repository-Methode
+        doNothing().when(userRepository).updatePreferredLanguage(microsoftId, newLanguage);
+
+        // Act
         userService.setPreferredLanguage(microsoftId, newLanguage);
 
-        assertEquals(newLanguage, testUser.getPreferredLanguage());
-        verify(userRepository, times(1)).findByMicrosoftId(microsoftId);
-        verify(userRepository, times(1)).save(testUser);
+        // Assert - Verifiziere dass die Repository-Methode aufgerufen wurde
+        verify(userRepository, times(1)).updatePreferredLanguage(microsoftId, newLanguage);
     }
 
     @Test
-    void setPreferredLanguage_UserNotFound_ThrowsException() {
+    void setPreferredLanguage_RepositoryThrowsException_ExceptionPropagated() {
         String microsoftId = "non-existent-id";
         String newLanguage = "fr";
-        when(userRepository.findByMicrosoftId(microsoftId)).thenReturn(Optional.empty());
 
-        UserNotFoundException exception = assertThrows(UserNotFoundException.class,
+        // Arrange - Repository wirft Exception (z.B. wenn User nicht existiert)
+        doThrow(new RuntimeException("Database error")).when(userRepository)
+                .updatePreferredLanguage(microsoftId, newLanguage);
+
+        // Act & Assert
+        RuntimeException exception = assertThrows(RuntimeException.class,
                 () -> userService.setPreferredLanguage(microsoftId, newLanguage));
 
-        assertEquals("User not found", exception.getMessage());
-        verify(userRepository, times(1)).findByMicrosoftId(microsoftId);
-        verify(userRepository, never()).save(any(UserModel.class));
+        assertEquals("Database error", exception.getMessage());
+        verify(userRepository, times(1)).updatePreferredLanguage(microsoftId, newLanguage);
     }
 }
-
-//createOrUpdateFromAzure, setPreferredLanguage

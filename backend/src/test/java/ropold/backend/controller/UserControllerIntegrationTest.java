@@ -16,7 +16,6 @@ import ropold.backend.repository.UserRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.mock;
@@ -35,23 +34,24 @@ class UserControllerIntegrationTest {
     @Autowired
     private UserRepository userRepository;
 
+    private UserModel testUser;
+
     @BeforeEach
     void setUp() {
         userRepository.deleteAll();
 
-        UserModel user1 = new UserModel(
-                UUID.fromString("00000000-0000-0000-0000-000000000001"),
-                "microsoftId1",
-                "userName1",
-                "email1@example.com",
-                "USER",
-                "de",
-                LocalDateTime.of(2024, 1, 1, 12, 0),
-                LocalDateTime.of(2024, 1, 1, 12, 30),
-                "https://www.avatar.com/user1.jpg"
-        );
+        // Lass Hibernate die ID automatisch generieren
+        UserModel user1 = new UserModel();
+        user1.setMicrosoftId("microsoftId1");
+        user1.setUsername("userName1");
+        user1.setEmail("email1@example.com");
+        user1.setRole("USER");
+        user1.setPreferredLanguage("de");
+        user1.setCreatedAt(LocalDateTime.of(2024, 1, 1, 12, 0));
+        user1.setLastLoginAt(LocalDateTime.of(2024, 1, 1, 12, 30));
+        user1.setAvatarUrl("https://www.avatar.com/user1.jpg");
 
-        userRepository.save(user1);
+        testUser = userRepository.save(user1);
     }
 
     @Test
@@ -100,7 +100,7 @@ class UserControllerIntegrationTest {
         mockMvc.perform(get("/api/users/me/details"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))
-                .andExpect(jsonPath("$.id").value("00000000-0000-0000-0000-000000000001"))
+                .andExpect(jsonPath("$.id").value(testUser.getId().toString()))
                 .andExpect(jsonPath("$.microsoftId").value("microsoftId1"))
                 .andExpect(jsonPath("$.username").value("userName1"))
                 .andExpect(jsonPath("$.email").value("email1@example.com"))

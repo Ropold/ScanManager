@@ -4,10 +4,10 @@ import "./styles/Navbar.css"
 import * as React from "react";
 import {translatedInfo} from "./utils/TranslatedInfo.ts";
 import "./styles/Popup.css"
-import bechtleLogoSmall from "../assets/logo-bechtle-small.svg"
 import scannerLogo from "../assets/scanner-logo.svg";
 import servicePartnerLogo from "../assets/service-partner-logo.png"
 import customerLogo from "../assets/customer-logo.png"
+import homeLogo from "../assets/home-logo.jpg"
 
 type NavbarProps = {
     user:string;
@@ -48,7 +48,7 @@ export default function NavBar(props: Readonly<NavbarProps>) {
                     navigate("/");
                 }}
             >
-                <img src={bechtleLogoSmall} alt="Bechtle Small Logo" className="logo-image logo-bechtle" />
+                <img src={homeLogo} alt="Bechtle Small Logo" className="logo-image logo-bechtle" />
                 <h2 className="header-title">Home</h2>
             </div>
 
